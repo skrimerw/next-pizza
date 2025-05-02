@@ -45,11 +45,13 @@ export default function ToolBar({ className }: Props) {
     }
 
     useEffect(() => {
-        window.scrollTo({
-            top:
-                (document.querySelector<HTMLDivElement>(location.hash)
-                    ?.offsetTop as number) - 140,
-        });
+        if (location.hash) {
+            window.scrollTo({
+                top:
+                    (document.querySelector<HTMLDivElement>(location.hash)
+                        ?.offsetTop as number) - 140,
+            });
+        }
 
         window.addEventListener("wheel", onScroll);
         window.addEventListener("touch", onScroll);

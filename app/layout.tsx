@@ -4,8 +4,9 @@ import "./globals.css";
 import { Header } from "@/components/shared";
 
 const nunito = Nunito({
-    weight: [],
-    subsets: ["latin"],
+    subsets: ["cyrillic"],
+    variable: "--font-nunito",
+    weight: ["400", "500", "600", "700", "800", "900"],
 });
 
 export const metadata: Metadata = {
