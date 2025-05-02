@@ -60,7 +60,7 @@ export default function ToolBar({ className }: Props) {
             window.removeEventListener("wheel", onScroll);
             window.removeEventListener("touchmove", onScroll);
         };
-    }, [onScroll]);
+    });
 
     return (
         <div
