@@ -1,6 +1,7 @@
 datasource db {
-    provider = "postgresql"
-    url      = env("DATABASE_URL")
+    provider  = "postgresql"
+    url       = env("DATABASE_URL")
+    directUrl = env("DATABASE_URL_UNPOOLED")
 }
 
 generator client {
@@ -21,22 +22,23 @@ model User {
 model Product {
     id Int @id @default(autoincrement())
 
-    name       String
-    imageUrl   String
-    /* category   Category @relation(fields: [categoryId], references: [id])
-    categoryId Int */
+    name     String
+    imageUrl String
+    /**
+     * category   Category @relation(fields: [categoryId], references: [id])
+     * categoryId Int
+     */
 
     createdAt DateTime @default(now())
     upadtedAt DateTime @updatedAt
 }
 
-/* model Category {
-    id Int @id @default(autoincrement())
-
-    name String
-
-    products Product[]
-
-    createdAt DateTime @default(now())
-    upadtedAt DateTime @updatedAt
-} */
+/**
+ * model Category {
+ * id Int @id @default(autoincrement())
+ * name String
+ * products Product[]
+ * createdAt DateTime @default(now())
+ * upadtedAt DateTime @updatedAt
+ * }
+ */
