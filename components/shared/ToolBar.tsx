@@ -1,6 +1,6 @@
 "use client";
 
-import React, { act, useEffect, useRef, useState } from "react";
+import React, { useEffect, useRef, useState } from "react";
 import Categories from "./Categories";
 import SortPopup from "./SortPopup";
 import { cn } from "@/lib/utils";

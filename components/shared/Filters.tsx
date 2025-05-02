@@ -30,7 +30,7 @@ const ingredients = [
 
 export default function Filters({ className }: Props) {
     const [sliderValues, setSliderValues] = useState([0, 5000]);
-    const [doughType, setDoughType] = useState();
+    const [doughType, setDoughType] = useState(); // eslint-disable-line
 
     return (
         <aside className={cn("w-[220px] pb-10 flex-none", className)}>

@@ -4,7 +4,7 @@ import React, { createContext, useContext, useEffect, useState } from "react";
 
 export const ScrollCategoryContext = createContext<{
     activeCat: number;
-    setActiveCat: (val: any) => void;
+    setActiveCat: (val: number) => void;
 } | null>(null);
 
 export function useScrollCategoryContext() {

@@ -5,7 +5,7 @@ import ProductCard from "./ProductCard";
 
 interface Props {
     title: string;
-    items: any[];
+    items: any[]; // eslint-disable-line
     categoryId: number;
     className?: string;
 }
