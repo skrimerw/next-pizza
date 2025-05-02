@@ -31,7 +31,7 @@ export default function CheckboxFilterGroup({
         const regex = new RegExp(substr, "i");
         let htmlStr = "";
 
-        let actualSubstr = str.slice(
+        const actualSubstr = str.slice(
             str.toLowerCase().indexOf(substr.toLowerCase()),
             str.toLowerCase().indexOf(substr.toLowerCase()) + substr.length
         );

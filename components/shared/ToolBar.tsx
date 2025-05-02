@@ -58,7 +58,7 @@ export default function ToolBar({ className }: Props) {
             window.removeEventListener("wheel", onScroll);
             window.removeEventListener("touch", onScroll);
         };
-    }, []);
+    }, [onScroll]);
 
     return (
         <div
