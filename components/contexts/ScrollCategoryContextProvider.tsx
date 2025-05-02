@@ -29,6 +29,13 @@ export default function ScrollCategoryContextProvider({
             defaultValue = location.hash.match(/product-group-[0-9]{1}/g)
                 ? Number(location.hash.split("-").at(-1))
                 : 1;
+            if (location.hash) {
+                window.scrollTo({
+                    top:
+                        (document.querySelector<HTMLDivElement>(location.hash)
+                            ?.offsetTop as number) - 140,
+                });
+            }
             setActiveCat(defaultValue);
         }
     }, []);
