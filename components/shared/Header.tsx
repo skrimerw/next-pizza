@@ -1,11 +1,10 @@
 import React from "react";
-import { Container } from "@/components/shared";
+import { Container, SearchProducts } from "@/components/shared";
 import Image from "next/image";
 import Link from "next/link";
 import { Button } from "../ui/button";
 import { ArrowRight, ShoppingCart, User } from "lucide-react";
 import { cn } from "@/lib/utils";
-import SearchProducts from "./SearchProducts";
 
 interface Props {
     className?: string;
@@ -21,7 +20,7 @@ export default function Header({ className }: Props) {
                         className="flex items-center gap-4 flex-none"
                     >
                         <Image
-                            src="/logo.svg"
+                            src="/img/logo.svg"
                             alt="Logo"
                             width={35}
                             height={35}

@@ -4,6 +4,7 @@ import Title from "./Title";
 import Link from "next/link";
 import { Button } from "../ui/button";
 import { Plus } from "lucide-react";
+import ProductImage from "./ProductImage";
 
 interface Props {
     id: number;
@@ -28,11 +29,15 @@ export default function ProductCard({
                 href={`/product/${id}`}
                 className="flex items-center justify-center rounded-lg p-0 group w-[250px] h-[225px]"
             >
-                <img
-                    alt="title"
-                    src={imageUrl}
-                    className="relative top-0 mt-2 ml-2 transition-all duration-200 ease-out group-hover:top-1"
-                />
+                <div className="relative w-full">
+                    <img
+                        src="/img/product-img-placeholder.svg"
+                        className="relative top-0 w-full mt-2 ml-2 transition-all duration-200 ease-out group-hover:top-1"
+                    />
+                    <div className="bg-white absolute top-0 w-full mt-2 ml-2 transition-all duration-200 ease-out group-hover:top-1">
+                        <img alt="title" src={imageUrl} />
+                    </div>
+                </div>
             </Link>
             <div>
                 <Title text={title} size="sm" />
