@@ -47,7 +47,7 @@ export default function SearchProducts() {
                 onFocus={() => setIsFocused(true)}
                 onBlur={() => setIsFocused(false)}
             />
-            {products.length > 0 && searchValue.length > 0 && (
+            {products.length > 0 && searchValue.length > 0 && isFocused && (
                 <ul className="absolute left-0 right-0 top-12 rounded-xl bg-white z-20 overflow-hidden shadow-md">
                     {products.map((product) => {
                         return (
