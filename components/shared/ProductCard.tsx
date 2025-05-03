@@ -4,7 +4,6 @@ import Title from "./Title";
 import Link from "next/link";
 import { Button } from "../ui/button";
 import { Plus } from "lucide-react";
-import ProductImage from "./ProductImage";
 
 interface Props {
     id: number;

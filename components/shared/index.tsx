@@ -9,7 +9,6 @@ import CheckboxFilterGroup from "./CheckboxFilterGroup";
 import ProductCard from "./ProductCard";
 import ProductGroup from "./ProductGroup";
 import SearchProducts from "./SearchProducts";
-import ProductImage from "./ProductImage";
 
 export {
     Header,
@@ -23,5 +22,4 @@ export {
     ProductCard,
     ProductGroup,
     SearchProducts,
-    ProductImage
 };
