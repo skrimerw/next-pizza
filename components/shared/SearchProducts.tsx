@@ -1,7 +1,7 @@
 "use client";
 
 import { Search } from "lucide-react";
-import React, { useEffect, useState } from "react";
+import React, { useEffect, useRef, useState } from "react";
 import { Input } from "../ui/input";
 import { Product } from "@prisma/client";
 import { axiosInstance } from "@/lib/axiosInstance";
@@ -11,9 +11,16 @@ export default function SearchProducts() {
     const [searchValue, setSearchValue] = useState("");
     const [isFocused, setIsFocused] = useState(false);
     const [products, setProducts] = useState<Product[]>([]);
+    const searchContainer = useRef(null);
 
-    function onChange(e: React.ChangeEvent<HTMLInputElement>) {
-        setSearchValue(e.target.value);
+    function onDocumentClick(e: HTMLElement) {
+        if (e.closest(".search-input-container") === null) {
+            setIsFocused(false);
+
+            return;
+        }
+
+        setIsFocused(true);
     }
 
     useEffect(() => {
@@ -31,10 +38,20 @@ export default function SearchProducts() {
                 console.error(e);
             }
         }
+
+        document.addEventListener("click", (e) =>
+            onDocumentClick(e.target as never)
+        );
+
+        return () => {
+            document.removeEventListener("click", (e) =>
+                onDocumentClick(e.target as never)
+            );
+        };
     }, [searchValue]);
 
     return (
-        <div className="w-full relative">
+        <div className="search-input-container w-full relative">
             <Search
                 size={16}
                 className="absolute top-1/2 left-3 -translate-y-1/2 text-gray-400"
@@ -43,9 +60,8 @@ export default function SearchProducts() {
                 className="h-[40px] bg-gray-50 border-none rounded-xl indent-7 placeholder:text-gray-400 focus-visible:ring-0"
                 placeholder="Поиск пиццы..."
                 value={searchValue}
-                onChange={(e) => onChange(e)}
+                onChange={(e) => setSearchValue(e.target.value)}
                 onFocus={() => setIsFocused(true)}
-                onBlur={() => setIsFocused(false)}
             />
             {products.length > 0 && searchValue.length > 0 && isFocused && (
                 <ul className="absolute left-0 right-0 top-12 rounded-xl bg-white z-20 overflow-hidden shadow-md">
