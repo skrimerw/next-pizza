@@ -3,7 +3,7 @@
 import React, { useState } from "react";
 import Title from "./Title";
 import { Checkbox } from "../ui/checkbox";
-import { cn } from "@/lib/utils";
+import { cn, markSubstr } from "@/lib/utils";
 import { Input } from "../ui/input";
 
 interface Props {
@@ -23,33 +23,6 @@ export default function CheckboxFilterGroup({
     const [searchInputValue, setSearchInputValue] = useState<string>("");
     const [searchItems, setSearchItems] = useState<string[]>([]);
 
-    function markSubstr(
-        str: string,
-        substr: string,
-        specialSymbol: string = "\n"
-    ) {
-        const regex = new RegExp(substr, "i");
-        let htmlStr = "";
-
-        const actualSubstr = str.slice(
-            str.toLowerCase().indexOf(substr.toLowerCase()),
-            str.toLowerCase().indexOf(substr.toLowerCase()) + substr.length
-        );
-        str = str.replace(regex, specialSymbol);
-
-        for (let i = 0; i < str.length; i++) {
-            if (str.charAt(i) === specialSymbol) {
-                htmlStr += `<b>${actualSubstr}</b>`;
-
-                continue;
-            }
-
-            htmlStr += str.charAt(i);
-        }
-
-        return htmlStr;
-    }
-
     function onSearchInput(e: React.ChangeEvent<HTMLInputElement>) {
         setSearchInputValue(e.target.value);
 
@@ -67,7 +40,7 @@ export default function CheckboxFilterGroup({
             <Title text={title} size="xs" />
             <Input
                 placeholder="Поиск..."
-                className="bg-gray-50 border-none"
+                className="bg-gray-50 focus-visible:ring-0 placeholder:text-gray-400"
                 value={searchInputValue}
                 onChange={(e) => onSearchInput(e)}
             />
