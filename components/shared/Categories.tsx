@@ -17,7 +17,7 @@ export default async function Categories({ className }: Props) {
         className
       )}
     >
-      {categories.map((cat, i) => {
+      {categories.map((cat) => {
         return <CategoryItem key={cat.id} id={cat.id} name={cat.name} />;
       })}
     </div>

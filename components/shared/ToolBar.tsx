@@ -1,7 +1,6 @@
 "use client";
 
 import React, { useEffect, useRef, useState } from "react";
-import SortPopup from "./SortPopup";
 import { cn } from "@/lib/utils";
 import Container from "./Container";
 import { useScrollCategoryContext } from "../contexts/ScrollCategoryContextProvider";

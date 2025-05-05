@@ -7,10 +7,9 @@ import { useScrollCategoryContext } from "../contexts/ScrollCategoryContextProvi
 interface Props {
   id: number;
   name: string;
-  isActive?: boolean;
 }
 
-export default function CategoryItem({ id, name, isActive = false }: Props) {
+export default function CategoryItem({ id, name }: Props) {
   const { activeCat, setActiveCat } = useScrollCategoryContext();
 
   function onCategoryClick(

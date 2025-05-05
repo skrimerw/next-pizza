@@ -5,10 +5,13 @@ import Title from "./Title";
 import { Checkbox } from "../ui/checkbox";
 import { cn, markSubstr } from "@/lib/utils";
 import { Input } from "../ui/input";
+import { Ingredient } from "@prisma/client";
+import { Skeleton } from "../ui/skeleton";
 
 interface Props {
     title: string;
-    items: Array<string>;
+    items: Ingredient[];
+    loading: boolean;
     limit?: number;
     className?: string;
 }
@@ -19,20 +22,48 @@ export default function CheckboxFilterGroup({
     limit = 6,
     className,
 }: Props) {
-    const [showAll, setShowAll] = useState<boolean>(false);
-    const [searchInputValue, setSearchInputValue] = useState<string>("");
-    const [searchItems, setSearchItems] = useState<string[]>([]);
+    const [showAll, setShowAll] = useState(false);
+    const [searchInputValue, setSearchInputValue] = useState("");
+    const [searchItems, setSearchItems] = useState<Ingredient[]>([]);
 
     function onSearchInput(e: React.ChangeEvent<HTMLInputElement>) {
         setSearchInputValue(e.target.value);
 
-        let searchItemsArr: string[] = [];
+        let searchItemsArr: Ingredient[] = [];
 
-        searchItemsArr = items.filter((item) =>
-            item.toLowerCase().includes(e.target.value.toLowerCase().trim())
+        searchItemsArr = items.filter(({ name }) =>
+            name.toLowerCase().includes(e.target.value.toLowerCase().trim())
         );
 
         setSearchItems(searchItemsArr);
+    }
+
+    function addSkeleton() {
+        let skeletons = [];
+
+        for (let i = 0; i < limit; i++) {
+            skeletons.push(
+                <div key={i} className="flex gap-3">
+                    <Skeleton className="h-6 w-6 bg-gray-50 flex-none" />
+                    <Skeleton className="h-6 w-full bg-gray-50" />
+                </div>
+            );
+        }
+
+        return skeletons;
+    }
+
+    if (items.length === 0) {
+        return (
+            <div className="flex flex-col gap-4 pb-6 pt-8">
+                <Title text={title} size="xs" />
+                <Skeleton className="h-9 w-full bg-gray-50 text-gray-400 px-3 pb-1 pt-[5px] text-sm flex items-center">
+                    Поиск...
+                </Skeleton>
+                {addSkeleton()}
+                <Skeleton className="h-6 w-28 bg-gray-50 mt-2" />
+            </div>
+        );
     }
 
     return (
@@ -40,7 +71,7 @@ export default function CheckboxFilterGroup({
             <Title text={title} size="xs" />
             <Input
                 placeholder="Поиск..."
-                className="bg-gray-50 focus-visible:ring-0 placeholder:text-gray-400"
+                className="bg-gray-50 border-none focus-visible:ring-0 placeholder:text-gray-400"
                 value={searchInputValue}
                 onChange={(e) => onSearchInput(e)}
             />
@@ -57,7 +88,7 @@ export default function CheckboxFilterGroup({
                                     <label
                                         dangerouslySetInnerHTML={{
                                             __html: markSubstr(
-                                                item,
+                                                item.name,
                                                 searchInputValue.trim()
                                             ),
                                         }}

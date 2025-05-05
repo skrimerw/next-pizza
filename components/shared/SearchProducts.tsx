@@ -1,7 +1,7 @@
 "use client";
 
-import { Search } from "lucide-react";
-import React, { useEffect, useRef, useState } from "react";
+import { LoaderCircle, Search } from "lucide-react";
+import React, { useEffect, useState } from "react";
 import { Input } from "../ui/input";
 import { Product } from "@prisma/client";
 import { axiosInstance } from "@/lib/axiosInstance";
@@ -11,7 +11,7 @@ export default function SearchProducts() {
     const [searchValue, setSearchValue] = useState("");
     const [isFocused, setIsFocused] = useState(false);
     const [products, setProducts] = useState<Product[]>([]);
-    const searchContainer = useRef(null);
+    const [loading, setLoading] = useState(false);
 
     function onDocumentClick(e: HTMLElement) {
         if (e.closest(".search-input-container") === null) {
@@ -25,18 +25,25 @@ export default function SearchProducts() {
 
     useEffect(() => {
         if (isFocused && searchValue) {
-            const fetchData = async () => {
-                const { data } = await axiosInstance.get(
-                    `/products/search?query=${searchValue}`
-                );
+            setLoading(true);
 
-                setProducts(data);
-            };
-            try {
-                fetchData();
-            } catch (e) {
-                console.error(e);
+            async function fetchData() {
+                try {
+                    const { data } = await axiosInstance.get(
+                        "/products/search",
+                        {
+                            params: { query: searchValue },
+                        }
+                    );
+
+                    setProducts(data);
+                } catch (e) {
+                    console.error(e);
+                } finally {
+                    setLoading(false);
+                }
             }
+            fetchData();
         }
 
         document.addEventListener("click", (e) =>
@@ -63,32 +70,51 @@ export default function SearchProducts() {
                 onChange={(e) => setSearchValue(e.target.value)}
                 onFocus={() => setIsFocused(true)}
             />
-            {products.length > 0 && searchValue.length > 0 && isFocused && (
-                <ul className="absolute left-0 right-0 top-12 rounded-xl bg-white z-20 overflow-hidden shadow-md">
-                    {products.map((product) => {
-                        return (
-                            <li key={product.id}>
-                                <a
-                                    href={`/products/${product.id}`}
-                                    className="flex items-center px-4 py-2 gap-4 transition-all hover:bg-gray-50"
-                                >
-                                    <img
-                                        src={product.imageUrl}
-                                        className="h-10"
-                                    />
-                                    <span
-                                        dangerouslySetInnerHTML={{
-                                            __html: markSubstr(
-                                                product.name,
-                                                searchValue.trim()
-                                            ),
-                                        }}
-                                    ></span>
-                                </a>
-                            </li>
-                        );
-                    })}
-                </ul>
+            {((loading && isFocused) ||
+                (searchValue.length > 0 && isFocused)) && (
+                <>
+                    <div className="absolute left-0 right-0 top-12 rounded-xl min-h-16 bg-white z-20 overflow-hidden shadow-md">
+                        <div
+                            className={`absolute h-full w-full bg-white/60 flex transition-all items-center justify-center overflow-hidden ${
+                                loading ? "opacity-100" : "opacity-0"
+                            }`}
+                        >
+                            <LoaderCircle
+                                size={30}
+                                className="text-gray-400 animate-spin"
+                            />
+                        </div>
+                        {products.length === 0 && !loading ? (
+                                <span className="text-center block mt-5 text-gray-500">
+                                    Ничего не найдено
+                                </span>
+                        ) : (
+                            products.map((product) => {
+                                return (
+                                    <div key={product.id}>
+                                        <a
+                                            href={`/products/${product.id}`}
+                                            className="flex items-center px-4 py-2 gap-4 transition-all hover:bg-gray-50"
+                                        >
+                                            <img
+                                                src={product.imageUrl}
+                                                className="h-10"
+                                            />
+                                            <span
+                                                dangerouslySetInnerHTML={{
+                                                    __html: markSubstr(
+                                                        product.name,
+                                                        searchValue.trim()
+                                                    ),
+                                                }}
+                                            ></span>
+                                        </a>
+                                    </div>
+                                );
+                            })
+                        )}
+                    </div>
+                </>
             )}
         </div>
     );
