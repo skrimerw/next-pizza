@@ -29,10 +29,10 @@ export default function ProductGroup({
                         <ProductCard
                             key={item.id}
                             id={item.id}
-                            title={item.title}
+                            title={item.name}
                             imageUrl={item.imageUrl}
                             ingredients={item.ingredients}
-                            price={item.price}
+                            productItems={item.item}
                         />
                     );
                 })}

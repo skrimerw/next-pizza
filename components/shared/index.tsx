@@ -11,15 +11,15 @@ import ProductGroup from "./ProductGroup";
 import SearchProducts from "./SearchProducts";
 
 export {
-    Header,
-    Container,
-    Categories,
-    SortPopup,
-    ToolBar,
-    Title,
-    Filters,
-    CheckboxFilterGroup,
-    ProductCard,
-    ProductGroup,
-    SearchProducts,
+  Header,
+  Container,
+  Categories,
+  SortPopup,
+  ToolBar,
+  Title,
+  Filters,
+  CheckboxFilterGroup,
+  ProductCard,
+  ProductGroup,
+  SearchProducts,
 };
