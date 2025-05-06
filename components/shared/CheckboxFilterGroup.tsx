@@ -39,7 +39,7 @@ export default function CheckboxFilterGroup({
     }
 
     function addSkeleton() {
-        let skeletons = [];
+        const skeletons = [];
 
         for (let i = 0; i < limit; i++) {
             skeletons.push(
