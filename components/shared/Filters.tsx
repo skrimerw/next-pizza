@@ -17,9 +17,9 @@ interface Props {
 
 export default function Filters({ className }: Props) {
   const [sliderValues, setSliderValues] = useState([0, 5000]);
-  const [doughType, setDoughType] = useState(); // eslint-disable-line
+  const [doughType, setDoughType] = useState<"thin" | "traditional">("thin"); // eslint-disable-line
+  const [checkedIds, setCheckedIds] = useState<number[]>([]);
   const [ingredients, setIngredients] = useState<Ingredient[]>([]);
-  const [loading, setLoading] = useState(true);
 
   useEffect(() => {
     async function fetchData() {
@@ -29,8 +29,6 @@ export default function Filters({ className }: Props) {
         setIngredients(data);
       } catch (e) {
         console.error(e);
-      } finally {
-        setLoading(false);
       }
     }
 
@@ -40,16 +38,6 @@ export default function Filters({ className }: Props) {
   return (
     <aside className={cn("w-[220px] pb-10 flex-none", className)}>
       <Title text="Фильтрация" />
-      <div className="flex flex-col gap-4 pb-6 pt-8 border-b border-gray-100">
-        <div className="flex items-center gap-3">
-          <Checkbox id="customizable" />
-          <label htmlFor="customizable">Можно собирать</label>
-        </div>
-        <div className="flex items-center gap-3">
-          <Checkbox id="new" />
-          <label htmlFor="new">Новинки</label>
-        </div>
-      </div>
       <div className="flex flex-col gap-4 pb-6 pt-8 border-b border-gray-100">
         <Title text="Цена от и до:" size="xs" />
         <div className="flex gap-4">
@@ -91,7 +79,8 @@ export default function Filters({ className }: Props) {
       <CheckboxFilterGroup
         title="Ингредиенты: "
         items={ingredients}
-        loading={loading}
+        checkedIds={checkedIds}
+        setCheckedIds={setCheckedIds}
       />
       <div className="flex flex-col gap-4 pb-6 pt-8">
         <Title text="Тип теста:" size="xs" />
@@ -101,6 +90,10 @@ export default function Filters({ className }: Props) {
             id="tranditional"
             className="rounded-full w-6 h-6"
             radio
+            checked={doughType === "traditional"}
+            onChange={() =>
+              setDoughType(doughType === "thin" ? "traditional" : "thin")
+            }
           />
           <label htmlFor="tranditional">Традиционное</label>
         </div>
@@ -110,6 +103,10 @@ export default function Filters({ className }: Props) {
             id="thin"
             className="rounded-full w-6 h-6"
             radio
+            checked={doughType === "thin"}
+            onChange={() =>
+              setDoughType(doughType === "traditional" ? "thin" : "traditional")
+            }
           />
           <label htmlFor="thin">Тонкое</label>
         </div>
