@@ -26,7 +26,7 @@ export default function ScrollCategoryContextProvider({
     useEffect(() => {
         let defaultValue = 1;
         if (typeof window !== undefined) {
-            defaultValue = location.hash.match(/product-group-[0-9]{1}/g)
+            defaultValue = location.hash.match(/product-group-[0-9]{1,}/g)
                 ? Number(location.hash.split("-").at(-1))
                 : 1;
             if (location.hash) {

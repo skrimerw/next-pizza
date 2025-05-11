@@ -21,15 +21,21 @@ export default function ToolBar({ className, children }: Props) {
     } else {
       setHasShadow(false);
     }
+  }
 
+  function handleNavbarSwitch() {
     const productGroups =
       document.querySelectorAll<HTMLDivElement>(".product-group");
 
     productGroups.forEach((productGroup) => {
       if (
-        (window.innerHeight - productGroup.getBoundingClientRect().top) /
+        ((window.innerHeight - productGroup.getBoundingClientRect().top) /
           window.innerHeight >=
-        0.33
+        0.33)
+        ||
+        ((window.innerHeight - productGroup.getBoundingClientRect().bottom) /
+          window.innerHeight >=
+        0.33)
       ) {
         setActiveCat(
           Number(productGroup.getAttribute("data-product-group-id") as never)
@@ -39,12 +45,14 @@ export default function ToolBar({ className, children }: Props) {
   }
 
   useEffect(() => {
-    window.addEventListener("wheel", onScroll);
-    window.addEventListener("touchmove", onScroll);
+    window.addEventListener("scroll", onScroll)
+    window.addEventListener("wheel", handleNavbarSwitch);
+    window.addEventListener("touchmove", handleNavbarSwitch);
 
     return () => {
-      window.removeEventListener("wheel", onScroll);
-      window.removeEventListener("touchmove", onScroll);
+      window.removeEventListener("scroll", onScroll)
+      window.removeEventListener("wheel", handleNavbarSwitch);
+      window.removeEventListener("touchmove", handleNavbarSwitch);
     };
   }, []);
 

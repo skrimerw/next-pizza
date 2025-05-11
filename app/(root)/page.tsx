@@ -23,7 +23,6 @@ export default async function Home() {
 
   return (
     <ScrollCategoryContextProvider>
-      <main>
         <div className="h-[1px]"></div>
         <ToolBar>
           <Categories />
@@ -45,7 +44,6 @@ export default async function Home() {
             })}
           </div>
         </Container>
-      </main>
     </ScrollCategoryContextProvider>
   );
 }

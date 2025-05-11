@@ -9,17 +9,21 @@ import CheckboxFilterGroup from "./CheckboxFilterGroup";
 import ProductCard from "./ProductCard";
 import ProductGroup from "./ProductGroup";
 import SearchProducts from "./SearchProducts";
+import Modal from "./Modal";
+import ProductModal from "./ProductModal";
 
 export {
-  Header,
-  Container,
-  Categories,
-  SortPopup,
-  ToolBar,
-  Title,
-  Filters,
-  CheckboxFilterGroup,
-  ProductCard,
-  ProductGroup,
-  SearchProducts,
+    Header,
+    Container,
+    Categories,
+    SortPopup,
+    ToolBar,
+    Title,
+    Filters,
+    CheckboxFilterGroup,
+    ProductCard,
+    ProductGroup,
+    SearchProducts,
+    Modal,
+    ProductModal,
 };
