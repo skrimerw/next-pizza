@@ -30,9 +30,7 @@ export default async function Home() {
                 <SortPopup />
             </ToolBar>
             <Container className="flex gap-12 mt-7">
-                <Suspense>
-                    <Filters />
-                </Suspense>
+                <Filters />
                 <div className="flex flex-col gap-24 pb-20">
                     {productGroups.map(({ id, name, products }) => {
                         return (
