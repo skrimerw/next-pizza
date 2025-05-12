@@ -1,17 +1,20 @@
-import { useEffect, useRef } from 'react';
+import { useEffect, useRef } from "react";
 
-import type { HookTarget } from '@/utils/helpers';
+import type { HookTarget } from "@/utils/lib";
 
-import { getElement, isTarget } from '@/utils/lib';
+import { getElement, isTarget } from "@/utils/lib";
 
-import type { StateRef } from '../useRefState/useRefState';
+import type { StateRef } from "../useRefState/useRefState";
 
-import { useRefState } from '../useRefState/useRefState';
+import { useRefState } from "../useRefState/useRefState";
 
 export interface UseClickOutside {
-  (target: HookTarget, callback: (event: Event) => void): void;
+    (target: HookTarget, callback: (event: Event) => void): void;
 
-  <Target extends Element>(callback: (event: Event) => void, target?: never): StateRef<Target>;
+    <Target extends Element>(
+        callback: (event: Event) => void,
+        target?: never
+    ): StateRef<Target>;
 }
 
 /**
@@ -38,30 +41,36 @@ export interface UseClickOutside {
  * @see {@link https://siberiacancode.github.io/reactuse/functions/hooks/useClickOutside.html}
  */
 export const useClickOutside = ((...params: any[]) => {
-  const target = (isTarget(params[0]) ? params[0] : undefined) as HookTarget | undefined;
-  const callback = (params[1] ? params[1] : params[0]) as (event: Event) => void;
+    const target = (isTarget(params[0]) ? params[0] : undefined) as
+        | HookTarget
+        | undefined;
+    const callback = (params[1] ? params[1] : params[0]) as (
+        event: Event
+    ) => void;
 
-  const internalRef = useRefState<Element>();
-  const internalCallbackRef = useRef(callback);
-  internalCallbackRef.current = callback;
+    const internalRef = useRefState<Element>();
+    const internalCallbackRef = useRef(callback);
+    internalCallbackRef.current = callback;
 
-  useEffect(() => {
-    if (!target && !internalRef.state) return;
-    const onClick = (event: Event) => {
-      const element = (target ? getElement(target) : internalRef.current) as Element;
+    useEffect(() => {
+        if (!target && !internalRef.state) return;
+        const onClick = (event: Event) => {
+            const element = (
+                target ? getElement(target) : internalRef.current
+            ) as Element;
 
-      if (element && !element.contains(event.target as Node)) {
-        internalCallbackRef.current(event);
-      }
-    };
+            if (element && !element.contains(event.target as Node)) {
+                internalCallbackRef.current(event);
+            }
+        };
 
-    document.addEventListener('click', onClick);
+        document.addEventListener("click", onClick);
 
-    return () => {
-      document.removeEventListener('click', onClick);
-    };
-  }, [target, internalRef.state]);
+        return () => {
+            document.removeEventListener("click", onClick);
+        };
+    }, [target, internalRef.state]);
 
-  if (target) return;
-  return internalRef;
+    if (target) return;
+    return internalRef;
 }) as UseClickOutside;
