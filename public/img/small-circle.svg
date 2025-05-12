@@ -1,0 +1,18 @@
+<svg
+                            xmlns="http://www.w3.org/2000/svg"
+                            width="382"
+                            height="382"
+                            fill="none"
+                            viewBox="0 0 382 382"
+                        >
+                            <circle
+                                cx="191"
+                                cy="191"
+                                r="190"
+                                stroke="#6F6E6F"
+                                stroke-dasharray="1 6.1"
+                                stroke-linecap="round"
+                                stroske-linejoin="round"
+                                stroke-width="0.6"
+                            ></circle>
+                        </svg>

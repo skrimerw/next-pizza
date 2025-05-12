@@ -11,6 +11,7 @@ import ProductGroup from "./ProductGroup";
 import SearchProducts from "./SearchProducts";
 import Modal from "./Modal";
 import ProductModal from "./ProductModal";
+import Ingredient from "./Ingredient";
 
 export {
     Header,
@@ -26,4 +27,5 @@ export {
     SearchProducts,
     Modal,
     ProductModal,
+    Ingredient
 };

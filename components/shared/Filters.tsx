@@ -55,7 +55,7 @@ export default function Filters({ className }: Props) {
         string
     >;
     const router = useRouter();
-    const [prices, setPrices] = useState<any[]>([
+    const [prices, setPrices] = useState<any[]>([ // eslint-disable-line
         Number(searchParams.get("priceFrom")) || undefined,
         Number(searchParams.get("priceTo")) || undefined,
     ]);

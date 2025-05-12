@@ -2,11 +2,11 @@
 @tailwind components;
 @tailwind utilities;
 
-html {
+/* html {
     scroll-behavior: smooth;
     scroll-padding-top: 140px;
 }
-
+ */
 body {
     font-family: Arial, Helvetica, sans-serif;
 }
@@ -39,6 +39,7 @@ body {
             --chart-3: 197 37% 24%;
             --chart-4: 43 74% 66%;
             --chart-5: 27 87% 67%;
+            --product-card: #f4f1ee;
         }
 
         .dark {
@@ -108,10 +109,25 @@ body {
         border-radius: 3px;
         @apply bg-gray-200;
     }
+
+    .product-card-scroll {
+        overflow-y: scroll;
+    }
+
+    .product-card-scroll::-webkit-scrollbar {
+        background-color: transparent;
+        width: 12px;
+    }
+    .product-card-scroll::-webkit-scrollbar-thumb {
+        border-radius: 15px;
+        border: 3px solid var(--product-card);
+        background-color: rgba(57, 57, 57, 0.15);
+    }
 }
 
 @layer base {
     * {
+        box-sizing: border-box;
         @apply border-border;
     }
     body {
