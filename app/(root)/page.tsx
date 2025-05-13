@@ -8,7 +8,6 @@ import {
     ToolBar,
 } from "@/components/shared";
 import { prisma } from "@/prisma/prisma-client";
-import { Suspense } from "react";
 
 export default async function Home() {
     const productGroups = await prisma.category.findMany({
