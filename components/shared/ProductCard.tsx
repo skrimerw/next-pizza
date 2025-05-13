@@ -64,7 +64,6 @@ export default function ProductCard({
   }
 
   useEffect(() => {
-    console.log(location.pathname)
     if (location.pathname) {}
   },[showModal])
 

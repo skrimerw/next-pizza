@@ -39,7 +39,8 @@ body {
             --chart-3: 197 37% 24%;
             --chart-4: 43 74% 66%;
             --chart-5: 27 87% 67%;
-            --product-card: #f4f1ee;
+            --product-card: rgb(252, 252, 252);
+            --product-card-bar: rgb(243, 243, 247);
         }
 
         .dark {
@@ -122,6 +123,11 @@ body {
         border-radius: 15px;
         border: 3px solid var(--product-card);
         background-color: rgba(57, 57, 57, 0.15);
+        transition: all 0.3s ease;
+    }
+
+    .product-card-scroll::-webkit-scrollbar-thumb:hover {
+        background-color: rgba(57, 57, 57, 0.3);
     }
 }
 

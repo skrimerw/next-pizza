@@ -17,7 +17,6 @@ export default function Layout({
         <>
             <Header />
             <main>
-                {modal}
                 {children}
             </main>
         </>

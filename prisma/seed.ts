@@ -1,4 +1,4 @@
-import { Prisma } from "@prisma/client";
+import { DoughType, Prisma } from "@prisma/client";
 import { categories, ingredients, products } from "./constants";
 import { prisma } from "./prisma-client";
 import { hashSync } from "bcrypt";
@@ -13,7 +13,7 @@ const generateProductItem = ({
     size,
 }: {
     productId: number;
-    pizzaType?: 1 | 2;
+    pizzaType?: DoughType;
     size?: 20 | 30 | 40;
 }) => {
     return {
@@ -95,66 +95,66 @@ async function up() {
             // Пицца "Пепперони фреш"
             generateProductItem({
                 productId: pizza1.id,
-                pizzaType: 1,
+                pizzaType: DoughType.THIN,
                 size: 20,
             }),
             generateProductItem({
                 productId: pizza1.id,
-                pizzaType: 2,
+                pizzaType: DoughType.TRADITIONAL,
                 size: 30,
             }),
             generateProductItem({
                 productId: pizza1.id,
-                pizzaType: 2,
+                pizzaType: DoughType.TRADITIONAL,
                 size: 40,
             }),
 
             // Пицца "Сырная"
             generateProductItem({
                 productId: pizza2.id,
-                pizzaType: 1,
+                pizzaType: DoughType.THIN,
                 size: 20,
             }),
             generateProductItem({
                 productId: pizza2.id,
-                pizzaType: 1,
+                pizzaType: DoughType.THIN,
                 size: 30,
             }),
             generateProductItem({
                 productId: pizza2.id,
-                pizzaType: 1,
+                pizzaType: DoughType.THIN,
                 size: 40,
             }),
             generateProductItem({
                 productId: pizza2.id,
-                pizzaType: 2,
+                pizzaType: DoughType.TRADITIONAL,
                 size: 20,
             }),
             generateProductItem({
                 productId: pizza2.id,
-                pizzaType: 2,
+                pizzaType: DoughType.TRADITIONAL,
                 size: 30,
             }),
             generateProductItem({
                 productId: pizza2.id,
-                pizzaType: 2,
+                pizzaType: DoughType.TRADITIONAL,
                 size: 40,
             }),
 
             // Пицца "Чоризо фреш"
             generateProductItem({
                 productId: pizza3.id,
-                pizzaType: 1,
+                pizzaType: DoughType.THIN,
                 size: 20,
             }),
             generateProductItem({
                 productId: pizza3.id,
-                pizzaType: 2,
+                pizzaType: DoughType.TRADITIONAL,
                 size: 30,
             }),
             generateProductItem({
                 productId: pizza3.id,
-                pizzaType: 2,
+                pizzaType: DoughType.TRADITIONAL,
                 size: 40,
             }),
 

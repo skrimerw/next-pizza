@@ -91,7 +91,7 @@ model ProductItem {
 
     price     Int
     size      Int?
-    pizzaType Int?
+    pizzaType DoughType?
 
     product   Product @relation(fields: [productId], references: [id])
     productId Int
@@ -144,4 +144,9 @@ enum OrderStatus {
 enum UserRole {
     USER
     ADMIN
+}
+
+enum DoughType {
+    THIN
+    TRADITIONAL
 }
