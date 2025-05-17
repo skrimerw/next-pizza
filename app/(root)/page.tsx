@@ -1,4 +1,4 @@
-import ScrollCategoryContextProvider from "@/components/contexts/ScrollCategoryContextProvider";
+import ScrollCategoryContextProvider from "@/contexts/ScrollCategoryContextProvider";
 import {
     Categories,
     Container,
@@ -8,8 +8,16 @@ import {
     ToolBar,
 } from "@/components/shared";
 import { prisma } from "@/prisma/prisma-client";
+import { QueryFilters } from "@/hooks/useFilters";
 
-export default async function Home() {
+export default async function Home({
+    searchParams,
+}: {
+    searchParams: Promise<QueryFilters>;
+}) {
+    const { doughTypes, ingredients, priceFrom, priceTo, sizes } =
+        await searchParams;
+
     const productGroups = await prisma.category.findMany({
         include: {
             products: {

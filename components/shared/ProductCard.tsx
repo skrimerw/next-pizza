@@ -94,7 +94,7 @@ export default function ProductCard({
             <span className="text-xl">
               от <b>{sortPorductItems()[0].price} ₽</b>
             </span>
-            <Button variant="secondary">
+            <Button variant="secondary" className="font-semibold">
               <Plus />
               Добавить
             </Button>

@@ -29,11 +29,23 @@ export default function Modal({
     }
 
     useEffect(() => {
+        let timeout = null;
+
         if (isOpen) {
+            document.body.style.marginRight = "15px";
             document.body.style.overflowY = "hidden";
         } else {
-            document.body.style.overflowY = "auto";
+            timeout = setTimeout(() => {
+                document.body.style.overflowY = "auto";
+                document.body.style.marginRight = "0";
+            }, 150);
         }
+
+        return () => {
+            if (timeout) {
+                clearTimeout(timeout);
+            }
+        };
     }, [isOpen]);
 
     return (

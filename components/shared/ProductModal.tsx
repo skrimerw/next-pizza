@@ -105,7 +105,7 @@ export default function ProductModal({
   }
 
   function sortItems(): ProductItem[] {
-    let itemsSorted: ProductItem[] = items.sort(
+    const itemsSorted: ProductItem[] = items.sort(
       (a: ProductItem, b: ProductItem) => {
         if (a.size === null || b.size === null) return 0;
 
@@ -329,7 +329,7 @@ export default function ProductModal({
             )}
           </div>
           <div className="px-8">
-            <Button className="mt-6 h-12 min-w-full mx-auto">
+            <Button className="mt-6 h-12 min-w-full mx-auto font-semibold">
               Добавить в корзину за {currentItem.price + ingredientsPrice()} ₽
             </Button>
           </div>

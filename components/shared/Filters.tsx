@@ -8,20 +8,11 @@ import { Input } from "../ui/input";
 import { DualRangeSlider } from "../ui/dual-range-slider";
 import { Button } from "../ui/button";
 import CheckboxFilterGroup from "./CheckboxFilterGroup";
-import { Ingredient } from "@prisma/client";
 import { axiosInstance } from "@/lib/axiosInstance";
-import qs from "qs";
-import { useRouter, useSearchParams } from "next/navigation";
+import { useFilters } from "@/hooks/useFilters";
+import { Ingredient } from "@prisma/client";
 interface Props {
     className?: string;
-}
-
-interface Filters {
-    priceFrom: string;
-    priceTo: string;
-    sizes: string;
-    ingredients: string;
-    doughTypes: string;
 }
 
 const pizzaSizes = [
@@ -38,6 +29,7 @@ const pizzaSizes = [
         size: 40,
     },
 ];
+
 const pizzaDough = [
     {
         id: 1,
@@ -50,25 +42,18 @@ const pizzaDough = [
 ];
 
 export default function Filters({ className }: Props) {
-    const searchParams = useSearchParams() as unknown as Map<
-        keyof Filters,
-        string
-    >;
-    const router = useRouter();
-    const [prices, setPrices] = useState<any[]>([ // eslint-disable-line
-        Number(searchParams.get("priceFrom")) || undefined,
-        Number(searchParams.get("priceTo")) || undefined,
-    ]);
-    const [checkedSizes, setCheckedSizes] = useState<string[]>(
-        searchParams.get("sizes")?.split(",") || []
-    );
-    const [checkedDoughTypes, setCheckedDoughTypes] = useState<string[]>(
-        searchParams.get("doughTypes")?.split(",") || []
-    );
-    const [checkedIngredients, setCheckedIngredients] = useState<string[]>(
-        searchParams.get("ingredients")?.split(",") || []
-    );
     const [ingredients, setIngredients] = useState<Ingredient[]>([]);
+
+    const {
+        prices,
+        setPrices,
+        checkedSizes,
+        setCheckedSizes,
+        checkedDoughTypes,
+        setCheckedDoughTypes,
+        checkedIngredients,
+        setCheckedIngredients,
+    } = useFilters();
 
     useEffect(() => {
         async function fetchData() {
@@ -109,26 +94,12 @@ export default function Filters({ className }: Props) {
         }
     }
 
-    useEffect(() => {
-        const filters = {
-            doughTypes: checkedDoughTypes,
-            ingredients: checkedIngredients,
-            sizes: checkedSizes,
-            priceFrom: prices[0],
-            priceTo: prices[1],
-        };
-
-        const queryString = qs.stringify(filters, { arrayFormat: "comma" });
-
-        router.push(`/?${queryString}`, { scroll: false });
-    }, [checkedSizes, checkedDoughTypes, prices, checkedIngredients]);
-
     return (
         <aside className={cn("w-[250px] pb-10 flex-none", className)}>
             <Title text="Фильтрация" />
             <div className="flex flex-col gap-4 pb-6 pt-8 border-b border-gray-100">
                 <Title text="Размер:" size="xs" />
-                {pizzaSizes.map(({id, size}) => {
+                {pizzaSizes.map(({ id, size }) => {
                     return (
                         <label
                             className="flex items-center gap-3"
