@@ -55,13 +55,12 @@ export default function Modal({
                 isOpen && "visible opacity-100"
             )}
             onClick={(e) => {
+                const target = e.nativeEvent?.target as HTMLElement;
                 if (
-                    !e.nativeEvent.target.classList.contains(
-                        "product-modal-overlay"
-                    )
+                    !target ||
+                    !target.classList?.contains("product-modal-overlay")
                 )
                     return;
-
                 handleCloseModal();
             }}
         >
