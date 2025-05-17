@@ -10,11 +10,11 @@ import {
 import { prisma } from "@/prisma/prisma-client";
 import { QueryFilters } from "@/hooks/useFilters";
 
-export default async function Home({
-    //searchParams,
+export default async function Home(/* {
+    searchParams,
 }: {
     searchParams: Promise<QueryFilters>;
-}) {
+} */) {
    /*  const { doughTypes, ingredients, priceFrom, priceTo, sizes } =
         await searchParams; */
 
