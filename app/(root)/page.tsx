@@ -34,7 +34,7 @@ export default async function Home(/* {
             <div className="h-[1px]"></div>
             <ToolBar>
                 <Categories />
-                <SortPopup />
+                {/* <SortPopup /> */}
             </ToolBar>
             <Container className="flex gap-12 mt-7">
                 {/* <Filters /> */}
