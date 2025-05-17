@@ -8,7 +8,7 @@ import {
     ToolBar,
 } from "@/components/shared";
 import { prisma } from "@/prisma/prisma-client";
-import { QueryFilters } from "@/hooks/useFilters";
+//import { QueryFilters } from "@/hooks/useFilters";
 
 export default async function Home(/* {
     searchParams,
