@@ -54,7 +54,6 @@ export function useFilters() {
             order,
             sortBy,
         };
-        console.log(filters)
         
         const queryString = qs.stringify(filters, { arrayFormat: "comma" });
 
