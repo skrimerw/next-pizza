@@ -32,7 +32,7 @@ const sortCats: SortCat[] = [
 
 export default function SortPopup({ className }: Props) {
     const [currentSortCat, setCurrentSortCat] = useState<SortCat>(sortCats[0]);
-    const { order, setOrder, sortBy, setSortBy } = useFilters();
+    const { setOrder, setSortBy } = useFilters();
 
     return (
         <Popover>

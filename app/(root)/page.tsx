@@ -11,12 +11,12 @@ import { prisma } from "@/prisma/prisma-client";
 import { QueryFilters } from "@/hooks/useFilters";
 
 export default async function Home({
-    searchParams,
+    //searchParams,
 }: {
     searchParams: Promise<QueryFilters>;
 }) {
-    const { doughTypes, ingredients, priceFrom, priceTo, sizes } =
-        await searchParams;
+   /*  const { doughTypes, ingredients, priceFrom, priceTo, sizes } =
+        await searchParams; */
 
     const productGroups = await prisma.category.findMany({
         include: {
