@@ -1,9 +1,9 @@
 import React from "react";
-import { Container, SearchProducts } from "@/components/shared";
+import { Cart, Container, SearchProducts } from "@/components/shared";
 import Image from "next/image";
 import Link from "next/link";
 import { Button } from "../ui/button";
-import { ArrowRight, ShoppingCart, User } from "lucide-react";
+import { User } from "lucide-react";
 import { cn } from "@/lib/utils";
 
 interface Props {
@@ -43,19 +43,8 @@ export default function Header({ className }: Props) {
                             <User size={16} />
                             Войти
                         </Button>
-                        <Button className="group h-[40px] px-6 py-3">
-                            <span>520 ₽</span>
-                            <div className="h-full w-[1px] bg-white opacity-25"></div>
-                            <div className="relative">
-                                <span className="flex items-center transition-all gap-1 group-hover:opacity-0">
-                                    <ShoppingCart />
-                                    <span>3</span>
-                                </span>
-                                <ArrowRight
-                                    className="absolute left-[50%] top-[50%] -translate-y-[50%] opacity-0 transition-all -translate-x-[100%] group-hover:opacity-100 group-hover:-translate-x-[40%]"
-                                />
-                            </div>
-                        </Button>
+                        <Cart />
+                        
                     </div>
                 </nav>
             </Container>

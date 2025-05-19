@@ -13,6 +13,7 @@ import Modal from "./Modal";
 import ProductModal from "./ProductModal";
 import Ingredient from "./Ingredient";
 import RefreshButton from "./RefreshButton";
+import Cart from "./Cart";
 
 export {
     Header,
@@ -30,4 +31,5 @@ export {
     ProductModal,
     Ingredient,
     RefreshButton,
+    Cart
 };
