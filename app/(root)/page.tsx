@@ -1,4 +1,3 @@
-import ScrollCategoryContextProvider from "@/contexts/AppContextProvider";
 import {
   Categories,
   Container,

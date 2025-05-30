@@ -10,7 +10,7 @@ interface Props {
 }
 
 export default function CategoryItem({ id, name }: Props) {
-  let { activeCat, setActiveCat } = useAppContext();
+  const { activeCat, setActiveCat } = useAppContext();
 
   function onCategoryClick(
     e: React.MouseEvent<HTMLDivElement, MouseEvent>,

@@ -3,11 +3,8 @@ import React from "react";
 import {
   Sheet,
   SheetContent,
-  SheetDescription,
   SheetTrigger,
-  SheetHeader,
   SheetTitle,
-  SheetFooter,
   SheetClose,
 } from "../ui/sheet";
 import { Button } from "../ui/button";
