@@ -35,7 +35,7 @@ export default function Cart({ className }: Props) {
           </div>
         </Button>
       </SheetTrigger>
-      <SheetContent className={cn("bg-white border-0", className)}>
+      <SheetContent className="bg-white border-0">
         <SheetClose className="absolute -left-16 top-1/2 -translate-y-1/2 rounded-sm ring-offset-background transition-all duration-500 hover:rotate-180 focus:outline-none focus-visible:outline-none focus-visible:ring-0 disabled:pointer-events-none data-[state=open]:bg-secondary">
           <X className="h-10 w-10 text-white" />
           <span className="sr-only">Close</span>
