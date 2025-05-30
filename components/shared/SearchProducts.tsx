@@ -5,26 +5,27 @@ import React, { useEffect, useState } from "react";
 import { Input } from "../ui/input";
 import { Product } from "@prisma/client";
 import { axiosInstance } from "@/lib/axiosInstance";
-import { markSubstr } from "@/lib/utils";
+import { cn, markSubstr } from "@/lib/utils";
+import { useAppContext } from "@/contexts/AppContextProvider";
 
 export default function SearchProducts() {
   const [searchValue, setSearchValue] = useState("");
-  const [isFocused, setIsFocused] = useState(false);
   const [products, setProducts] = useState<Product[]>([]);
   const [loading, setLoading] = useState(false);
+  const { isSearchFocused, setIsSearchFocused } = useAppContext();
 
   function onDocumentClick(e: HTMLElement) {
     if (e.closest(".search-input-container") === null) {
-      setIsFocused(false);
+      setIsSearchFocused(false);
 
       return;
     }
 
-    setIsFocused(true);
+    setIsSearchFocused(true);
   }
 
   useEffect(() => {
-    if (isFocused && searchValue) {
+    if (isSearchFocused && searchValue) {
       setLoading(true);
 
       async function fetchData() {
@@ -55,7 +56,7 @@ export default function SearchProducts() {
   }, [searchValue]);
 
   return (
-    <div className="search-input-container w-full relative">
+    <div className={cn("search-input-container w-full relative z-50")}>
       <Search
         size={16}
         className="absolute top-1/2 left-3 -translate-y-1/2 text-gray-400"
@@ -65,9 +66,10 @@ export default function SearchProducts() {
         placeholder="Поиск пиццы..."
         value={searchValue}
         onChange={(e) => setSearchValue(e.target.value)}
-        onFocus={() => setIsFocused(true)}
+        onFocus={() => setIsSearchFocused(true)}
       />
-      {((loading && isFocused) || (searchValue.length > 0 && isFocused)) && (
+      {((loading && isSearchFocused) ||
+        (searchValue.length > 0 && isSearchFocused)) && (
         <>
           <div className="absolute left-0 right-0 top-12 rounded-xl min-h-16 bg-white z-20 overflow-hidden shadow-md">
             <div

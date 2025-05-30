@@ -23,7 +23,7 @@ export default function Cart({ className }: Props) {
   return (
     <Sheet>
       <SheetTrigger asChild>
-        <Button className="group h-[40px] px-6 py-3">
+        <Button className={cn("group h-[40px] px-6 py-3", className)}>
           <span>520 ₽</span>
           <div className="h-full w-[1px] bg-white opacity-25"></div>
           <div className="relative">
