@@ -1,6 +1,5 @@
 import type { Metadata } from "next";
-import { Header, SearchFocusedOverlay } from "@/components/shared";
-import AppContextProvider from "@/contexts/AppContextProvider";
+import { Header } from "@/components/shared";
 
 export const metadata: Metadata = {
   title: "Next Pizza | Главная",
@@ -13,12 +12,10 @@ export default function Layout({
   children: React.ReactNode;
   modal: React.ReactNode;
 }>) {
-
   return (
-    <AppContextProvider>
+    <>
       <Header />
-      <SearchFocusedOverlay />
       <main>{children}</main>
-    </AppContextProvider>
+    </>
   );
 }

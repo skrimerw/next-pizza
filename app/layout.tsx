@@ -1,23 +1,23 @@
+import AppContextProvider from "@/contexts/AppContextProvider";
 import { Nunito } from "next/font/google";
 import "./globals.css";
 
 const nunito = Nunito({
-    subsets: ["cyrillic"],
-    variable: "--font-nunito",
-    weight: ["400", "500", "600", "700", "800", "900"],
+  subsets: ["cyrillic"],
+  variable: "--font-nunito",
+  weight: ["400", "500", "600", "700", "800", "900"],
 });
 
-
 export default function RootLayout({
-    children,
+  children,
 }: Readonly<{
-    children: React.ReactNode;
+  children: React.ReactNode;
 }>) {
-    return (
-        <html lang="en">
-            <body className={`${nunito.className} antialiased`}>
-                {children}
-            </body>
-        </html>
-    );
+  return (
+    <html lang="en">
+      <body className={`${nunito.className} antialiased`}>
+        <AppContextProvider>{children}</AppContextProvider>
+      </body>
+    </html>
+  );
 }
