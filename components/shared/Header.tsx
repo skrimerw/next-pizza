@@ -1,4 +1,4 @@
-"use client";
+//"use client";
 
 import React from "react";
 import { Cart, Container, SearchProducts } from "@/components/shared";
@@ -7,14 +7,14 @@ import Link from "next/link";
 import { Button } from "../ui/button";
 import { User } from "lucide-react";
 import { cn } from "@/lib/utils";
-import { useAppContext } from "@/contexts/AppContextProvider";
+//import { useAppContext } from "@/contexts/AppContextProvider";
 
 interface Props {
   className?: string;
 }
 
 export default function Header({ className }: Props) {
-  const { hasShadow } = useAppContext();
+  /* const { hasShadow } = useAppContext(); */
 
   return (
     <header className={cn("border-b border-gray-100", className)}>
@@ -42,8 +42,8 @@ export default function Header({ className }: Props) {
             </Button>
             <Cart
               className={cn(
-                "w-[130px] opacity-100 visible transition-all",
-                hasShadow ? "w-0 opacity-0 invisible" : ""
+                "min-w-[130px] opacity-100 visible transition-all",
+                /* hasShadow ? "w-0 opacity-0 invisible" : "" */
               )}
             />
           </div>

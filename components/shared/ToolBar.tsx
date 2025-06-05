@@ -4,7 +4,7 @@ import React, { useEffect, useRef } from "react";
 import { cn } from "@/lib/utils";
 import Container from "./Container";
 import { useAppContext } from "../../contexts/AppContextProvider";
-import Cart from "./Cart";
+//import Cart from "./Cart";
 
 interface Props {
   children: React.ReactNode;
@@ -68,12 +68,12 @@ export default function ToolBar({ className, children }: Props) {
     >
       <Container className="flex items-center">
         {children}
-        <Cart
+       {/*  <Cart
           className={cn(
             "w-0 opacity-0 invisible transition-all px-0",
             hasShadow ? "w-[130px] opacity-100 visible ml-4" : ""
           )}
-        />
+        /> */}
       </Container>
     </div>
   );

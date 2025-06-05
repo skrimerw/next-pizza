@@ -20,7 +20,7 @@ import {
 import Title from "./Title";
 import Image from "next/image";
 import { prisma } from "@/prisma/prisma-client";
-import { cookies } from "next/headers";
+//import { cookies } from "next/headers";
 import { DoughType } from "@prisma/client";
 
 interface Props {
@@ -28,9 +28,9 @@ interface Props {
 }
 
 export default async function Cart({ className }: Props) {
-    const cookieStore = await cookies();
+   //const cookieStore = await cookies();
 
-    let cart = await prisma.cart.findFirst({
+    const cart = await prisma.cart.findFirst({
         where: {
             token: "11111",
         },
@@ -47,6 +47,7 @@ export default async function Cart({ className }: Props) {
             },
         },
     });
+
 
     /* if (cookieStore.has("cart-token")) {
         {
@@ -109,9 +110,9 @@ export default async function Cart({ className }: Props) {
                 </Button>
             </SheetTrigger>
             <SheetContent
-                className={cn("bg-product-card-bar border-0 p-0", className)}
+                className={cn("border-0 p-0", cart ? 'bg-product-card-bar' : 'bg-white px-4', className)}
             >
-                <SheetClose className="absolute -left-16 top-1/2 -translate-y-1/2 rounded-sm ring-offset-background transition-all duration-500 hover:rotate-180 focus:outline-none focus-visible:outline-none focus-visible:ring-0 disabled:pointer-events-none data-[state=open]:bg-secondary">
+                <SheetClose className="absolute -left-16 top-1/2 -translate-y-1/2 rounded-sm ring-offset-background transition-all duration-500 hover:rotate-180 focus:outline-none focus-visible:outline-none focus-visible:duration-0 disabled:pointer-events-none data-[state=open]:bg-secondary">
                     <X className="h-10 w-10 text-white" />
                     <span className="sr-only">Close</span>
                 </SheetClose>

@@ -61,16 +61,27 @@ export default function ProductCard({
 
   function handleClick() {
     setShowModal(true);
+    //document.title = `Next Pizza | ${title}`
   }
 
   useEffect(() => {
-    if (location.pathname) {}
+    window.addEventListener("popstate", () => {
+      const path = location.pathname
+
+      if (/^\/products\/[0-9]{1,}$/gm.test(path)) {
+        if (id === Number(path.split("/").at(-1))) {
+          setShowModal(true)
+        }
+      } else {
+        setShowModal(false)
+      }
+    })
   },[showModal])
 
   return (
     <>
       <Link
-      href={`/products/${id}`}
+        href={`/products/${id}`}
         className={cn("flex flex-col gap-3", className)}
         onClick={handleClick}
       >

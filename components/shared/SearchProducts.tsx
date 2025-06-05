@@ -8,8 +8,6 @@ import { axiosInstance } from "@/lib/axiosInstance";
 import { cn, markSubstr } from "@/lib/utils";
 import { useAppContext } from "@/contexts/AppContextProvider";
 import SearchFocusedOverlay from "./SearchFocusedOverlay";
-import { useRouter } from "next/navigation";
-import Link from "next/link";
 
 export default function SearchProducts() {
     const [searchValue, setSearchValue] = useState("");
@@ -18,7 +16,6 @@ export default function SearchProducts() {
     const { isSearchFocused, setIsSearchFocused } = useAppContext();
     const searchInput = useRef<HTMLInputElement>(null);
     const [currentProduct, setCurrentProduct] = useState<number | null>(null);
-    const router = useRouter();
 
     useEffect(() => {
         if (isSearchFocused && searchValue && currentProduct === null) {
@@ -74,9 +71,7 @@ export default function SearchProducts() {
                 break;
             case "Enter":
                 if (currentProduct !== null) {
-                    router.push(`/products/${products[currentProduct].id}`);
-
-                    resetSearch();
+                    location.pathname = (`/products/${products[currentProduct].id}`);
                 }
 
                 break;
@@ -153,7 +148,7 @@ export default function SearchProducts() {
                                 products.map((product, index) => {
                                     return (
                                         <div key={product.id}>
-                                            <Link
+                                            <a
                                                 onClick={resetSearch}
                                                 href={`/products/${product.id}`}
                                                 className={cn(
@@ -174,7 +169,7 @@ export default function SearchProducts() {
                                                         ),
                                                     }}
                                                 ></span>
-                                            </Link>
+                                            </a>
                                         </div>
                                     );
                                 })
