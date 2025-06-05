@@ -1,9 +1,10 @@
+import AppContextProvider from "@/contexts/AppContextProvider";
 import { Nunito } from "next/font/google";
 import "./globals.css";
-import { cookies } from "next/headers";
-import { prisma } from "@/prisma/prisma-client";
+//import { cookies } from "next/headers";
+//import { prisma } from "@/prisma/prisma-client";
 
-const crypto = require("crypto");
+//const crypto = require("crypto");
 
 const nunito = Nunito({
     subsets: ["cyrillic"],
@@ -45,7 +46,7 @@ export default async function RootLayout({
                 }} */
                 className={`${nunito.className} antialiased`}
             >
-                {children}
+                <AppContextProvider>{children}</AppContextProvider>
             </body>
         </html>
     );
