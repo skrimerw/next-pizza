@@ -1,7 +1,7 @@
 "use client";
 
-import { LoaderCircle, Search } from "lucide-react";
-import React, { useEffect, useState } from "react";
+import { LoaderCircle, Search, X } from "lucide-react";
+import React, { useEffect, useRef, useState } from "react";
 import { Input } from "../ui/input";
 import { Product } from "@prisma/client";
 import { axiosInstance } from "@/lib/axiosInstance";
@@ -14,16 +14,7 @@ export default function SearchProducts() {
   const [products, setProducts] = useState<Product[]>([]);
   const [loading, setLoading] = useState(false);
   const { isSearchFocused, setIsSearchFocused } = useAppContext();
-
-  function onDocumentClick(e: HTMLElement) {
-    if (e.closest(".search-input-container") === null) {
-      setIsSearchFocused(false);
-
-      return;
-    }
-
-    setIsSearchFocused(true);
-  }
+  const searchInput = useRef<HTMLInputElement>(null);
 
   useEffect(() => {
     if (isSearchFocused && searchValue) {
@@ -44,28 +35,39 @@ export default function SearchProducts() {
       }
       fetchData();
     }
-
-    document.addEventListener("click", (e) =>
-      onDocumentClick(e.target as never)
-    );
-
-    return () => {
-      document.removeEventListener("click", (e) =>
-        onDocumentClick(e.target as never)
-      );
-    };
   }, [searchValue]);
 
   return (
     <>
-      <SearchFocusedOverlay />
+      <SearchFocusedOverlay
+        onClick={() => {
+          setIsSearchFocused(false);
+        }}
+      />
       <div className={cn("search-input-container w-full relative z-50")}>
         <Search
           size={16}
           className="absolute top-1/2 left-3 -translate-y-1/2 text-gray-400"
         />
+        {searchValue.length > 0 && (
+          <label
+            htmlFor="search-products-input"
+            onClick={() => {
+              setSearchValue("");
+
+              searchInput.current?.focus();
+            }}
+          >
+            <X
+              size={16}
+              className="absolute top-1/2 right-3 -translate-y-1/2 text-gray-400 cursor-pointer"
+            />
+          </label>
+        )}
         <Input
-          className="h-[40px] bg-gray-50 border-none rounded-xl indent-7 placeholder:text-gray-400 focus-visible:ring-0"
+          ref={searchInput}
+          id="search-products-input"
+          className="h-[40px] bg-gray-50 border-none rounded-xl px-9 placeholder:text-gray-400 focus-visible:ring-0"
           placeholder="Поиск пиццы..."
           value={searchValue}
           onChange={(e) => setSearchValue(e.target.value)}

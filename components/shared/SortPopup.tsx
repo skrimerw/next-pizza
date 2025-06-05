@@ -5,7 +5,6 @@ import { ArrowUpDown } from "lucide-react";
 import React, { useState } from "react";
 import { Popover, PopoverContent, PopoverTrigger } from "../ui/popover";
 import { PopoverClose } from "@radix-ui/react-popover";
-import { SortByType, useFilters } from "@/hooks/useFilters";
 
 interface Props {
     className?: string;
@@ -14,25 +13,21 @@ interface Props {
 type SortCat = {
     readonly id: number;
     name: string;
-    value: SortByType;
 };
 
 const sortCats: SortCat[] = [
     {
         id: 1,
         name: "По цене",
-        value: "price",
     },
     {
         id: 2,
         name: "По названию",
-        value: "name",
     },
 ];
 
 export default function SortPopup({ className }: Props) {
     const [currentSortCat, setCurrentSortCat] = useState<SortCat>(sortCats[0]);
-    const { setOrder, setSortBy } = useFilters();
 
     return (
         <Popover>
@@ -62,8 +57,6 @@ export default function SortPopup({ className }: Props) {
                                 key={cat.id}
                                 className="flex items-center gap-2 text-sm cursor-pointer outline-none hover:bg-gray-50 py-2 px-4 w-full text-start"
                                 onClick={() => {
-                                    setOrder("desc");
-                                    setSortBy(cat.value);
                                     setCurrentSortCat(cat);
                                 }}
                             >

@@ -7,6 +7,7 @@ import {
   ToolBar,
 } from "@/components/shared";
 import { prisma } from "@/prisma/prisma-client";
+import { Suspense } from "react";
 //import { QueryFilters } from "@/hooks/useFilters";
 
 export default async function Home(/* {
@@ -36,7 +37,9 @@ export default async function Home(/* {
         <SortPopup className="ml-auto" />
       </ToolBar>
       <Container className="flex gap-12 mt-7">
-        <Filters />
+        <Suspense>
+          <Filters />
+        </Suspense>
         <div className="flex flex-col gap-24 pb-20">
           {productGroups.map(({ id, name, products }) => {
             return (
