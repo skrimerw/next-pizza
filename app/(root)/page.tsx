@@ -8,15 +8,8 @@ import {
     ToolBar,
 } from "@/components/shared";
 import { prisma } from "@/prisma/prisma-client";
-//import { QueryFilters } from "@/hooks/useFilters";
 
-export default async function Home(/* {
-    searchParams,
-}: {
-    searchParams: Promise<QueryFilters>;
-} */) {
-   /*  const { doughTypes, ingredients, priceFrom, priceTo, sizes } =
-        await searchParams; */
+export default async function Home() {
 
     const productGroups = await prisma.category.findMany({
         include: {
@@ -34,10 +27,10 @@ export default async function Home(/* {
             <div className="h-[1px]"></div>
             <ToolBar>
                 <Categories />
-                {/* <SortPopup /> */}
+                <SortPopup />
             </ToolBar>
             <Container className="flex gap-12 mt-7">
-                {/* <Filters /> */}
+                <Filters />
                 <div className="flex flex-col gap-24 pb-20">
                     {productGroups.map(({ id, name, products }) => {
                         return (
