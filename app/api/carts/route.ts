@@ -1,8 +1,7 @@
 import { prisma } from "@/prisma/prisma-client";
 import { ProductItem } from "@prisma/client";
 import { NextRequest, NextResponse } from "next/server";
-
-const crypto = require("crypto");
+import crypto from "crypto";
 
 export async function GET(req: NextRequest) {
     const token = req.cookies.get("cart-token");
@@ -48,8 +47,8 @@ export async function GET(req: NextRequest) {
             },
         });
 
-        const response = NextResponse.json(cart)
-        
+        const response = NextResponse.json(cart);
+
         response.cookies.set({
             name: "cart-token",
             value: token,

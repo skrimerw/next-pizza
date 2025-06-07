@@ -1,7 +1,7 @@
 "use client";
 
 import { cn } from "@/lib/utils";
-import React, { useEffect, useRef, useState } from "react";
+import React from "react";
 import {
     Sheet,
     SheetContent,
@@ -22,7 +22,6 @@ import Title from "./Title";
 import CartItem from "./CartItem";
 import Image from "next/image";
 import { Prisma } from "@prisma/client";
-import { axiosInstance } from "@/lib/axiosInstance";
 import { useAppContext } from "@/contexts/AppContextProvider";
 
 interface Props {
@@ -46,23 +45,6 @@ export type CartRelations = Prisma.CartGetPayload<{
 
 export default function Cart({ className }: Props) {
     const { cart } = useAppContext();
-    const [loading, setLoading] = useState(true);
-
-    /* useEffect(() => {
-        async function getData() {
-            try {
-                const { data } = await axiosInstance.get("/carts");
-
-                setCart(data);
-            } catch (e) {
-                console.error(e);
-            } finally {
-                setLoading(false);
-            }
-        }
-
-        getData();
-    }, []); */
 
     function getCartLength() {
         let cartLength = 0;

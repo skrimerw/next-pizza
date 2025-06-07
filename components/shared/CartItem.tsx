@@ -49,14 +49,14 @@ export default function CartItem({ cartItem, className }: Props) {
                 },
             });
 
-            let newCart = { ...cart };
+            const newCart = { ...cart };
 
             if (newCart?.cartItems) {
                 newCart.cartItems = newCart.cartItems.filter(
                     (item) => item.id !== cartItem.id
                 );
 
-                setCart(newCart);
+                setCart(newCart as never);
             }
         } catch (e) {
             console.error(e);
@@ -70,19 +70,9 @@ export default function CartItem({ cartItem, className }: Props) {
                 quantity: ++cartItem.quantity,
             });
 
-            let newCart = { ...cart };
+            const newCart = { ...cart };
 
-            if (newCart?.cartItems) {
-                newCart.cartItems = newCart.cartItems.map((item) => {
-                    if (item.id !== cartItem.id) {
-                        item.quantity;
-                    }
-
-                    return item;
-                });
-
-                setCart(newCart);
-            }
+            setCart(newCart as never);
         } catch (e) {
             console.error(e);
         }
@@ -95,19 +85,9 @@ export default function CartItem({ cartItem, className }: Props) {
                 quantity: --cartItem.quantity,
             });
 
-            let newCart = { ...cart };
+            const newCart = { ...cart };
 
-            if (newCart?.cartItems) {
-                newCart.cartItems = newCart.cartItems.map((item) => {
-                    if (item.id !== cartItem.id) {
-                        item.quantity;
-                    }
-
-                    return item;
-                });
-
-                setCart(newCart);
-            }
+            setCart(newCart as never);
         } catch (e) {
             console.error(e);
         }
@@ -181,7 +161,11 @@ export default function CartItem({ cartItem, className }: Props) {
             <div className="flex items-center justify-between">
                 <div className="flex items-center gap-2">
                     <Button
-                        onClick={cartItem.quantity === 1 ? deleteCartItem : decrementCartItem}
+                        onClick={
+                            cartItem.quantity === 1
+                                ? deleteCartItem
+                                : decrementCartItem
+                        }
                         variant="outline"
                         className="p-0 h-[30px] w-[30px] rounded-lg"
                     >

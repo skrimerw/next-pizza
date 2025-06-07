@@ -62,7 +62,6 @@ export default function ProductCard({
     function handleClick() {
         setShowModal(true);
         history.pushState("", "", `/products/${id}`);
-        //document.title = `Next Pizza | ${title}`
     }
 
     useEffect(() => {

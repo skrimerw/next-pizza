@@ -71,7 +71,7 @@ export default function ToolBar({ className, children }: Props) {
        <Cart
           className={cn(
             "w-0 opacity-0 invisible transition-all px-0",
-            hasShadow || window.scrollY === toolbar.current?.offsetTop ? "w-[130px] opacity-100 visible ml-4" : ""
+            hasShadow || toolbar.current?.offsetTop === 0 ? "w-[130px] opacity-100 visible ml-4" : ""
           )}
         />
       </Container>
