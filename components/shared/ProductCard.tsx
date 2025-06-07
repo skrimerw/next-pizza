@@ -61,7 +61,7 @@ export default function ProductCard({
 
     function handleClick() {
         setShowModal(true);
-        history.pushState("", "", `/products/${id}`);
+        history.pushState({}, "", `/products/${id}`);
     }
 
     useEffect(() => {
