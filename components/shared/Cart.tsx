@@ -1,5 +1,7 @@
+"use client";
+
 import { cn } from "@/lib/utils";
-import React from "react";
+import React, { useEffect, useRef, useState } from "react";
 import {
     Sheet,
     SheetContent,
@@ -12,49 +14,67 @@ import { Button } from "../ui/button";
 import {
     ArrowLeft,
     ArrowRight,
-    Minus,
-    Plus,
+    LoaderCircle,
     ShoppingCart,
     X,
 } from "lucide-react";
 import Title from "./Title";
+import CartItem from "./CartItem";
 import Image from "next/image";
-import { prisma } from "@/prisma/prisma-client";
-//import { cookies } from "next/headers";
-import { DoughType } from "@prisma/client";
+import { Prisma } from "@prisma/client";
+import { axiosInstance } from "@/lib/axiosInstance";
+import { useAppContext } from "@/contexts/AppContextProvider";
 
 interface Props {
     className?: string;
 }
 
-export default async function Cart({ className }: Props) {
-   //const cookieStore = await cookies();
+export type CartRelations = Prisma.CartGetPayload<{
+    include: {
+        cartItems: {
+            include: {
+                ingredients: true;
+                productItem: {
+                    include: {
+                        product: true;
+                    };
+                };
+            };
+        };
+    };
+}>;
 
-    const cart = await prisma.cart.findFirst({
-        where: {
-            token: "11111",
-        },
-        include: {
-            cartItems: {
-                include: {
-                    ingredients: true,
-                    productItem: {
-                        include: {
-                            product: true,
-                        },
-                    },
-                },
-            },
-        },
-    });
+export default function Cart({ className }: Props) {
+    const { cart } = useAppContext();
+    const [loading, setLoading] = useState(true);
 
+    /* useEffect(() => {
+        async function getData() {
+            try {
+                const { data } = await axiosInstance.get("/carts");
 
-    /* if (cookieStore.has("cart-token")) {
-        {
-            const token = cookieStore.get("cart-token")?.value;
-
+                setCart(data);
+            } catch (e) {
+                console.error(e);
+            } finally {
+                setLoading(false);
+            }
         }
-    } */
+
+        getData();
+    }, []); */
+
+    function getCartLength() {
+        let cartLength = 0;
+
+        if (cart) {
+            cart.cartItems.forEach((item) => {
+                cartLength += item.quantity;
+            });
+        }
+
+        return cartLength;
+    }
 
     function countCartTotalPrice() {
         let totalCartPrice = 0;
@@ -78,13 +98,13 @@ export default async function Cart({ className }: Props) {
 
     function getCartHeaderString() {
         let productString = "";
-        const cartLength = cart?.cartItems.length || 0;
+        const cartLength = getCartLength();
 
         if ([2, 3, 4].includes(cartLength % 10)) {
             productString = "товара";
         } else if (
             [5, 6, 7, 8, 9, 0].includes(cartLength % 10) ||
-            cartLength % 100 === 11
+            (cartLength % 100 >= 10 && cartLength <= 20)
         ) {
             productString = "товаров";
         } else {
@@ -97,20 +117,37 @@ export default async function Cart({ className }: Props) {
     return (
         <Sheet>
             <SheetTrigger asChild>
-                <Button className="group h-[40px] px-6 py-3">
-                    <span>{countCartTotalPrice()} ₽</span>
-                    <div className="h-full w-[1px] bg-white opacity-25"></div>
-                    <div className="relative">
-                        <span className="flex items-center transition-all gap-1 group-hover:opacity-0">
-                            <ShoppingCart />
-                            <span>{cart ? cart.cartItems.length : 0}</span>
-                        </span>
-                        <ArrowRight className="absolute left-[50%] top-[50%] -translate-y-[50%] opacity-0 transition-all -translate-x-[100%] group-hover:opacity-100 group-hover:-translate-x-[40%]" />
-                    </div>
+                <Button
+                    className={cn(
+                        "group w-[130px] h-[40px] py-3 px-0",
+                        className
+                    )}
+                    disabled={!cart}
+                >
+                    {cart ? (
+                        <>
+                            <span>{countCartTotalPrice()} ₽</span>
+                            <div className="h-full w-[1px] bg-white opacity-25"></div>
+                            <div className="relative">
+                                <span className="flex items-center transition-all gap-1 group-hover:opacity-0">
+                                    <ShoppingCart />
+                                    <span>{getCartLength()}</span>
+                                </span>
+                                <ArrowRight className="absolute left-[50%] top-[50%] -translate-y-[50%] opacity-0 transition-all -translate-x-[100%] group-hover:opacity-100 group-hover:-translate-x-[40%]" />
+                            </div>
+                        </>
+                    ) : (
+                        <LoaderCircle size={20} className="animate-spin" />
+                    )}
                 </Button>
             </SheetTrigger>
             <SheetContent
-                className={cn("border-0 p-0", cart ? 'bg-product-card-bar' : 'bg-white px-4', className)}
+                className={cn(
+                    "border-0 p-0",
+                    !cart || cart.cartItems.length === 0
+                        ? "bg-white px-4"
+                        : "bg-product-card-bar"
+                )}
             >
                 <SheetClose className="absolute -left-16 top-1/2 -translate-y-1/2 rounded-sm ring-offset-background transition-all duration-500 hover:rotate-180 focus:outline-none focus-visible:outline-none focus-visible:duration-0 disabled:pointer-events-none data-[state=open]:bg-secondary">
                     <X className="h-10 w-10 text-white" />
@@ -127,71 +164,11 @@ export default async function Cart({ className }: Props) {
                         <div className="flex flex-col gap-3 mb-auto cart-scroll pb-[10px]">
                             {cart.cartItems.map((item) => {
                                 return (
-                                    <div
-                                        key={item.id}
-                                        className="flex gap-6 bg-white p-5 pr-6"
-                                    >
-                                        <div className="w-[65px] flex-none">
-                                            <img
-                                                src={
-                                                    item.productItem.product
-                                                        .imageUrl
-                                                }
-                                                alt="Картинка продукта"
-                                            />
-                                        </div>
-                                        <div className="w-full">
-                                            <div className="pb-1 border-b border-gray-200">
-                                                <h3 className="font-bold">
-                                                    {
-                                                        item.productItem.product
-                                                            .name
-                                                    }
-                                                </h3>
-                                                {item.productItem.pizzaType && (
-                                                    <p className="text-sm text-[#A1A1A1]">
-                                                        {item.productItem
-                                                            .size === 20
-                                                            ? "Маленькая"
-                                                            : item.productItem
-                                                                  .size === 30
-                                                            ? "Средняя"
-                                                            : "Большая"}{" "}
-                                                        {item.productItem.size}{" "}
-                                                        см,{" "}
-                                                        {item.productItem
-                                                            .pizzaType ===
-                                                        DoughType.THIN
-                                                            ? "тонкое"
-                                                            : "традиционное"}{" "}
-                                                        тесто
-                                                    </p>
-                                                )}
-                                            </div>
-                                            <div className="flex items-center justify-between mt-3">
-                                                <div className="flex items-center gap-2">
-                                                    <Button
-                                                        variant="outline"
-                                                        className="p-0 h-[30px] w-[30px] rounded-lg"
-                                                    >
-                                                        <Minus />
-                                                    </Button>
-                                                    <b>{item.quantity}</b>
-                                                    <Button
-                                                        variant="outline"
-                                                        className="p-0 h-[30px] w-[30px] rounded-lg"
-                                                    >
-                                                        <Plus />
-                                                    </Button>
-                                                </div>
-                                                <b>965 ₽</b>
-                                            </div>
-                                        </div>
-                                    </div>
+                                    <CartItem key={item.id} cartItem={item} />
                                 );
                             })}
                         </div>
-                        <footer className="flex flex-col gap-3 p-6 bg-white">
+                        <footer className="flex flex-col gap-3 p-6 bg-white shadow-[0px_4px_5px_5px_rgba(0,0,0,0.15)]">
                             <p className="flex gap-3 items-baseline w-full">
                                 <span className="text-nowrap">Итого: </span>
                                 <span className="w-full border-b-2 border-gray-300 border-dashed"></span>
@@ -203,7 +180,8 @@ export default async function Cart({ className }: Props) {
                                 <span className="text-nowrap">Налог 5%: </span>
                                 <span className="w-full border-b-2 border-gray-300 border-dashed"></span>
                                 <b className="text-nowrap text-lg">
-                                    {countCartTotalPrice() * 0.05} ₽
+                                    {(countCartTotalPrice() * 0.05).toFixed(2)}{" "}
+                                    ₽
                                 </b>
                             </p>
                             <Button className="mt-5 group text-base font-semibold h-12">

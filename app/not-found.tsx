@@ -8,7 +8,7 @@ export const metadata: Metadata = {
     title: "404 | Страница не найдена",
 };
 
-export default function Error() {
+export default function NotFound() {
     return (
         <div className="grid grid-rows-[auto_1fr] min-h-screen">
             <Header />
@@ -38,7 +38,7 @@ export default function Error() {
                             <RefreshButton />
                         </div>
                     </div>
-                    <img src="/img/404.svg" alt="" />
+                    <img src="/img/404.svg" alt="Ошибка 404" />
                 </Container>
             </main>
         </div>

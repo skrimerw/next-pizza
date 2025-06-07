@@ -7,122 +7,124 @@ import { Button } from "../ui/button";
 import { Plus } from "lucide-react";
 import { Ingredient, ProductItem } from "@prisma/client";
 import ProductModal from "./ProductModal";
-import Link from "next/link";
 
 interface Props {
-  id: number;
-  title: string;
-  imageUrl: string;
-  ingredients: Ingredient[];
-  productItems: ProductItem[];
-  className?: string;
+    id: number;
+    title: string;
+    imageUrl: string;
+    ingredients: Ingredient[];
+    productItems: ProductItem[];
+    className?: string;
 }
 
 export default function ProductCard({
-  id,
-  imageUrl,
-  ingredients,
-  productItems,
-  title,
-  className,
+    id,
+    imageUrl,
+    ingredients,
+    productItems,
+    title,
+    className,
 }: Props) {
-  const [showModal, setShowModal] = useState<boolean>(false);
+    const [showModal, setShowModal] = useState<boolean>(false);
 
-  function getIngredientsStr() {
-    let ingredientsStr = "";
+    function getIngredientsStr() {
+        let ingredientsStr = "";
 
-    ingredients.forEach((ingredient, i) => {
-      let ingredientName = ingredient.name;
+        ingredients.forEach((ingredient, i) => {
+            let ingredientName = ingredient.name;
 
-      if (i !== 0) {
-        ingredientName =
-          ingredient.name.charAt(0).toLowerCase() + ingredient.name.slice(1);
-      }
+            if (i !== 0) {
+                ingredientName =
+                    ingredient.name.charAt(0).toLowerCase() +
+                    ingredient.name.slice(1);
+            }
 
-      ingredientsStr += ingredientName;
+            ingredientsStr += ingredientName;
 
-      if (i !== ingredients.length - 1) ingredientsStr += ", ";
-    });
+            if (i !== ingredients.length - 1) ingredientsStr += ", ";
+        });
 
-    return ingredientsStr;
-  }
-
-  function compareFunction(a: ProductItem, b: ProductItem) {
-    if (a.price < b.price) {
-      return -1;
-    } else if (a.price > b.price) {
-      return 1;
+        return ingredientsStr;
     }
-    return 0;
-  }
-  function sortPorductItems(): ProductItem[] {
-    return productItems.sort(compareFunction);
-  }
 
-  function handleClick() {
-    setShowModal(true);
-    //document.title = `Next Pizza | ${title}`
-  }
-
-  useEffect(() => {
-    window.addEventListener("popstate", () => {
-      const path = location.pathname
-
-      if (/^\/products\/[0-9]{1,}$/gm.test(path)) {
-        if (id === Number(path.split("/").at(-1))) {
-          setShowModal(true)
+    function compareFunction(a: ProductItem, b: ProductItem) {
+        if (a.price < b.price) {
+            return -1;
+        } else if (a.price > b.price) {
+            return 1;
         }
-      } else {
-        setShowModal(false)
-      }
-    })
-  },[showModal])
+        return 0;
+    }
+    function sortPorductItems(): ProductItem[] {
+        return productItems.sort(compareFunction);
+    }
 
-  return (
-    <>
-      <Link
-        href={`/products/${id}`}
-        className={cn("flex flex-col gap-3", className)}
-        onClick={handleClick}
-      >
-        <div className="flex items-center justify-center rounded-lg p-0 group w-[250px] h-[225px]">
-          <div className="relative w-full">
-            <img
-              src="/img/product-img-placeholder.svg"
-              className="relative top-0 w-full mt-2 ml-2 transition-all duration-200 ease-out group-hover:top-1"
-            />
-            <div className="bg-white absolute top-0 w-full mt-2 ml-2 transition-all duration-200 ease-out group-hover:top-1">
-              <img alt="title" src={imageUrl} />
+    function handleClick() {
+        setShowModal(true);
+        history.pushState("", "", `/products/${id}`);
+        //document.title = `Next Pizza | ${title}`
+    }
+
+    useEffect(() => {
+        window.addEventListener("popstate", () => {
+            const path = location.pathname;
+
+            if (/^\/products\/[0-9]{1,}$/gm.test(path)) {
+                if (id === Number(path.split("/").at(-1))) {
+                    setShowModal(true);
+                }
+            } else {
+                setShowModal(false);
+            }
+        });
+    }, [showModal]);
+
+    return (
+        <>
+            <div
+                className={cn("flex flex-col gap-3", className)}
+                onClick={handleClick}
+            >
+                <div className="flex items-center justify-center rounded-lg p-0 group w-[250px] h-[225px]">
+                    <div className="relative w-full">
+                        <img
+                            src="/img/product-img-placeholder.svg"
+                            className="relative top-0 w-full mt-2 ml-2 transition-all duration-200 ease-out group-hover:top-1"
+                        />
+                        <div className="bg-white absolute top-0 w-full mt-2 ml-2 transition-all duration-200 ease-out group-hover:top-1">
+                            <img alt="title" src={imageUrl} />
+                        </div>
+                    </div>
+                </div>
+                <div className="h-full flex flex-col justify-between">
+                    <Title text={title} size="sm" className="mt-1" />
+                    {ingredients.length > 0 && (
+                        <p className="text-sm text-gray-400 mt-1">
+                            {getIngredientsStr()}
+                        </p>
+                    )}
+                    <div className="flex justify-between items-center mt-5">
+                        <span className="text-xl">
+                            от <b>{sortPorductItems()[0].price} ₽</b>
+                        </span>
+                        <Button variant="secondary" className="font-semibold">
+                            <Plus />
+                            Добавить
+                        </Button>
+                    </div>
+                </div>
             </div>
-          </div>
-        </div>
-        <div className="h-full flex flex-col justify-between">
-          <Title text={title} size="sm" className="mt-1" />
-          {ingredients.length > 0 && (
-            <p className="text-sm text-gray-400 mt-1">{getIngredientsStr()}</p>
-          )}
-          <div className="flex justify-between items-center mt-5">
-            <span className="text-xl">
-              от <b>{sortPorductItems()[0].price} ₽</b>
-            </span>
-            <Button variant="secondary" className="font-semibold">
-              <Plus />
-              Добавить
-            </Button>
-          </div>
-        </div>
-      </Link>
-      <ProductModal
-        productData={{
-          id,
-          imageUrl,
-          name: title,
-        }}
-        ingredients={ingredients}
-        items={productItems}
-        isOpen={showModal}
-        setShowModal={setShowModal}
-      />
-    </>
-  );
+            <ProductModal
+                productData={{
+                    id,
+                    imageUrl,
+                    name: title,
+                }}
+                ingredients={ingredients}
+                items={productItems}
+                isOpen={showModal}
+                setShowModal={setShowModal}
+            />
+        </>
+    );
 }

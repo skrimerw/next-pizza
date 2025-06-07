@@ -15,6 +15,7 @@ import Ingredient from "./Ingredient";
 import RefreshButton from "./RefreshButton";
 import Cart from "./Cart";
 import SearchFocusedOverlay from "./SearchFocusedOverlay";
+import CartItem from "./CartItem";
 
 export {
     Header,
@@ -33,5 +34,6 @@ export {
     Ingredient,
     RefreshButton,
     Cart,
-    SearchFocusedOverlay
+    SearchFocusedOverlay,
+    CartItem
 };

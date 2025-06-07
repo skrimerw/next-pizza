@@ -13,6 +13,10 @@ import {
 import Title from "./Title";
 import Ingredient from "./Ingredient";
 import { Button } from "../ui/button";
+import { axiosInstance } from "@/lib/axiosInstance";
+import { LoaderCircle } from "lucide-react";
+import { useAppContext } from "@/contexts/AppContextProvider";
+import { failToast, successToast } from "./toast";
 interface Props {
     productData: Pick<Product, "id" | "imageUrl" | "name">;
     ingredients: IngredientModel[];
@@ -61,6 +65,8 @@ export default function ProductModal({
     const router = useRouter();
     const [checkedIngredients, setCheckecdIngredients] = useState<number[]>([]);
     const [currentItem, setCurrentItem] = useState<ProductItem>(sortedItems[0]);
+    const [adding, setAdding] = useState(false);
+    const { setCart } = useAppContext();
 
     const hasSettings = currentItem.size && true;
 
@@ -104,6 +110,7 @@ export default function ProductModal({
         } else if (a.price < b.price) {
             return 1;
         }
+
         return 0;
     }
 
@@ -149,31 +156,53 @@ export default function ProductModal({
         return total;
     }
 
+    async function addProductToCart() {
+        setAdding(true);
+
+        try {
+            const { data } = await axiosInstance.post("/carts", {
+                productItem: currentItem,
+                ingredients: checkedIngredients,
+            });
+
+            setCart(data);
+            closeProductModal();
+            successToast("Товар добавлен в корзину");
+        } catch (e) {
+            console.error(e);
+            failToast("Ошибка. Проверьте соединение");
+        } finally {
+            setAdding(false);
+        }
+    }
+
+    function closeProductModal() {
+        const timeout = setTimeout(() => {
+            if (scrollableArea.current) {
+                scrollableArea.current.scrollTo({
+                    top: 0,
+                });
+            }
+        }, 300);
+
+        setCheckecdIngredients([]);
+
+        router.back();
+
+        setCurrentItem(sortedItems[0]);
+
+        return () => {
+            clearTimeout(timeout);
+        };
+    }
+
     return (
         <Modal
             className={cn(
                 "max-w-[1000px] p-0 overflow-hidden h-[580px] rounded-3xl",
                 className
             )}
-            onClose={() => {
-                const timeout = setTimeout(() => {
-                    if (scrollableArea.current) {
-                        scrollableArea.current.scrollTo({
-                            top: 0,
-                        });
-                    }
-                }, 300);
-
-                setCheckecdIngredients([]);
-
-                router.back();
-
-                setCurrentItem(sortedItems[0]);
-
-                return () => {
-                    clearTimeout(timeout);
-                };
-            }}
+            onClose={closeProductModal}
             isOpen={isOpen}
             setShowModal={setShowModal}
         >
@@ -363,7 +392,16 @@ export default function ProductModal({
                         )}
                     </div>
                     <div className="px-8">
-                        <Button className="mt-6 h-12 min-w-full mx-auto font-semibold">
+                        <Button
+                            onClick={addProductToCart}
+                            className="block relative mt-6 h-12 min-w-full mx-auto font-semibold"
+                            disabled={adding}
+                        >
+                            {adding && (
+                                <span className="block absolute top-1/2 left-4 -translate-y-1/2 size-5">
+                                    <LoaderCircle className="animate-spin !w-full !h-full" />
+                                </span>
+                            )}
                             Добавить в корзину за{" "}
                             {currentItem.price + ingredientsPrice()} ₽
                         </Button>
