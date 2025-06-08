@@ -48,8 +48,6 @@ export default function SearchProducts() {
     }
 
     function handleArrowPress(e: React.KeyboardEvent<HTMLInputElement>) {
-        e.preventDefault()
-        
         let newCurrentProduct = currentProduct;
         switch (e.key) {
             case "ArrowDown":
@@ -64,6 +62,8 @@ export default function SearchProducts() {
 
                 break;
             case "ArrowUp":
+                e.preventDefault();
+
                 if (!currentProduct) {
                     newCurrentProduct = products.length - 1;
                 } else {
@@ -83,7 +83,7 @@ export default function SearchProducts() {
             setCurrentProduct(newCurrentProduct);
             setSearchValue(products[newCurrentProduct].name);
 
-            searchInput.current.focus()
+            searchInput.current.focus();
         }
     }
 
