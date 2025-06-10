@@ -111,15 +111,9 @@ body {
         @apply bg-gray-200;
     }
 
-    .product-card-scroll {
-        overflow-y: scroll;
-    }
-
-    .product-card-scroll::-webkit-scrollbar-thumb:hover {
-        background-color: rgba(57, 57, 57, 0.3);
-    }
-
-    .cart-scroll {
+    .product-card-scroll,
+    .cart-scroll,
+    .filters-scroll {
         overflow-y: auto;
     }
 
@@ -137,19 +131,25 @@ body {
     .cart-scroll::-webkit-scrollbar-thumb:hover {
         background-color: rgba(57, 57, 57, 0.3);
     }
-    .product-card-scroll::-webkit-scrollbar {
-        background-color: transparent;
+    .product-card-scroll::-webkit-scrollbar,
+    .filters-scroll::-webkit-scrollbar {
         width: 12px;
     }
-    .product-card-scroll::-webkit-scrollbar-thumb {
+    .product-card-scroll::-webkit-scrollbar-thumb,
+    .filters-scroll::-webkit-scrollbar-thumb {
         border-radius: 15px;
         border: 3px solid var(--product-card);
         background-color: rgba(57, 57, 57, 0.15);
         transition: all 0.3s ease;
     }
 
-    .product-card-scroll::-webkit-scrollbar-thumb:hover {
+    .product-card-scroll::-webkit-scrollbar-thumb:hover,
+    .filters-scroll::-webkit-scrollbar-thumb:hover {
         background-color: rgba(57, 57, 57, 0.3);
+    }
+
+    .filters-scroll::-webkit-scrollbar-thumb {
+        border: 3px solid white
     }
 }
 

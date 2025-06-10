@@ -13,7 +13,7 @@ export default async function Categories({ className }: Props) {
   return (
     <div
       className={cn(
-        "flex gap-1 p-2 rounded-2xl bg-gray-50 w-fit h-14",
+        "flex gap-1 p-1 lg:p-2 rounded-xl lg:rounded-2xl bg-gray-50 w-fit h-10 lg:h-14",
         className
       )}
     >

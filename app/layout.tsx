@@ -16,7 +16,7 @@ export default async function RootLayout({
 }>) {
 
     return (
-        <html lang="en">
+        <html lang="en" className="text-sm md:text-base">
             <body className={`${nunito.className} antialiased`}>
                 <Toaster richColors />
                 <AppContextProvider>{children}</AppContextProvider>

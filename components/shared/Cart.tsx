@@ -101,38 +101,43 @@ export default function Cart({ className }: Props) {
             <SheetTrigger asChild>
                 <Button
                     className={cn(
-                        "group w-[130px] h-[40px] py-3 px-0",
+                        "group h-10 py-2 bg-white sm:bg-primary shadow-[0_0_5px_0_rgba(0,0,0,0.15)] sm:shadow-none md:py-3 px-0 hover:bg-gray-50 sm:hover:bg-primary/90",
+                        !cart && "hidden sm:flex",
                         className
                     )}
                     disabled={!cart}
                 >
                     {cart ? (
                         <>
-                            <span>{countCartTotalPrice()} ₽</span>
-                            <div className="h-full w-[1px] bg-white opacity-25"></div>
+                            <span className="hidden sm:inline">
+                                {countCartTotalPrice()} ₽
+                            </span>
+                            <div className="hidden sm:block h-full w-[1px] bg-white opacity-25"></div>
                             <div className="relative">
-                                <span className="flex items-center transition-all gap-1 group-hover:opacity-0">
-                                    <ShoppingCart />
-                                    <span>{getCartLength()}</span>
+                                <span className="flex items-center justify-center transition-all gap-1 sm:group-hover:opacity-0">
+                                    <ShoppingCart className="!size-5 sm:!size-4 text-primary sm:text-white" />
+                                    <span className="flex items-center justify-center lead rounded-full bg-primary absolute sm:static sm:inline -top-5 -right-4 w-6 h-6 sm:h-fit sm:w-fit">
+                                        {getCartLength()}
+                                    </span>
                                 </span>
-                                <ArrowRight className="absolute left-[50%] top-[50%] -translate-y-[50%] opacity-0 transition-all -translate-x-[100%] group-hover:opacity-100 group-hover:-translate-x-[40%]" />
+                                <ArrowRight className="absolute left-[50%] top-[50%] -translate-y-[50%] opacity-0 transition-all -translate-x-[100%] sm:group-hover:opacity-100 sm:group-hover:-translate-x-[40%]" />
                             </div>
                         </>
                     ) : (
-                        <LoaderCircle size={20} className="animate-spin" />
+                        <LoaderCircle className="animate-spin" />
                     )}
                 </Button>
             </SheetTrigger>
             <SheetContent
                 className={cn(
-                    "border-0 p-0",
+                    "p-0 w-full",
                     !cart || cart.cartItems.length === 0
                         ? "bg-white px-4"
                         : "bg-product-card-bar"
                 )}
             >
-                <SheetClose className="absolute -left-16 top-1/2 -translate-y-1/2 rounded-sm ring-offset-background transition-all duration-500 hover:rotate-180 focus:outline-none focus-visible:outline-none focus-visible:duration-0 disabled:pointer-events-none data-[state=open]:bg-secondary">
-                    <X className="h-10 w-10 text-white" />
+                <SheetClose className="absolute right-1 sm:-left-16 sm:top-1/2 sm:-translate-y-1/2 rounded-sm ring-offset-background transition-all duration-500 hover:rotate-180 focus:outline-none focus-visible:outline-none focus-visible:duration-0 disabled:pointer-events-none data-[state=open]:bg-secondary">
+                    <X className="sm:h-10 sm:w-10 text-black/60 sm:text-white" />
                     <span className="sr-only">Close</span>
                 </SheetClose>
                 <SheetTitle />

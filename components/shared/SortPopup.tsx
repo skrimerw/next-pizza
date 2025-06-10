@@ -34,14 +34,16 @@ export default function SortPopup({ className }: Props) {
             <PopoverTrigger asChild>
                 <div
                     className={cn(
-                        "flex items-center gap-2 p-2 px-5 rounded-2xl bg-gray-50 w-fit h-14 cursor-pointer",
+                        "flex items-center justify-center gap-2 bg-gray-50 transition-all px-4 sm:px-0 h-10 sm:w-10 sm:h-10 rounded-xl hover:bg-gray-100 lg:hover:bg-gray-50 lg:w-fit lg:px-6 lg:h-14 lg:rounded-2xl cursor-pointer",
                         className
                     )}
                 >
                     <ArrowUpDown size={16} />
-                    Сортировка:
-                    <span className="text-accent-foreground font-bold">
-                        {currentSortCat.name.toLocaleLowerCase()}
+                    <span className="sm:hidden lg:block">
+                        Сортировка:
+                        <span className="text-accent-foreground font-bold ml-1">
+                            {currentSortCat.name.toLocaleLowerCase()}
+                        </span>
                     </span>
                 </div>
             </PopoverTrigger>

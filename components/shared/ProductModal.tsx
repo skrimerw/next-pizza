@@ -199,15 +199,16 @@ export default function ProductModal({
     return (
         <Modal
             className={cn(
-                "max-w-[1000px] p-0 overflow-hidden h-[580px] rounded-3xl",
+                "max-w-[1000px] p-0 overflow-hidden h-svh sm:h-[580px] rounded-none sm:rounded-3xl",
                 className
             )}
             onClose={closeProductModal}
             isOpen={isOpen}
             setShowModal={setShowModal}
+            closeButtonClass="flex justify-center right-6 bg-white items-center shadow-[0_0_8px_0_rgba(0,0,0,0.1)] h-10 w-10 rounded-full sm:shadow-none sm:w-fit sm:h-fit sm:right-4"
         >
-            <div className="flex h-full">
-                <div className="relative grid basis-1/2 py-6 px-4">
+            <div className="flex flex-col overflow-x-hidden overflow-y-auto sm:product-card-scroll sm:flex-row h-full">
+                <div className="relative mx-auto max-w-lg grid basis-1/2 py-4 md:py-6 px-2 md:px-4">
                     {hasSettings && (
                         <>
                             <div className="col-start-1 col-end-1 row-start-1 row-end-2 self-center justify-self-center aspect-square rounded-full w-full p-5">
@@ -222,7 +223,7 @@ export default function ProductModal({
                         src={imageUrl}
                         alt={name}
                         className={cn(
-                            "col-start-1 col-end-1 row-start-1 row-end-2 self-center justify-self-center aspect-square mt-[5.5%] ml-[5.5%] transition-all",
+                            "col-start-1 col-end-1 row-start-1 row-end-2 self-center justify-self-center aspect-square translate-x-[2.3%] translate-y-[2.3%] transition-all",
                             currentItem.size === 20
                                 ? "w-[calc(60%+5.5%)]"
                                 : currentItem.size === 30
@@ -231,10 +232,10 @@ export default function ProductModal({
                         )}
                     />
                 </div>
-                <div className="flex flex-col basis-1/2 bg-product-card py-8">
+                <div className="flex flex-col basis-1/2 bg-product-card py-4 sm:py-6 md:py-8">
                     <div
                         ref={scrollableArea}
-                        className="product-card-scroll px-10 h-full"
+                        className="sm:product-card-scroll px-6 sm:px-8 md:px-10 h-full"
                     >
                         <Title text={name} size="md" />
                         {hasSettings && (
@@ -251,7 +252,7 @@ export default function ProductModal({
                             <div className="flex flex-col gap-2 my-7">
                                 <div className="relative flex justify-between items-center rounded-full bg-product-card-bar h-8 overflow-hidden">
                                     <div
-                                        className="absolute top-0 left-0 h-full rounded-full  w-1/3 p-[2px] transition-all"
+                                        className="absolute top-0 left-0 h-full rounded-full w-1/3 p-[2px] transition-all"
                                         style={{
                                             left: `${getSizesSliderOffset(
                                                 currentItem.size || 0
@@ -309,7 +310,7 @@ export default function ProductModal({
                                 </div>
                                 <div className="relative flex justify-between items-center rounded-full bg-product-card-bar h-8 overflow-hidden">
                                     <div
-                                        className="absolute top-0 left-0 h-full rounded-full  w-1/2 p-[2px] transition-all"
+                                        className="absolute top-0 left-0 h-full rounded-full w-1/2 p-[2px] transition-all"
                                         style={{
                                             left: `${getDoughSliderOffset(
                                                 currentItem.pizzaType ||
@@ -366,7 +367,7 @@ export default function ProductModal({
                                     size="xs"
                                     className="font-semibold text-lg mb-4"
                                 />
-                                <div className="grid grid-cols-3 gap-3">
+                                <div className="grid grid-cols-3 gap-2 xs:gap-3">
                                     {ingredients.map(
                                         ({ id, imageUrl, name, price }) => {
                                             return (
@@ -391,7 +392,7 @@ export default function ProductModal({
                             </div>
                         )}
                     </div>
-                    <div className="px-8">
+                    <div className="px-6 sm:px-8">
                         <Button
                             onClick={addProductToCart}
                             className="block relative mt-6 h-12 min-w-full mx-auto font-semibold"

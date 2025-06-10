@@ -81,21 +81,21 @@ export default function ProductCard({
     return (
         <>
             <div
-                className={cn("flex flex-col gap-3", className)}
+                className={cn("flex sm:flex-col gap-3", className)}
                 onClick={handleClick}
             >
-                <div className="flex items-center justify-center rounded-lg p-0 group w-[250px] h-[225px]">
-                    <div className="relative w-full">
+                <div className="flex flex-none items-center justify-center rounded-lg sm:px-8 md:px-0 group sm:aspect-[5/3]">
+                    <div className="aspect-square relative h-full w-[85px] xs:w-[115px] sm:w-full">
                         <img
                             src="/img/product-img-placeholder.svg"
-                            className="relative top-0 w-full mt-2 ml-2 transition-all duration-200 ease-out group-hover:top-1"
+                            className="relative top-0 w-full mt-2 ml-2 transition-all duration-200 ease-out sm:group-hover:top-1"
                         />
-                        <div className="bg-white absolute top-0 w-full mt-2 ml-2 transition-all duration-200 ease-out group-hover:top-1">
-                            <img alt="title" src={imageUrl} />
+                        <div className="bg-white absolute top-0 w-full mt-2 ml-2 transition-all duration-200 ease-out sm:group-hover:top-1">
+                            <img className="w-full h-full" alt="title" src={imageUrl} />
                         </div>
                     </div>
                 </div>
-                <div className="h-full flex flex-col justify-between">
+                <div className="h-full flex flex-col justify-between w-full">
                     <Title text={title} size="sm" className="mt-1" />
                     {ingredients.length > 0 && (
                         <p className="text-sm text-gray-400 mt-1">
@@ -103,7 +103,7 @@ export default function ProductCard({
                         </p>
                     )}
                     <div className="flex justify-between items-center mt-5">
-                        <span className="text-xl">
+                        <span className="text-lg text-nowrap sm:text-xl">
                             от <b>{sortPorductItems()[0].price} ₽</b>
                         </span>
                         <Button variant="secondary" className="font-semibold">

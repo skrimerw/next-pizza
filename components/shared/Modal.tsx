@@ -9,6 +9,7 @@ interface Props {
     isOpen: boolean;
     setShowModal: (value: React.SetStateAction<boolean>) => void;
     className?: string;
+    closeButtonClass?: string;
     children?: React.ReactNode;
 }
 
@@ -17,6 +18,7 @@ export default function Modal({
     isOpen,
     setShowModal,
     className,
+    closeButtonClass,
     children,
 }: Props) {
     const modalRef = useRef(null);
@@ -67,16 +69,16 @@ export default function Modal({
             <div
                 ref={modalRef}
                 className={cn(
-                    "relative translate-y-10 max-w-screen-lg w-full bg-white rounded-md p-6 transition-transform",
-                    isOpen && "translate-y-0",
-                    className
+                    "relative  translate-y-[100%] duration-300 sm:duration-150 sm:translate-y-10 max-w-screen-lg w-full bg-white rounded-md p-6 transition-transform",
+                    className,
+                    isOpen && "translate-y-0 sm:translate-y-0",
                 )}
             >
                 <button
-                    className="absolute top-4 right-4 cursor-pointer"
+                    className={cn("absolute top-4 right-4 cursor-pointer z-50 text-sm", closeButtonClass)}
                     onClick={handleCloseModal}
                 >
-                    <X className="w-4 h-4" />
+                    <X />
                 </button>
                 {children}
             </div>

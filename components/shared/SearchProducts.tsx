@@ -8,14 +8,22 @@ import { axiosInstance } from "@/lib/axiosInstance";
 import { cn, markSubstr } from "@/lib/utils";
 import { useAppContext } from "@/contexts/AppContextProvider";
 import SearchFocusedOverlay from "./SearchFocusedOverlay";
+import Link from "next/link";
+import { useRouter } from "next/navigation";
 
-export default function SearchProducts() {
+interface Props {
+    className?: string;
+}
+
+export default function SearchProducts({ className }: Props) {
     const [searchValue, setSearchValue] = useState("");
     const [products, setProducts] = useState<Product[]>([]);
     const [loading, setLoading] = useState(false);
     const { isSearchFocused, setIsSearchFocused } = useAppContext();
     const searchInput = useRef<HTMLInputElement>(null);
     const [currentProduct, setCurrentProduct] = useState<number | null>(null);
+
+    const router = useRouter();
 
     useEffect(() => {
         if (isSearchFocused && searchValue && currentProduct === null) {
@@ -43,11 +51,15 @@ export default function SearchProducts() {
 
     function resetSearch() {
         setSearchValue("");
-        setIsSearchFocused(false);
+        setProducts([]);
+        setCurrentProduct(null);
+
         searchInput.current?.blur();
     }
 
     function handleArrowPress(e: React.KeyboardEvent<HTMLInputElement>) {
+        if (products.length === 0) return
+
         let newCurrentProduct = currentProduct;
         switch (e.key) {
             case "ArrowDown":
@@ -73,11 +85,15 @@ export default function SearchProducts() {
                 break;
             case "Enter":
                 if (currentProduct !== null) {
-                    location.pathname = `/products/${products[currentProduct].id}`;
+                    router.push(`/products/${products[currentProduct].id}`);
                 }
+                resetSearch();
+                setIsSearchFocused(false);
 
-                break;
+                return;
         }
+
+        console.log(newCurrentProduct)
 
         if (newCurrentProduct !== null && searchInput.current) {
             setCurrentProduct(newCurrentProduct);
@@ -94,18 +110,19 @@ export default function SearchProducts() {
                     setIsSearchFocused(false);
                 }}
             />
-            <div className={cn("search-input-container w-full relative z-50")}>
+            <div
+                className={cn(
+                    "search-input-container w-full relative z-50",
+                    className
+                )}
+            >
                 <Search
                     size={16}
                     className="absolute top-1/2 left-3 -translate-y-1/2 text-gray-400"
                 />
                 {searchValue.length > 0 && (
                     <X
-                        onClick={() => {
-                            setSearchValue("");
-
-                            searchInput.current?.focus();
-                        }}
+                        onClick={resetSearch}
                         size={16}
                         className="absolute top-1/2 right-3 -translate-y-1/2 text-gray-400 cursor-pointer"
                     />
@@ -113,7 +130,7 @@ export default function SearchProducts() {
                 <Input
                     ref={searchInput}
                     className={cn(
-                        "h-[40px] bg-gray-50 border-none rounded-xl px-9 placeholder:text-gray-400 focus-visible:ring-0",
+                        "h-10 bg-gray-50 border-none rounded-xl px-9 placeholder:text-gray-400 focus-visible:ring-0",
                         isSearchFocused && "bg-white"
                     )}
                     placeholder="Поиск пиццы..."
@@ -149,8 +166,11 @@ export default function SearchProducts() {
                                 products.map((product, index) => {
                                     return (
                                         <div key={product.id}>
-                                            <a
-                                                onClick={resetSearch}
+                                            <Link
+                                                onClick={() => {
+                                                    resetSearch();
+                                                    setIsSearchFocused(false);
+                                                }}
                                                 href={`/products/${product.id}`}
                                                 className={cn(
                                                     "flex items-center px-4 py-2 gap-4 transition-all hover:bg-gray-100",
@@ -170,7 +190,7 @@ export default function SearchProducts() {
                                                         ),
                                                     }}
                                                 ></span>
-                                            </a>
+                                            </Link>
                                         </div>
                                     );
                                 })

@@ -30,7 +30,7 @@ export default function CategoryItem({ id, name }: Props) {
   return (
     <div
       className={cn(
-        `py-2 px-6 rounded-2xl cursor-pointer `,
+        `flex items-center py-1 lg:py-2 px-4 lg:px-6 text-[15px] md:text-base rounded-xl lg:rounded-2xl cursor-pointer `,
         id === activeCat ? "bg-white text-[#FE5F00] shadow-md" : ""
       )}
       onClick={(e) => {

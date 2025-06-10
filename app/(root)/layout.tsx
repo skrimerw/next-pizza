@@ -1,5 +1,5 @@
 import type { Metadata } from "next";
-import { Header } from "@/components/shared";
+import { Cart, Header } from "@/components/shared";
 
 export const metadata: Metadata = {
     title: "Next Pizza | Главная",
@@ -15,6 +15,7 @@ export default function Layout({
         <>
             <Header />
             <main>{children}</main>
+            <Cart className="sm:hidden fixed bottom-5 right-5 rounded-full h-12 w-12" />
         </>
     );
 }

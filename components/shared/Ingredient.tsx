@@ -21,7 +21,7 @@ export default function Ingredient({
     return (
         <div
             className={cn(
-                "relative flex flex-col items-center border border-transparent bg-white rounded-xl p-[10px] pt-3 shadow-lg cursor-pointer transition-all hover:shadow-md",
+                "relative flex flex-col items-center border border-transparent bg-white rounded-xl p-2 sm:p-[10px] pt-3 shadow-lg cursor-pointer transition-all hover:shadow-md",
                 checked && "border border-secondary-foreground shadow-none hover:shadow-none",
                 className
             )}

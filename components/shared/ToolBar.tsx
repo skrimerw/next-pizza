@@ -66,12 +66,12 @@ export default function ToolBar({ className, children }: Props) {
         className
       )}
     >
-      <Container className="flex items-center">
+      <Container className="flex items-center flex-wrap gap-3 sm:gap-0">
         {children}
        <Cart
           className={cn(
-            "w-0 opacity-0 invisible transition-all px-0",
-            hasShadow || toolbar.current?.offsetTop === 0 ? "w-[130px] opacity-100 visible ml-4" : ""
+            "w-0 opacity-0 invisible transition-all px-0 hidden sm:flex",
+            hasShadow || toolbar.current?.offsetTop === 0 ? "w-[100px] md:w-[130px] opacity-100 visible sm:ml-3 md:ml-4" : ""
           )}
         />
       </Container>

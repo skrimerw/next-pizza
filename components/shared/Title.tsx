@@ -19,12 +19,12 @@ export default function Title({ className, text, size = "sm" }: Props) {
     };
 
     const mapClassNameBySize = {
-        xs: "text-[16px] font-bold",
-        sm: "text-[22px] font-bold",
-        md: "text-[26px] font-bold",
-        lg: "text-[32px] font-black",
-        xl: "text-[40px] font-black",
-        "2xl": "text-[48px] font-black",
+        xs: "text-base font-bold",
+        sm: "text-xl font-bold",
+        md: "text-2xl font-bold",
+        lg: "text-3xl font-black",
+        xl: "text-4xl font-black",
+        "2xl": "text-5xl font-black",
     };
 
     return React.createElement(
