@@ -38,9 +38,11 @@ export default function Modal({
                 document.body.style.marginRight = "15px";
             }
             document.body.style.overflowY = "hidden";
+            document.documentElement.style.overflowY = "hidden";
         } else {
             timeout = setTimeout(() => {
                 document.body.style.overflowY = "auto";
+                document.documentElement.style.overflowY = "auto";
                 document.body.style.marginRight = "0";
             }, 150);
         }
