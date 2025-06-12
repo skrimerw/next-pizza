@@ -34,7 +34,9 @@ export default function Modal({
         let timeout = null;
 
         if (isOpen) {
-            document.body.style.marginRight = "15px";
+            if (window.innerWidth >= 640) {
+                document.body.style.marginRight = "15px";
+            }
             document.body.style.overflowY = "hidden";
         } else {
             timeout = setTimeout(() => {

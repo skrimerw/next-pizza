@@ -136,7 +136,7 @@ export default function Cart({ className }: Props) {
                         : "bg-product-card-bar"
                 )}
             >
-                <SheetClose className="absolute right-1 sm:-left-16 sm:top-1/2 sm:-translate-y-1/2 rounded-sm ring-offset-background transition-all duration-500 hover:rotate-180 focus:outline-none focus-visible:outline-none focus-visible:duration-0 disabled:pointer-events-none data-[state=open]:bg-secondary">
+                <SheetClose className="absolute right-2 top-2 sm:right-auto sm:-left-16 sm:top-1/2 sm:-translate-y-1/2 rounded-sm ring-offset-background transition-all duration-500 sm:hover:rotate-180 focus:outline-none focus-visible:outline-none focus-visible:duration-0 disabled:pointer-events-none data-[state=open]:bg-secondary">
                     <X className="sm:h-10 sm:w-10 text-black/60 sm:text-white" />
                     <span className="sr-only">Close</span>
                 </SheetClose>
@@ -158,14 +158,14 @@ export default function Cart({ className }: Props) {
                         <footer className="flex flex-col gap-3 p-6 bg-white shadow-[0px_4px_5px_5px_rgba(0,0,0,0.15)]">
                             <p className="flex gap-3 items-baseline w-full">
                                 <span className="text-nowrap">Итого: </span>
-                                <span className="w-full border-b-2 border-gray-300 border-dashed"></span>
+                                <span className="w-full border-b md:border-b-2 border-gray-300 border-dashed"></span>
                                 <b className="text-nowrap text-lg">
                                     {countCartTotalPrice()} ₽
                                 </b>
                             </p>
                             <p className="flex gap-3 items-baseline w-full">
                                 <span className="text-nowrap">Налог 5%: </span>
-                                <span className="w-full border-b-2 border-gray-300 border-dashed"></span>
+                                <span className="w-full border-b md:border-b-2 border-gray-300 border-dashed"></span>
                                 <b className="text-nowrap text-lg">
                                     {(countCartTotalPrice() * 0.05).toFixed(2)}{" "}
                                     ₽

@@ -23,7 +23,6 @@ export default function FiltersSheet({ className }: Props) {
     useEffect(() => {
         const handleResize = () => {
             setIsDesktop(window.innerWidth >= 640);
-            console.log(window.innerWidth >= 640);
         };
 
         window.addEventListener("resize", handleResize);
@@ -39,7 +38,7 @@ export default function FiltersSheet({ className }: Props) {
                 <SheetTrigger asChild>
                     <Button
                         className={cn(
-                            "bg-gray-50 text-[#0C0A09] hover:bg-gray-100 h-10 mr-auto sm:hidden",
+                            "bg-gray-50 text-[#0C0A09] hover:bg-gray-100 h-10 mr-auto sm:hidden text-base font-normal",
                             className
                         )}
                     >
