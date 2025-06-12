@@ -65,7 +65,7 @@ export default function ToolBar({ className, children }: Props) {
 
             if (targetItem) {
                 const container = catsContainer;
-                const target = targetItem;
+                const target = targetItem as HTMLDivElement;
                 const containerRect = container.getBoundingClientRect();
                 const targetRect = target.getBoundingClientRect();
 
@@ -74,7 +74,6 @@ export default function ToolBar({ className, children }: Props) {
                     targetRect.right > containerRect.right;
 
                 if (isPartiallyHidden) {
-                    const containerScrollLeft = container.scrollLeft;
                     const containerWidth = container.clientWidth;
                     const targetOffsetLeft = target.offsetLeft;
                     const targetWidth = target.offsetWidth;
