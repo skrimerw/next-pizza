@@ -17,25 +17,33 @@ import Cart from "./Cart";
 import SearchFocusedOverlay from "./SearchFocusedOverlay";
 import CartItem from "./CartItem";
 import FiltersSheet from "./FiltersSheet";
+import ProfileButton from "./ProfileButton";
+import FormInput from "./FormInput";
+import SignInForm from "./SignInForm";
+import SignUpForm from "./SignUpForm";
 
 export {
-    Header,
-    Container,
-    Categories,
-    SortPopup,
-    ToolBar,
-    Title,
-    Filters,
-    CheckboxFilterGroup,
-    ProductCard,
-    ProductGroup,
-    SearchProducts,
-    Modal,
-    ProductModal,
-    Ingredient,
-    RefreshButton,
-    Cart,
-    SearchFocusedOverlay,
-    CartItem,
-    FiltersSheet
+  Header,
+  Container,
+  Categories,
+  SortPopup,
+  ToolBar,
+  Title,
+  Filters,
+  CheckboxFilterGroup,
+  ProductCard,
+  ProductGroup,
+  SearchProducts,
+  Modal,
+  ProductModal,
+  Ingredient,
+  RefreshButton,
+  Cart,
+  SearchFocusedOverlay,
+  CartItem,
+  FiltersSheet,
+  ProfileButton,
+  FormInput,
+  SignInForm,
+  SignUpForm,
 };
