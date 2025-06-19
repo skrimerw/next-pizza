@@ -71,7 +71,6 @@ export default function ProductModal({
     const hasSettings = currentItem.size && true;
 
     const scrollableArea = useRef<HTMLDivElement>(null);
-    const modal = useRef<HTMLDivElement>(null);
 
     function getIngredientsStr() {
         let ingredientsStr = "";
@@ -184,12 +183,6 @@ export default function ProductModal({
                     top: 0,
                 });
             }
-
-            if (modal.current) {
-                modal.current.scrollTo({
-                    top: 0,
-                });
-            }
         }, 300);
 
         setCheckecdIngredients([]);
@@ -206,7 +199,7 @@ export default function ProductModal({
     return (
         <Modal
             className={cn(
-                "max-w-[1000px] p-0 overflow-hidden h-dvh sm:h-[580px] rounded-none sm:rounded-3xl",
+                "max-w-[1000px] p-0 overflow-hidden h-svh sm:h-[580px] rounded-none sm:rounded-3xl",
                 className
             )}
             onClose={closeProductModal}
@@ -214,10 +207,7 @@ export default function ProductModal({
             setShowModal={setShowModal}
             closeButtonClass="flex justify-center right-6 bg-white items-center shadow-[0_0_8px_0_rgba(0,0,0,0.1)] h-10 w-10 rounded-full sm:shadow-none sm:w-fit sm:h-fit sm:right-4"
         >
-            <div
-                ref={modal}
-                className="flex flex-col overflow-x-hidden overflow-y-auto sm:product-card-scroll sm:flex-row h-full"
-            >
+            <div className="flex flex-col overflow-x-hidden overflow-y-auto sm:product-card-scroll sm:flex-row h-full">
                 <div className="relative mx-auto max-w-lg grid basis-1/2 py-4 md:py-6 px-2 md:px-4">
                     {hasSettings && (
                         <>

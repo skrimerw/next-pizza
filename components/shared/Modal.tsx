@@ -38,11 +38,9 @@ export default function Modal({
                 document.body.style.marginRight = "15px";
             }
             document.body.style.overflowY = "hidden";
-            document.documentElement.style.overflowY = "hidden";
         } else {
             timeout = setTimeout(() => {
                 document.body.style.overflowY = "auto";
-                document.documentElement.style.overflowY = "auto";
                 document.body.style.marginRight = "0";
             }, 150);
         }
@@ -75,11 +73,14 @@ export default function Modal({
                 className={cn(
                     "relative  translate-y-[100%] duration-300 sm:duration-150 sm:translate-y-10 max-w-screen-lg w-full bg-white rounded-md p-6 transition-transform",
                     className,
-                    isOpen && "translate-y-0 sm:translate-y-0",
+                    isOpen && "translate-y-0 sm:translate-y-0"
                 )}
             >
                 <button
-                    className={cn("absolute top-4 right-4 cursor-pointer z-50 text-sm", closeButtonClass)}
+                    className={cn(
+                        "absolute top-4 right-4 cursor-pointer z-50 text-sm",
+                        closeButtonClass
+                    )}
                     onClick={handleCloseModal}
                 >
                     <X />
