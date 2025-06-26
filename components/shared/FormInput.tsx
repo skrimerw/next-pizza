@@ -45,7 +45,10 @@ export default function FormInput({
                       : "password"
                     : type
                 }
-                className={cn("!mt-0 h-12 rounded-xl border-gray-200", type === 'password' && 'pr-10')}
+                className={cn(
+                  "!mt-0 h-12 rounded-xl border-gray-200 !text-base",
+                  type === "password" && "pr-10"
+                )}
                 placeholder={placeholder}
                 {...field}
               />

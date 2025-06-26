@@ -2,7 +2,7 @@
 
 import React, { useState } from "react";
 import { Button } from "../ui/button";
-import { User, X } from "lucide-react";
+import { LogOut, User, X } from "lucide-react";
 import {
   Dialog,
   DialogClose,
@@ -11,47 +11,69 @@ import {
 } from "../ui/dialog";
 import SignInForm from "./SignInForm";
 import SignUpForm from "./SignUpForm";
+import { signOut, useSession } from "next-auth/react";
 
 export default function ProfileButton() {
   const [isSignin, setIsSignin] = useState(true);
+  const [open, setOpen] = useState(false);
+  const { data } = useSession();
 
   return (
-    <Dialog>
-      <DialogTrigger asChild>
-        <Button
-          variant="secondary"
-          className="flex items-center flex-col sm:flex-row gap-1 h-10 px-2 font-semibold bg-accent text-base sm:px-6 sm:py-3 border-none hover:bg-accent/80 sm:rounded-xl"
+    <>
+      <Button variant="secondary">
+        {data?.user ? (
+          <span
+            onClick={() => signOut()}
+            className="flex items-center flex-col sm:flex-row gap-1 h-10 px-2 font-semibold bg-accent text-base sm:px-6 sm:py-3 border-none hover:bg-accent/80 sm:rounded-xl"
+          >
+            <LogOut className="hidden sm:block" size={16} />
+            Выйти, {data.user.email}
+          </span>
+        ) : (
+          <span
+            onClick={() => {
+              setOpen(true);
+              setIsSignin(true);
+            }}
+            className="flex items-center flex-col sm:flex-row gap-1 h-10 px-2 font-semibold bg-accent text-base sm:px-6 sm:py-3 border-none hover:bg-accent/80 sm:rounded-xl"
+          >
+            <User className="hidden sm:block" size={16} />
+            Войти
+          </span>
+        )}
+      </Button>
+      <Dialog open={open} onOpenChange={() => setOpen(false)}>
+        <DialogContent
+          className="max-w-[450px] w-full !rounded-2xl"
+          onOpenAutoFocus={(e) => e.preventDefault()}
         >
-          <User className="hidden sm:block" size={16} />
-          Войти
-        </Button>
-      </DialogTrigger>
-      <DialogContent
-        className="max-w-[450px] w-full !rounded-2xl"
-        onOpenAutoFocus={(e) => e.preventDefault()}
-      >
-        <DialogClose>
-          <X size={16} className="absolute top-3 right-3" />
-        </DialogClose>
-        {isSignin ? <SignInForm /> : <SignUpForm />}
-        <p className="text-center" onClick={() => setIsSignin(!isSignin)}>
+          <DialogClose>
+            <X size={16} className="absolute top-3 right-3" />
+          </DialogClose>
           {isSignin ? (
-            <>
-              Еще нет аккаунта?{" "}
-              <span className="hover:text-accent-foreground underline-offset-4 underline cursor-pointer">
-                Зарегистрироваться
-              </span>
-            </>
+            <SignInForm onClose={() => setOpen(false)} />
           ) : (
-            <>
-              Уже есть аккаунта?{" "}
-              <span className="hover:text-accent-foreground underline-offset-4 underline cursor-pointer">
-                Войти
-              </span>
-            </>
+            <SignUpForm />
           )}
-        </p>
-      </DialogContent>
-    </Dialog>
+          <p className="text-center" onClick={() => setIsSignin(!isSignin)}>
+            {isSignin ? (
+              <>
+                Еще нет аккаунта?{" "}
+                <span className="hover:text-accent-foreground underline-offset-4 underline cursor-pointer">
+                  Зарегистрироваться
+                </span>
+              </>
+            ) : (
+              <>
+                Уже есть аккаунта?{" "}
+                <span className="hover:text-accent-foreground underline-offset-4 underline cursor-pointer">
+                  Войти
+                </span>
+              </>
+            )}
+          </p>
+        </DialogContent>
+      </Dialog>
+    </>
   );
 }

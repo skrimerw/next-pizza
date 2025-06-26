@@ -1,6 +1,6 @@
 "use client";
 
-import React from "react";
+import React, { useState } from "react";
 import { Button } from "../ui/button";
 import { DialogDescription, DialogTitle } from "../ui/dialog";
 import { Form } from "../ui/form";
@@ -8,6 +8,8 @@ import FormInput from "./FormInput";
 import { useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { z } from "zod";
+import { signIn } from "next-auth/react";
+import { failToast, successToast } from "./toast";
 
 const SigninSchema = z.object({
   email: z
@@ -17,7 +19,13 @@ const SigninSchema = z.object({
   password: z.string().nonempty({ message: "Обязательное поле" }),
 });
 
-export default function SignInForm() {
+interface Props {
+  onClose: () => void
+}
+
+export default function SignInForm({onClose}:Props) {
+  const [loading, setLoading] = useState(false);
+
   const form = useForm({
     resolver: zodResolver(SigninSchema),
     defaultValues: {
@@ -26,8 +34,28 @@ export default function SignInForm() {
     },
   });
 
-  function onSubmit(data: z.output<typeof SigninSchema>) {
-    console.log(data);
+  async function onSubmit(data: z.output<typeof SigninSchema>) {
+    setLoading(true);
+
+    try {
+      const resp = await signIn("credentials", {
+        ...data,
+        redirect: false,
+      });
+
+      if (resp?.error) {
+        throw new Error();
+      }
+
+      successToast("Вы успешно вошли в аккаунт");
+
+      onClose()
+    } catch (error) {
+      console.error("Error [LOGIN]", error);
+      failToast("Не удалось войти в аккаунт");
+    } finally {
+      setLoading(false);
+    }
   }
 
   return (
@@ -57,7 +85,7 @@ export default function SignInForm() {
             placeholder="Введите пароль"
             type="password"
           />
-          <Button className="h-12 text-base" type="submit">
+          <Button className="h-12 text-base" type="submit" disabled={loading}>
             Войти
           </Button>
         </form>

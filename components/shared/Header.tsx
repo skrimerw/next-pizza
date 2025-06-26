@@ -9,7 +9,8 @@ interface Props {
   className?: string;
 }
 
-export default function Header({ className }: Props) {
+export default async function Header({ className }: Props) {
+
   return (
     <header className={cn("border-b border-gray-100", className)}>
       <Container>

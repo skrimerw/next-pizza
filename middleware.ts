@@ -1,3 +1,5 @@
+//export { auth as middleware } from "@/auth"
+
 import { NextResponse } from 'next/server';
 
 export function middleware(request: Request) {
