@@ -3,8 +3,8 @@ import { toast } from "sonner";
 
 export function successToast(description: string) {
     toast(
-        <div className="flex gap-2">
-            <CheckCircle2 size={20} className="text-green-700" />
+        <div className="flex gap-3 w-fit text-base items-center">
+            <CheckCircle2 size={25} className="text-green-700" />
             {description}
         </div>,
         {
@@ -17,8 +17,8 @@ export function successToast(description: string) {
 
 export function failToast(description: string) {
     toast(
-        <div className="flex gap-2">
-            <XCircle size={20} className="text-red-500" />
+        <div className="flex gap-3 w-fit text-base items-center">
+            <XCircle size={25} className="text-red-500" />
             {description}
         </div>,
         {

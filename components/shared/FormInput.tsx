@@ -46,7 +46,7 @@ export default function FormInput({
                     : type
                 }
                 className={cn(
-                  "!mt-0 h-12 rounded-xl border-gray-200 !text-base",
+                  "!mt-0 h-12 rounded-xl border-gray-200 !text-base focus-visible:border-primary focus-visible:ring-0",
                   type === "password" && "pr-10"
                 )}
                 placeholder={placeholder}
@@ -55,7 +55,7 @@ export default function FormInput({
 
               {type === "password" && (
                 <span
-                  className="absolute top-1/2 right-4 -translate-y-1/2 inline-block w-fit cursor-pointer"
+                  className="absolute top-1/2 right-4 -translate-y-1/2 inline-block w-fit cursor-pointer text-black/70"
                   onClick={() => setShowPassword(!showPassword)}
                 >
                   {!showPassword ? <Eye size={20} /> : <EyeOff size={20} />}
