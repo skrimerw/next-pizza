@@ -1,15 +1,23 @@
 import React from "react";
-import { Cart, Container, SearchProducts } from "@/components/shared";
+import {
+  Cart,
+  Container,
+  LoginButton,
+  ProfileButton,
+  SearchProducts,
+} from "@/components/shared";
 import Image from "next/image";
 import Link from "next/link";
 import { cn } from "@/lib/utils";
-import ProfileButton from "./ProfileButton";
+
+import { auth } from "@/auth";
 
 interface Props {
   className?: string;
 }
 
 export default async function Header({ className }: Props) {
+  const session = await auth();
 
   return (
     <header className={cn("border-b border-gray-100", className)}>
@@ -31,7 +39,7 @@ export default async function Header({ className }: Props) {
           </Link>
           <SearchProducts />
           <div className="flex gap-3">
-            <ProfileButton />
+            {!session?.user ? <LoginButton /> : <ProfileButton />}
             <Cart
               className={cn(
                 "w-[100px] md:w-[130px]  opacity-100 visible transition-all hidden sm:flex"
