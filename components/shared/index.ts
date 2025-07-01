@@ -17,10 +17,12 @@ import Cart from "./Cart";
 import SearchFocusedOverlay from "./SearchFocusedOverlay";
 import CartItem from "./CartItem";
 import FiltersSheet from "./FiltersSheet";
+import LoginButton from "./LoginButton";
 import ProfileButton from "./ProfileButton";
 import FormInput from "./FormInput";
-import SignInForm from "./SignInForm";
-import SignUpForm from "./SignUpForm";
+import SignInForm from "./auth/SignInForm";
+import SignUpForm from "./auth/SignUpForm";
+import ProductItemCard from "./ProductItemCard";
 
 export {
   Header,
@@ -42,8 +44,10 @@ export {
   SearchFocusedOverlay,
   CartItem,
   FiltersSheet,
+  LoginButton,
   ProfileButton,
   FormInput,
   SignInForm,
   SignUpForm,
+  ProductItemCard,
 };

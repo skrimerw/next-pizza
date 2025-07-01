@@ -48,7 +48,7 @@ export default function SortPopup({ className }: Props) {
                 </div>
             </PopoverTrigger>
             <PopoverContent
-                className="border-none p-0 rounded-xl overflow-hidden w-fit min-w-40"
+                className="p-0 rounded-xl overflow-hidden w-fit min-w-40"
                 sideOffset={10}
                 align="end"
             >
