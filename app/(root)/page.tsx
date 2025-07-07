@@ -9,6 +9,7 @@ import {
 } from "@/components/shared";
 import { QueryFilters } from "@/hooks/useFilters";
 import { prisma } from "@/prisma/prisma-client";
+import { DoughType } from "@prisma/client";
 import { Suspense } from "react";
 
 export default async function Home({
@@ -16,14 +17,72 @@ export default async function Home({
 }: {
   searchParams: Promise<QueryFilters>;
 }) {
-  
-console.log(await searchParams)
+  const DEFAULT_MIN_PRICE = 0;
+  const DEFAULT_MAX_PRICE = 1000;
+  const params = await searchParams;
+
+  const pizzaTypes: DoughType[] = [];
+
+  params.doughTypes?.split(",").forEach((doughType) => {
+    if (doughType === "1") {
+      pizzaTypes.push(DoughType.TRADITIONAL);
+    } else if (doughType === "2") {
+      pizzaTypes.push(DoughType.THIN);
+    }
+  });
+
+  const sizes = params.sizes?.split(",").map(Number);
+  const ingredientsIdArr = params.ingredients?.split(",").map(Number);
+
+  const minPrice = Number(params.priceFrom) || DEFAULT_MIN_PRICE;
+  const maxPrice = Number(params.priceTo) || DEFAULT_MAX_PRICE;
+
   const productGroups = await prisma.category.findMany({
     include: {
       products: {
+        orderBy: {
+          id: "asc",
+        },
+        where: {
+          ingredients: ingredientsIdArr
+            ? {
+                some: {
+                  id: {
+                    in: ingredientsIdArr,
+                  },
+                },
+              }
+            : undefined,
+          item: {
+            some: {
+              size: sizes
+                ? {
+                    in: sizes,
+                  }
+                : undefined,
+              pizzaType:
+                pizzaTypes.length > 0
+                  ? {
+                      in: pizzaTypes,
+                    }
+                  : undefined,
+              price: {
+                gte: minPrice,
+                lte: maxPrice,
+              },
+            },
+          },
+        },
         include: {
           ingredients: true,
-          item: true,
+          item: {
+            where: {
+              price: {
+                gte: minPrice,
+                lte: maxPrice,
+              },
+            },
+          },
         },
       },
     },
@@ -33,7 +92,7 @@ console.log(await searchParams)
     <>
       <div className="h-[1px]"></div>
       <ToolBar className="overflow-hidden">
-        <Categories />
+        <Categories categories={productGroups} />
         <SortPopup className="mr-0 sm:ml-auto" />
         <FiltersSheet />
       </ToolBar>
@@ -43,15 +102,17 @@ console.log(await searchParams)
         </Suspense>
         <div className="flex flex-col gap-24 pb-20">
           {productGroups.map(({ id, name, products }) => {
-            return (
-              <ProductGroup
-                key={id}
-                categoryId={id}
-                title={name}
-                items={products}
-                className="leading-[200%]"
-              />
-            );
+            if (products.length > 0) {
+              return (
+                <ProductGroup
+                  key={id}
+                  categoryId={id}
+                  title={name}
+                  items={products}
+                  className="leading-[200%]"
+                />
+              );
+            }
           })}
         </div>
       </Container>

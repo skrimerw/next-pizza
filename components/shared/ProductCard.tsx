@@ -95,14 +95,14 @@ export default function ProductCard({
                         </div>
                     </div>
                 </div>
-                <div className="h-full flex flex-col justify-between w-full">
+                <div className="h-full flex flex-col w-full">
                     <Title text={title} size="sm" className="mt-1" />
                     {ingredients.length > 0 && (
                         <p className="text-sm text-gray-400 mt-1">
                             {getIngredientsStr()}
                         </p>
                     )}
-                    <div className="flex justify-between items-center mt-5">
+                    <div className="flex justify-between items-center mt-auto pt-5">
                         <span className="text-lg text-nowrap sm:text-xl">
                             от <b>{sortPorductItems()[0].price} ₽</b>
                         </span>

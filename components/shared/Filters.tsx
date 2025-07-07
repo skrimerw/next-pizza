@@ -163,7 +163,7 @@ export default function Filters({ className }: Props) {
                         <span className="text-sm text-gray-400 mr-2">до</span>
                         <Input
                             value={
-                                prices[1] ? prices[1].toLocaleString() : 5000
+                                prices[1] ? prices[1].toLocaleString() : 1000
                             }
                             className="border-none p-0 focus-visible:ring-0"
                             maxLength={7}
@@ -178,10 +178,10 @@ export default function Filters({ className }: Props) {
                     </label>
                 </div>
                 <DualRangeSlider
-                    value={[prices[0] || 0, prices[1] || 5000]}
+                    value={[prices[0] || 0, prices[1] || 1000]}
                     onValueChange={setPrices}
                     min={0}
-                    max={5000}
+                    max={1000}
                     step={1}
                 />
             </div>

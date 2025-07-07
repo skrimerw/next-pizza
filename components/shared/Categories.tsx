@@ -1,15 +1,18 @@
 import { cn } from "@/lib/utils";
-import { prisma } from "@/prisma/prisma-client";
 import React from "react";
 import CategoryItem from "./CategoryItem";
+import { Prisma } from "@prisma/client";
 
 interface Props {
+    categories: Prisma.CategoryGetPayload<{
+        include: {
+            products: true
+        }
+    }>[]
     className?: string;
 }
 
-export default async function Categories({ className }: Props) {
-    const categories = await prisma.category.findMany();
-
+export default async function Categories({ categories, className }: Props) {
     return (
         <div
             className={cn(
@@ -19,7 +22,7 @@ export default async function Categories({ className }: Props) {
         >
             {categories.map((cat) => {
                 return (
-                    <CategoryItem key={cat.id} id={cat.id} name={cat.name} />
+                    <CategoryItem key={cat.id} id={cat.id} name={cat.name} disabled={cat.products.length === 0} />
                 );
             })}
         </div>

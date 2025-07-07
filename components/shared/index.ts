@@ -23,6 +23,14 @@ import FormInput from "./FormInput";
 import SignInForm from "./auth/SignInForm";
 import SignUpForm from "./auth/SignUpForm";
 import ProductItemCard from "./ProductItemCard";
+import CheckoutHeader from "./CheckoutHeader";
+import CheckoutCart from "./CheckoutCart";
+import CheckoutCartItem from "./CheckoutCartItem";
+import CheckoutTotal from "./CheckoutTotal";
+import CheckoutCartSkeleton from "./CheckoutCartSkeleton";
+import WhiteBlock from "./WhiteBlock";
+import CheckoutPersonalInfo from "./CheckoutPersonalInfo";
+import CheckoutAddress from "./CheckoutAddress";
 
 export {
   Header,
@@ -50,4 +58,12 @@ export {
   SignInForm,
   SignUpForm,
   ProductItemCard,
+  CheckoutHeader,
+  CheckoutCart,
+  CheckoutCartItem,
+  CheckoutTotal,
+  CheckoutCartSkeleton,
+  WhiteBlock,
+  CheckoutPersonalInfo,
+  CheckoutAddress,
 };

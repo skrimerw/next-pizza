@@ -93,8 +93,6 @@ export default function SearchProducts({ className }: Props) {
                 return;
         }
 
-        console.log(newCurrentProduct)
-
         if (newCurrentProduct !== null && searchInput.current) {
             setCurrentProduct(newCurrentProduct);
             setSearchValue(products[newCurrentProduct].name);
