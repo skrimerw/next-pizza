@@ -11,7 +11,6 @@ import { z } from "zod";
 import { signIn } from "next-auth/react";
 import { failToast, successToast } from "../toast";
 import { SigninSchema } from "./schemas";
-import { useRouter } from "next/navigation";
 
 interface Props {
     onClose: () => void;
@@ -73,6 +72,7 @@ export default function SignInForm({ onClose }: Props) {
                         name="email"
                         label="Email"
                         placeholder="Введите email"
+                        type="email"
                     />
                     <FormInput
                         form={form}

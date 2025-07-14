@@ -31,6 +31,7 @@ import CheckoutCartSkeleton from "./CheckoutCartSkeleton";
 import WhiteBlock from "./WhiteBlock";
 import CheckoutPersonalInfo from "./CheckoutPersonalInfo";
 import CheckoutAddress from "./CheckoutAddress";
+import FormTextarea from "./FormTextarea";
 
 export {
   Header,
@@ -66,4 +67,5 @@ export {
   WhiteBlock,
   CheckoutPersonalInfo,
   CheckoutAddress,
+  FormTextarea
 };
