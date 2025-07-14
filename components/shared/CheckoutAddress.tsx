@@ -27,7 +27,7 @@ export default function CheckoutAddress() {
 
   return (
     <WhiteBlock title="3. Адрес доставки">
-      <div className="flex flex-col gap-8 mb-auto cart-scroll divide-solid divide-[#F6F6F6]">
+      <div className="flex flex-col gap-8 mb-auto divide-solid divide-[#F6F6F6]">
         <Form {...form}>
           <form className="flex flex-col gap-6" onSubmit={form.handleSubmit(onSubmit)}>
             <Controller

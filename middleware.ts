@@ -1,14 +1,14 @@
 //export { auth as middleware } from "@/auth"
 
-import { NextResponse } from 'next/server';
+import { NextRequest, NextResponse } from "next/server";
 
-export function middleware(request: Request) {
-  const requestHeaders = new Headers(request.headers);
-  requestHeaders.set('x-url', request.url);
+export async function middleware(request: NextRequest) {
+    const requestHeaders = new Headers(request.headers);
+    requestHeaders.set("x-url", request.url);
 
-  return NextResponse.next({
-    request: {
-      headers: requestHeaders,
-    }
-  });
+    return NextResponse.next({
+        request: {
+            headers: requestHeaders,
+        },
+    });
 }
