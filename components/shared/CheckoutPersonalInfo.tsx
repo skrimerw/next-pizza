@@ -37,7 +37,7 @@ export default function CheckoutPersonalInfo() {
     <WhiteBlock title="2. Персональная информация">
       <Form {...form}>
         <form
-          className="grid grid-cols-2 gap-6 mb-auto divide-solid divide-[#F6F6F6]"
+          className="grid grid-cols-1 sm:grid-cols-2 gap-6 mb-auto divide-solid divide-[#F6F6F6]"
           onSubmit={form.handleSubmit(onSubmit)}
         >
           <FormInput

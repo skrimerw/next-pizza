@@ -82,7 +82,7 @@ export default function ProductModal({
   return (
     <Modal
       className={cn(
-        "max-w-[1000px] p-0 overflow-hidden h-svh sm:h-[580px] rounded-none sm:rounded-3xl",
+        "fixed inset-0 sm:static flex max-w-[1000px] p-0 overflow-hidden sm:h-[580px] rounded-none sm:rounded-3xl",
         className
       )}
       onClose={closeProductModal}

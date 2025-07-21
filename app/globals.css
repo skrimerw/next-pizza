@@ -148,10 +148,9 @@ body {
     }
 }
 
-.react-dadata__suggestions {
-    max-height: none;
-    height: auto;
-    overflow: hidden;
+div:has(.search-input:focus) + .search-focused-overlay {
+    opacity: 1;
+    visibility: visible;
 }
 
 @layer base {

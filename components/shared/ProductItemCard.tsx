@@ -191,7 +191,7 @@ export default function ProductItemCard({
   return (
     <div
       className={cn(
-        "flex flex-col overflow-x-hidden overflow-y-auto sm:product-card-scroll sm:flex-row h-full ",
+        "flex flex-col overflow-x-hidden overflow-y-auto sm:flex-row h-full ",
         className
       )}
     >
@@ -219,7 +219,7 @@ export default function ProductItemCard({
           )}
         />
       </div>
-      <div className={cn("flex flex-col basis-1/2 bg-product-card py-4 sm:py-6 md:py-8", isOnPage && "bg-transparent")}>
+      <div className={cn("flex flex-col basis-1/2 bg-product-card py-4 pb-8 sm:py-6 md:py-8", isOnPage && "bg-transparent")}>
         <div
           ref={scrollableArea}
           className="sm:product-card-scroll px-6 sm:px-8 md:px-10 h-full"

@@ -58,9 +58,10 @@ export default function SearchProducts({ className }: Props) {
     }
 
     function handleArrowPress(e: React.KeyboardEvent<HTMLInputElement>) {
-        if (products.length === 0) return
+        //if (products.length === 0) return
 
         let newCurrentProduct = currentProduct;
+
         switch (e.key) {
             case "ArrowDown":
                 if (
@@ -91,6 +92,8 @@ export default function SearchProducts({ className }: Props) {
                 setIsSearchFocused(false);
 
                 return;
+            case "Tab": 
+                setIsSearchFocused(false)
         }
 
         if (newCurrentProduct !== null && searchInput.current) {

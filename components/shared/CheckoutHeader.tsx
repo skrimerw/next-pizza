@@ -21,8 +21,8 @@ export default async function CheckoutHeader({ className }: Props) {
 
   return (
     <header className={cn(className)}>
-      <Container className="">
-        <nav className="border-b border-[#DEDEDE] py-2 sm:py-3 md:py-4 lg:py-8 flex items-center justify-between gap-3 lg:gap-10">
+      <Container className="!px-0 xl:!px-16">
+        <nav className="px-8 lg:px-16 xl:px-0 border-b border-[#DEDEDE] py-2 sm:py-3 md:py-4 lg:py-8 flex items-center justify-between gap-3 lg:gap-10">
           <Link
             href="/"
             className="flex items-center gap-4 flex-none mr-0 sm:mr-3 lg:mr-0"
@@ -38,7 +38,7 @@ export default async function CheckoutHeader({ className }: Props) {
             </div>
           </Link>
           <div className="flex gap-3">
-            {!session?.user ? <LoginButton /> : <ProfileButton />}
+            {!session?.user ? <LoginButton /> : <ProfileButton className="bg-primary text-primary-foreground hover:bg-primary/80" />}
           </div>
         </nav>
       </Container>

@@ -37,10 +37,10 @@ export default function Modal({
             if (window.innerWidth >= 640) {
                 document.body.style.marginRight = "15px";
             }
-            document.body.style.overflowY = "hidden";
+            document.body.classList.add("overflow-hidden");
         } else {
             timeout = setTimeout(() => {
-                document.body.style.overflowY = "auto";
+                document.body.classList.remove("overflow-hidden");
                 document.body.style.marginRight = "0";
             }, 150);
         }
@@ -55,7 +55,7 @@ export default function Modal({
     return (
         <div
             className={cn(
-                "product-modal-overlay fixed top-0 left-0 z-50 invisible opacity-0 bg-black/70 w-full h-svh flex justify-center transition-all duration-150 items-center",
+                "product-modal-overlay fixed inset-0 z-50 invisible opacity-0 bg-black/70 w-full h-svh flex justify-center transition-all duration-150 items-center",
                 isOpen && "visible opacity-100"
             )}
             onClick={(e) => {

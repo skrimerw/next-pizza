@@ -9,7 +9,7 @@ interface Props {
 export default function WhiteBlock({ title, children }: Props) {
   return (
     <div className="rounded-3xl bg-white w-full h-fit">
-      <header className="flex justify-between px-9 pt-7 pb-6 border-b border-[#F6F6F6]">
+      <header className="flex justify-between px-7 sm:px-9 pt-5 sm:pt-7 pb-4 sm:pb-6 border-b border-[#F6F6F6]">
         <Title text={title} size="md" />
 
         {/* <Button
@@ -20,7 +20,7 @@ export default function WhiteBlock({ title, children }: Props) {
           Очистить корзину
         </Button> */}
       </header>
-      <div className="p-9">{children}</div>
+      <div className="p-7 sm:p-9">{children}</div>
     </div>
   );
 }
