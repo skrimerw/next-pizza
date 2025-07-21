@@ -10,12 +10,12 @@ import { cn } from "@/lib/utils";
 import { Textarea } from "../ui/textarea";
 import { UseFormReturn } from "react-hook-form";
 
-type Props = {
-    form: UseFormReturn<any>;
+interface Props extends TextareaHTMLAttributes<HTMLTextAreaElement> {
+    form: any;
     name: string;
     label: string;
     placeholder: string;
-} & TextareaHTMLAttributes<HTMLTextAreaElement>;
+}
 
 export default function FormTextarea({
     form,
