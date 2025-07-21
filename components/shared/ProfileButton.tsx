@@ -8,7 +8,7 @@ import {
     DropdownMenuSeparator,
     DropdownMenuTrigger,
 } from "../ui/dropdown-menu";
-import { User } from "lucide-react";
+import { LogOut, Package, Settings, User } from "lucide-react";
 import { Button } from "../ui/button";
 import { signOut } from "next-auth/react";
 import { cn } from "@/lib/utils";
@@ -31,9 +31,17 @@ export default function ProfileButton({ className }: Props) {
                     Профиль
                 </Button>
             </DropdownMenuTrigger>
-            <DropdownMenuContent>
-                <DropdownMenuItem>Настройки</DropdownMenuItem>
-                <DropdownMenuItem>Заказы</DropdownMenuItem>
+            <DropdownMenuContent
+                style={{ width: "var(--radix-dropdown-menu-trigger-width)" }}
+            >
+                <DropdownMenuItem>
+                    <Settings />
+                    Настройки
+                </DropdownMenuItem>
+                <DropdownMenuItem>
+                    <Package />
+                    Заказы
+                </DropdownMenuItem>
                 <DropdownMenuSeparator />
                 <DropdownMenuItem
                     className="text-red-500"
@@ -41,6 +49,7 @@ export default function ProfileButton({ className }: Props) {
                         await signOut();
                     }}
                 >
+                    <LogOut />
                     Выйти
                 </DropdownMenuItem>
             </DropdownMenuContent>

@@ -135,7 +135,7 @@ export default function AddressInput({ form, name, onChange }: Props) {
                     className={cn(
                         "!mt-0 h-12 rounded-xl border-gray-200 !text-base focus-visible:border-primary focus-visible:ring-0",
                         Object.keys(form.formState.errors).includes(name) &&
-                            "border-red-500"
+                            "border-red-500 focus-visible:border-red-500"
                     )}
                     placeholder="Введите адрес доставки"
                     value={suggestion}

@@ -14,7 +14,7 @@ import { cn } from "@/lib/utils";
 import { UseFormReturn } from "react-hook-form";
 
 interface Props {
-    form: UseFormReturn;
+    form: UseFormReturn<any>;
     name: string;
     label: string;
     placeholder: string;
@@ -54,7 +54,7 @@ export default function FormInput({
                                     type === "password" && "pr-10",
                                     Object.keys(form.formState.errors).includes(
                                         name
-                                    ) && "border-red-500"
+                                    ) && "border-red-500 focus-visible:border-red-500"
                                 )}
                                 placeholder={placeholder}
                                 {...field}

@@ -8,13 +8,14 @@ import {
 } from "../ui/form";
 import { cn } from "@/lib/utils";
 import { Textarea } from "../ui/textarea";
+import { UseFormReturn } from "react-hook-form";
 
-interface Props extends TextareaHTMLAttributes<HTMLTextAreaElement> {
-    form: any;
+type Props = {
+    form: UseFormReturn<any>;
     name: string;
     label: string;
     placeholder: string;
-}
+} & TextareaHTMLAttributes<HTMLTextAreaElement>;
 
 export default function FormTextarea({
     form,
@@ -39,7 +40,8 @@ export default function FormTextarea({
                                 "!mt-0 h-12 rounded-xl border-gray-200 !text-base focus-visible:border-primary focus-visible:ring-0",
                                 Object.keys(form.formState.errors).includes(
                                     name
-                                ) && "border-red-500",
+                                ) &&
+                                    "border-red-500 focus-visible:border-red-500",
                                 props.className
                             )}
                             placeholder={placeholder}
