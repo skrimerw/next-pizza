@@ -1,6 +1,20 @@
+/* 'use client'
+
+import React from 'react'
+
+export default function CheckoutPage() {
+  return (
+    <div>CheckoutPage</div>
+  )
+} */
+
+
+
+
 import {
   CheckoutAddress,
   CheckoutCart,
+  CheckoutForm,
   CheckoutPersonalInfo,
   CheckoutTotal,
   Container,
@@ -16,7 +30,8 @@ export default function CheckoutPage() {
         size="xl"
         className="font-extrabold my-12"
       />
-      <div className="flex flex-col lg:flex-row gap-8 lg:gap-11">
+      <CheckoutForm />
+      {/* <div className="flex flex-col lg:flex-row gap-8 lg:gap-11">
         <div className="flex flex-col gap-8 lg:gap-11 w-full">
           <CheckoutCart />
           <CheckoutPersonalInfo />
@@ -25,7 +40,7 @@ export default function CheckoutPage() {
         <aside className="lg:max-w-md w-full h-fit p-7 bg-white rounded-3xl sticky top-10">
           <CheckoutTotal />
         </aside>
-      </div>
+      </div> */}
     </Container>
   );
 }

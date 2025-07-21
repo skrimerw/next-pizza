@@ -5,8 +5,15 @@ import { Input } from "../ui/input";
 import { DaDataAddress, DaDataSuggestion } from "react-dadata";
 import { cn } from "@/lib/utils";
 import { useClickOutside } from "@/shared/hooks";
+import { UseFormReturn } from "react-hook-form";
 
-export default function AddressInput() {
+interface Props {
+    form: UseFormReturn;
+    name: string;
+    onChange?: (value?: string) => void
+}
+
+export default function AddressInput({ form, name, onChange }: Props) {
     const [suggestion, setSuggestion] = useState("");
     const [addresses, setAddresses] = useState<
         DaDataSuggestion<DaDataAddress>[]
@@ -17,7 +24,7 @@ export default function AddressInput() {
     const [isFocused, setIsFocused] = useState(false);
 
     useClickOutside(containerEl, () => {
-        setIsFocused(false)
+        setIsFocused(false);
     });
 
     useEffect(() => {
@@ -46,6 +53,8 @@ export default function AddressInput() {
                 const data = await res.json();
 
                 setAddresses(data.suggestions);
+
+                onChange?.(suggestion)
             } catch (e) {
                 console.error(e);
             }
@@ -104,7 +113,11 @@ export default function AddressInput() {
 
                 break;
             case "Enter":
-                setSuggestion(addresses[newAddressId].value);
+                e.preventDefault();
+
+                if (currentAddressId === -1) break;
+
+                setSuggestion(addresses[currentAddressId].value);
 
                 break;
             case "Tab":
@@ -119,7 +132,11 @@ export default function AddressInput() {
             <p className="font-medium mb-1">Введите адрес</p>
             <div ref={containerEl}>
                 <Input
-                    className="!mt-0 h-12 rounded-xl border-gray-200 !text-base focus-visible:border-primary focus-visible:ring-0"
+                    className={cn(
+                        "!mt-0 h-12 rounded-xl border-gray-200 !text-base focus-visible:border-primary focus-visible:ring-0",
+                        Object.keys(form.formState.errors).includes(name) &&
+                            "border-red-500"
+                    )}
                     placeholder="Введите адрес доставки"
                     value={suggestion}
                     onChange={(e) => {
