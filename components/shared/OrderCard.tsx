@@ -1,5 +1,4 @@
 import { cn } from "@/lib/utils";
-import { prisma } from "@/prisma/prisma-client";
 import { DoughType, Ingredient, Prisma } from "@prisma/client";
 import React from "react";
 
