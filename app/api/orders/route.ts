@@ -1,17 +1,6 @@
 import { prisma } from "@/prisma/prisma-client";
 import { NextRequest, NextResponse } from "next/server";
-import { z } from "zod";
-
-export const OrderSchema = z.object({
-    userId: z.number(),
-    totalAmount: z.number(),
-    items: z.any(),
-    fullName: z.string(),
-    email: z.string().email(),
-    phone: z.string(),
-    address: z.string(),
-    comment: z.string().optional(),
-});
+import { OrderSchema } from "./schemas";
 
 export async function POST(req: NextRequest) {
     const data = await req.json();
