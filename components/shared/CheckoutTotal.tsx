@@ -3,34 +3,19 @@
 import { useAppContext } from "@/contexts/AppContextProvider";
 import React from "react";
 import { Button } from "../ui/button";
-import { Package, Percent, Truck } from "lucide-react";
+import { Loader2, Package, Percent, Truck } from "lucide-react";
 import { Skeleton } from "../ui/skeleton";
-import { useFormContext } from "react-hook-form";
+import { DELIVERY_PRICE, totalCartPrice } from "@/lib/utils";
+import { CartRelations } from "./Cart";
 
-export default function CheckoutTotal() {
+interface Props {
+    loading: boolean;
+}
+
+export default function CheckoutTotal({ loading }: Props) {
     const { cart } = useAppContext();
-    const form = useFormContext()
-    const DELIVERY_PRICE = 120;
 
-    function countCartTotalPrice() {
-        let totalCartPrice = 0;
-
-        if (cart) {
-            cart.cartItems.forEach((item) => {
-                let totalItemPrice = 0;
-                totalItemPrice += item.productItem.price;
-
-                item.ingredients.forEach((ingredient) => {
-                    totalItemPrice += ingredient.price;
-                });
-
-                totalItemPrice *= item.quantity;
-                totalCartPrice += totalItemPrice;
-            });
-        }
-
-        return totalCartPrice;
-    }
+    const totalAmount = totalCartPrice(cart as CartRelations);
 
     return (
         <div className="flex flex-col gap-3 bg-white text-lg">
@@ -39,11 +24,9 @@ export default function CheckoutTotal() {
                 <br />
                 {cart ? (
                     <b className="text-4xl font-extrabold h-12">
-                        {countCartTotalPrice() +
+                        {totalAmount +
                             DELIVERY_PRICE +
-                            Number(
-                                (countCartTotalPrice() * 0.05).toFixed(2)
-                            )}{" "}
+                            Number((totalAmount * 0.05).toFixed(2))}{" "}
                         ₽
                     </b>
                 ) : (
@@ -59,7 +42,7 @@ export default function CheckoutTotal() {
                     <span className="w-full border-b md:border-b-2 border-gray-300 border-dashed"></span>
                     <b className="text-nowrap text-lg">
                         {cart ? (
-                            `${countCartTotalPrice()} ₽`
+                            `${totalAmount} ₽`
                         ) : (
                             <Skeleton className="inline-block h-5 w-16" />
                         )}
@@ -73,7 +56,7 @@ export default function CheckoutTotal() {
                     <span className="w-full border-b md:border-b-2 border-gray-300 border-dashed"></span>
                     <b className="text-nowrap text-lg">
                         {cart ? (
-                            `${(countCartTotalPrice() * 0.05).toFixed(2)} ₽`
+                            `${(totalAmount * 0.05).toFixed(2)} ₽`
                         ) : (
                             <Skeleton className="inline-block h-5 w-16" />
                         )}
@@ -94,9 +77,16 @@ export default function CheckoutTotal() {
                     </b>
                 </div>
             </div>
-            <Button className="text-lg h-14" type="submit" onClick={() => {
-              console.log(form.formState.errors)
-            }}>
+            <Button
+                disabled={loading}
+                className="text-lg h-14 relative"
+                type="submit"
+            >
+                {loading && (
+                    <span className="absolute top-1/2 left-3 -translate-y-1/2">
+                        <Loader2 className="opacity-0 animate-spin !w-5 !h-5 delay-500" />
+                    </span>
+                )}
                 Перейти к оплате
             </Button>
         </div>

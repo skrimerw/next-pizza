@@ -1,6 +1,6 @@
 "use client";
 
-import { cn } from "@/lib/utils";
+import { cn, totalCartPrice } from "@/lib/utils";
 import React from "react";
 import {
   Sheet,
@@ -47,6 +47,8 @@ export type CartRelations = Prisma.CartGetPayload<{
 export default function Cart({ className }: Props) {
   const { cart } = useAppContext();
 
+  const totalAmount = totalCartPrice(cart as CartRelations)
+
   function getCartLength() {
     let cartLength = 0;
 
@@ -57,26 +59,6 @@ export default function Cart({ className }: Props) {
     }
 
     return cartLength;
-  }
-
-  function countCartTotalPrice() {
-    let totalCartPrice = 0;
-
-    if (cart) {
-      cart.cartItems.forEach((item) => {
-        let totalItemPrice = 0;
-        totalItemPrice += item.productItem.price;
-
-        item.ingredients.forEach((ingredient) => {
-          totalItemPrice += ingredient.price;
-        });
-
-        totalItemPrice *= item.quantity;
-        totalCartPrice += totalItemPrice;
-      });
-    }
-
-    return totalCartPrice;
   }
 
   function getCartHeaderString() {
@@ -111,7 +93,7 @@ export default function Cart({ className }: Props) {
           {cart ? (
             <>
               <span className="hidden sm:inline">
-                {countCartTotalPrice()} ₽
+                {totalAmount} ₽
               </span>
               <div className="hidden sm:block h-full w-[1px] bg-white opacity-25"></div>
               <div className="relative">
@@ -158,13 +140,13 @@ export default function Cart({ className }: Props) {
               <p className="flex gap-3 items-baseline w-full">
                 <span className="text-nowrap">Итого: </span>
                 <span className="w-full border-b md:border-b-2 border-gray-300 border-dashed"></span>
-                <b className="text-nowrap text-lg">{countCartTotalPrice()} ₽</b>
+                <b className="text-nowrap text-lg">{totalAmount} ₽</b>
               </p>
               <p className="flex gap-3 items-baseline w-full">
                 <span className="text-nowrap">Налог 5%: </span>
                 <span className="w-full border-b md:border-b-2 border-gray-300 border-dashed"></span>
                 <b className="text-nowrap text-lg">
-                  {(countCartTotalPrice() * 0.05).toFixed(2)} ₽
+                  {(totalAmount * 0.05).toFixed(2)} ₽
                 </b>
               </p>
               <SheetClose asChild>

@@ -68,13 +68,11 @@ model Ingredient {
 model Order {
     id Int @id @default(autoincrement())
 
-    user   User? @relation(fields: [userId], references: [id])
-    userId Int?
-
-    token String
+    user   User @relation(fields: [userId], references: [id])
+    userId Int
 
     totalAmount Int
-    status      OrderStatus
+    status      OrderStatus @default(PENDING)
     paymentId   String?
 
     items Json

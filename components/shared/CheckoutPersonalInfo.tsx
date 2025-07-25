@@ -1,48 +1,19 @@
 "use client";
 
-import React from "react";
+import React, { useState } from "react";
 import WhiteBlock from "./WhiteBlock";
-import { Form } from "../ui/form";
 import FormInput from "./FormInput";
-import { useForm, useFormContext } from "react-hook-form";
-import { z } from "zod";
-import { zodResolver } from "@hookform/resolvers/zod";
-import { useSession } from "next-auth/react";
-
-const PersonalInfoSchema = z.object({
-    firstName: z.string().nonempty("Введите ваше имя"),
-    lastName: z.string().nonempty("Введите вашу фамилию"),
-    email: z.string().email("Некорректный email").nonempty("Введите ваш email"),
-    phone: z.string().nonempty("Введите ваш телефон"),
-});
+import { useFormContext } from "react-hook-form";
+import InputPhone from "./InputPhone";
 
 export default function CheckoutPersonalInfo() {
-    const { data } = useSession();
+    const [phone, setPhone] = useState();
     const form = useFormContext();
 
-    /* const form = useForm({
-        resolver: zodResolver(PersonalInfoSchema),
-        defaultValues: {
-            email: data?.user.email || "",
-            firstName: data?.user.fullName.split(" ")[0] || "",
-            lastName: data?.user.fullName.split(" ")[1] || "",
-            phone: "",
-        },
-    }); */
-
-    function onSubmit(data: z.infer<typeof PersonalInfoSchema>) {
-        console.log(data);
-    }
+    function maskPhoneNumber(value: string) {}
 
     return (
         <WhiteBlock title="2. Персональная информация">
-            {/* <Form {...form}>
-                <form
-                    className="grid grid-cols-1 sm:grid-cols-2 gap-6 mb-auto divide-solid divide-[#F6F6F6]"
-                    onSubmit={form.handleSubmit(onSubmit)}
-                ></form>
-            </Form> */}
-
             <div className="grid grid-cols-1 sm:grid-cols-2 gap-6 mb-auto divide-solid divide-[#F6F6F6]">
                 <FormInput
                     form={form}
@@ -64,13 +35,20 @@ export default function CheckoutPersonalInfo() {
                     placeholder="Введите email"
                     type="email"
                 />
-                <FormInput
+                <InputPhone
                     form={form}
                     name="phone"
                     label="Телефон"
                     placeholder="Введите телефон"
-                    type="text"
                 />
+                {/* <FormInput
+                    form={form}
+                    name="phone"
+                    label="Телефон"
+                    placeholder="Введите телефон"
+                    type="tel"
+                    onChange={(e) => maskPhoneNumber(e.target.value)}
+                /> */}
             </div>
         </WhiteBlock>
     );

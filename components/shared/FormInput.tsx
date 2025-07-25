@@ -13,7 +13,11 @@ import { Eye, EyeOff } from "lucide-react";
 import { cn } from "@/lib/utils";
 import { UseFormReturn } from "react-hook-form";
 
-interface Props {
+interface Props
+    extends Omit<
+        React.InputHTMLAttributes<HTMLInputElement>,
+        "className" | "form"
+    > {
     form: UseFormReturn<any>;
     name: string;
     label: string;
@@ -27,6 +31,7 @@ export default function FormInput({
     name,
     placeholder,
     type = "text",
+    ...props
 }: Props) {
     const [showPassword, setShowPassword] = useState(false);
 
@@ -42,6 +47,7 @@ export default function FormInput({
                     <FormControl>
                         <div className="relative">
                             <Input
+                                {...props}
                                 type={
                                     type === "password"
                                         ? showPassword
@@ -50,11 +56,12 @@ export default function FormInput({
                                         : type
                                 }
                                 className={cn(
-                                    "!mt-0 h-12 rounded-xl border-gray-200 !text-base focus-visible:border-primary focus-visible:ring-0",
+                                    "!mt-0 h-12 rounded-xl border-gray-200 !text-[16px] focus-visible:border-primary focus-visible:ring-0",
                                     type === "password" && "pr-10",
                                     Object.keys(form.formState.errors).includes(
                                         name
-                                    ) && "border-red-500 focus-visible:border-red-500"
+                                    ) &&
+                                        "border-red-500 focus-visible:border-red-500"
                                 )}
                                 placeholder={placeholder}
                                 {...field}

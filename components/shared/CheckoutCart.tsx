@@ -5,21 +5,34 @@ import { useAppContext } from "@/contexts/AppContextProvider";
 import CheckoutCartItem from "./CheckoutCartItem";
 import CheckoutCartSkeleton from "./CheckoutCartSkeleton";
 import WhiteBlock from "./WhiteBlock";
+import { cn } from "@/lib/utils";
 
 export default function CheckoutCart() {
-  const { cart } = useAppContext();
+    const { cart } = useAppContext();
 
-  return (
-    <WhiteBlock title="1. Корзина">
-      <div className="flex flex-col gap-8 mb-auto cart-scroll divide-solid divide-[#F6F6F6]">
-        {cart ? (
-          cart.cartItems.map((item) => {
-            return <CheckoutCartItem key={item.id} cartItem={item} />;
-          })
-        ) : (
-          <CheckoutCartSkeleton />
-        )}
-      </div>
-    </WhiteBlock>
-  );
+    return (
+        <WhiteBlock
+            title="1. Корзина"
+            className="[&_.white-block-content]:pt-0"
+        >
+            <div className="flex flex-col mb-auto cart-scroll divide-y divide-solid divide-[#F6F6F6]">
+                {cart ? (
+                    cart.cartItems.map((item, i) => {
+                        return (
+                            <CheckoutCartItem
+                                key={item.id}
+                                cartItem={item}
+                                className={cn(
+                                    "py-8",
+                                    i === cart.cartItems.length - 1 && "pb-0"
+                                )}
+                            />
+                        );
+                    })
+                ) : (
+                    <CheckoutCartSkeleton />
+                )}
+            </div>
+        </WhiteBlock>
+    );
 }

@@ -191,7 +191,7 @@ export default function ProductItemCard({
   return (
     <div
       className={cn(
-        "flex flex-col overflow-x-hidden overflow-y-auto sm:flex-row h-full ",
+        "flex flex-col overflow-x-hidden overflow-y-auto sm:flex-row h-full w-full",
         className
       )}
     >

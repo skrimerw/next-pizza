@@ -8,7 +8,6 @@ import {
 } from "../ui/form";
 import { cn } from "@/lib/utils";
 import { Textarea } from "../ui/textarea";
-import { UseFormReturn } from "react-hook-form";
 
 interface Props extends TextareaHTMLAttributes<HTMLTextAreaElement> {
     form: any;
@@ -37,7 +36,7 @@ export default function FormTextarea({
                         <Textarea
                             {...props}
                             className={cn(
-                                "!mt-0 h-12 rounded-xl border-gray-200 !text-base focus-visible:border-primary focus-visible:ring-0",
+                                "!mt-0 h-12 rounded-xl border-gray-200 !text-[16px] focus-visible:border-primary focus-visible:ring-0",
                                 Object.keys(form.formState.errors).includes(
                                     name
                                 ) &&

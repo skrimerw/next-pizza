@@ -12,6 +12,7 @@ import { LogOut, Package, Settings, User } from "lucide-react";
 import { Button } from "../ui/button";
 import { signOut } from "next-auth/react";
 import { cn } from "@/lib/utils";
+import Link from "next/link";
 
 interface Props {
     className?: string;
@@ -34,22 +35,24 @@ export default function ProfileButton({ className }: Props) {
             <DropdownMenuContent
                 style={{ width: "var(--radix-dropdown-menu-trigger-width)" }}
             >
-                <DropdownMenuItem>
-                    <Settings />
+                <DropdownMenuItem className="text-base">
+                    <Settings className="!w-5 !h-5" />
                     Настройки
                 </DropdownMenuItem>
-                <DropdownMenuItem>
-                    <Package />
-                    Заказы
+                <DropdownMenuItem asChild className="text-base">
+                    <Link href="/orders">
+                        <Package className="!w-5 !h-5" />
+                        Заказы
+                    </Link>
                 </DropdownMenuItem>
                 <DropdownMenuSeparator />
                 <DropdownMenuItem
-                    className="text-red-500"
+                    className="text-red-500 text-base"
                     onClick={async () => {
                         await signOut();
                     }}
                 >
-                    <LogOut />
+                    <LogOut className="!w-5 !h-5" />
                     Выйти
                 </DropdownMenuItem>
             </DropdownMenuContent>

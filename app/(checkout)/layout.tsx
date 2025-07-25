@@ -1,8 +1,5 @@
-import { auth } from "@/auth";
 import { CheckoutHeader } from "@/components/shared";
-import { prisma } from "@/prisma/prisma-client";
 import { Metadata } from "next";
-import { redirect } from "next/navigation";
 import React from "react";
 
 export const metadata: Metadata = {
@@ -13,25 +10,7 @@ export const metadata: Metadata = {
 export default async function Layout({
     children,
 }: Readonly<{ children: React.ReactNode }>) {
-    const session = await auth();
-
-    if (session?.user) {
-        const cart = await prisma.cart.findFirst({
-            where: {
-                userId: session.user.id,
-            },
-            include: {
-                cartItems: true,
-            },
-        });
-
-        if (cart?.cartItems.length === 0) {
-            redirect("/");
-        }
-    } else {
-      redirect('/')
-    }
-
+    
     return (
         <div className="bg-[#F4F1EE] min-h-screen">
             <CheckoutHeader />

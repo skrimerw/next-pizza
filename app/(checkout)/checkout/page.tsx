@@ -1,46 +1,37 @@
-/* 'use client'
-
-import React from 'react'
-
-export default function CheckoutPage() {
-  return (
-    <div>CheckoutPage</div>
-  )
-} */
-
-
-
-
-import {
-  CheckoutAddress,
-  CheckoutCart,
-  CheckoutForm,
-  CheckoutPersonalInfo,
-  CheckoutTotal,
-  Container,
-  Title,
-} from "@/components/shared";
+import { auth } from "@/auth";
+import { CheckoutForm, Container, Title } from "@/components/shared";
+import { prisma } from "@/prisma/prisma-client";
+import { redirect } from "next/navigation";
 import React from "react";
 
-export default function CheckoutPage() {
-  return (
-    <Container className="pb-20 lg:pb-32">
-      <Title
-        text="Оформление заказа"
-        size="xl"
-        className="font-extrabold my-12"
-      />
-      <CheckoutForm />
-      {/* <div className="flex flex-col lg:flex-row gap-8 lg:gap-11">
-        <div className="flex flex-col gap-8 lg:gap-11 w-full">
-          <CheckoutCart />
-          <CheckoutPersonalInfo />
-          <CheckoutAddress />
-        </div>
-        <aside className="lg:max-w-md w-full h-fit p-7 bg-white rounded-3xl sticky top-10">
-          <CheckoutTotal />
-        </aside>
-      </div> */}
-    </Container>
-  );
+export default async function CheckoutPage() {
+    const session = await auth();
+
+    if (session?.user) {
+        const cart = await prisma.cart.findFirst({
+            where: {
+                userId: session.user.id,
+            },
+            include: {
+                cartItems: true,
+            },
+        });
+
+        if (cart?.cartItems.length === 0) {
+            redirect("/");
+        }
+    } else {
+        redirect("/");
+    }
+
+    return (
+        <Container className="pb-20 lg:pb-32">
+            <Title
+                text="Оформление заказа"
+                size="xl"
+                className="font-extrabold my-6 sm:my-12 text-[26px] sm:text-4xl"
+            />
+            <CheckoutForm />
+        </Container>
+    );
 }

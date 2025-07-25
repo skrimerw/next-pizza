@@ -1,3 +1,4 @@
+import { Prisma } from "@prisma/client";
 import { clsx, type ClassValue } from "clsx";
 import { twMerge } from "tailwind-merge";
 
@@ -30,4 +31,39 @@ export function markSubstr(
     }
 
     return htmlStr;
+}
+
+export const DELIVERY_PRICE = 120;
+
+export type CartRelations = Prisma.CartGetPayload<{
+        include: {
+            cartItems: {
+                include: {
+                    ingredients: true;
+                    productItem: true;
+                };
+            };
+        };
+    }>
+
+export function totalCartPrice(
+    cart: CartRelations
+) {
+    let totalCartPrice = 0;
+
+    if (cart) {
+        cart.cartItems.forEach((item) => {
+            let totalItemPrice = 0;
+            totalItemPrice += item.productItem.price;
+
+            item.ingredients.forEach((ingredient) => {
+                totalItemPrice += ingredient.price;
+            });
+
+            totalItemPrice *= item.quantity;
+            totalCartPrice += totalItemPrice;
+        });
+    }
+
+    return totalCartPrice;
 }

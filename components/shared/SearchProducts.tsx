@@ -58,8 +58,6 @@ export default function SearchProducts({ className }: Props) {
     }
 
     function handleArrowPress(e: React.KeyboardEvent<HTMLInputElement>) {
-        //if (products.length === 0) return
-
         let newCurrentProduct = currentProduct;
 
         switch (e.key) {
@@ -131,7 +129,7 @@ export default function SearchProducts({ className }: Props) {
                 <Input
                     ref={searchInput}
                     className={cn(
-                        "h-10 bg-gray-50 border-none rounded-xl px-9 placeholder:text-gray-400 focus-visible:ring-0",
+                        "!text-[16px] h-10 bg-gray-50 border-none rounded-xl px-9 placeholder:text-gray-400 focus-visible:ring-0",
                         isSearchFocused && "bg-white"
                     )}
                     placeholder="Поиск пиццы..."
