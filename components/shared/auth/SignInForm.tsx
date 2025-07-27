@@ -11,6 +11,7 @@ import { z } from "zod";
 import { signIn } from "next-auth/react";
 import { failToast, successToast } from "../toast";
 import { SigninSchema } from "./schemas";
+import { LoaderCircle } from "lucide-react";
 
 interface Props {
     onClose: () => void;
@@ -82,10 +83,15 @@ export default function SignInForm({ onClose }: Props) {
                         type="password"
                     />
                     <Button
-                        className="h-12 text-base"
+                        className="relative h-12 text-base"
                         type="submit"
                         disabled={loading}
                     >
+                        {loading && (
+                            <span className="block absolute top-1/2 left-4 -translate-y-1/2 size-5">
+                                <LoaderCircle className="animate-spin !w-full !h-full" />
+                            </span>
+                        )}
                         Войти
                     </Button>
                 </form>

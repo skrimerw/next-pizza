@@ -33,6 +33,17 @@ export default async function OrdersPage() {
         return moment(date).format("d MMMM YYYY, в HH:mm");
     }
 
+    function getStatusName(status: OrderStatus) {
+        switch (status) {
+            case OrderStatus.PENDING:
+                return "В ожидании";
+            case OrderStatus.CANCELLED:
+                return "Отклонено";
+            case OrderStatus.SUCCEEDED:
+                return "Оплачено";
+        }
+    }
+
     return (
         <Container>
             <Title
@@ -77,7 +88,7 @@ export default async function OrdersPage() {
                                                         "bg-badge-danger-background text-badge-danger-foreground"
                                                 )}
                                             >
-                                                {status}
+                                                {getStatusName(status)}
                                             </span>
                                         </div>
                                     </AccordionTrigger>

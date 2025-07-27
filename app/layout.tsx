@@ -4,7 +4,7 @@ import "./globals.css";
 import { Toaster } from "sonner";
 import { SessionProvider } from "next-auth/react";
 import { auth } from "@/auth";
-import Head from "next/head";
+import NextTopLoader from "nextjs-toploader";
 
 const nunito = Nunito({
     subsets: ["cyrillic"],
@@ -21,10 +21,8 @@ export default async function RootLayout({
 
     return (
         <html lang="en" className="text-sm md:text-base">
-            <head>
-                <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1" />
-            </head>
             <body className={`${nunito.className} antialiased`}>
+                <NextTopLoader color="#f97316" showSpinner={false} />
                 <SessionProvider session={session}>
                     <Toaster richColors />
                     <AppContextProvider>{children}</AppContextProvider>

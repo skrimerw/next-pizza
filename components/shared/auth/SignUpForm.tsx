@@ -1,6 +1,6 @@
 "use client";
 
-import React from "react";
+import React, { useState } from "react";
 import { Button } from "../../ui/button";
 import { DialogDescription, DialogTitle } from "../../ui/dialog";
 import { Form } from "../../ui/form";
@@ -10,8 +10,11 @@ import { zodResolver } from "@hookform/resolvers/zod";
 import { z } from "zod";
 import { SignupSchema } from "./schemas";
 import { axiosInstance } from "@/lib/axiosInstance";
+import { LoaderCircle } from "lucide-react";
 
 export default function SignUpForm() {
+    const [loading, setLoading] = useState(false);
+
     const form = useForm({
         resolver: zodResolver(SignupSchema),
         defaultValues: {
@@ -23,11 +26,15 @@ export default function SignUpForm() {
 
     async function onSubmit(data: z.output<typeof SignupSchema>) {
         try {
+            setLoading(true);
+
             await axiosInstance.post("/auth/signup", data);
 
             location.reload();
         } catch (e) {
             console.error(e);
+        } finally {
+            setLoading(false);
         }
     }
 
@@ -64,7 +71,16 @@ export default function SignUpForm() {
                         placeholder="Введите пароль"
                         type="password"
                     />
-                    <Button className="h-12 text-base" type="submit">
+                    <Button
+                        className="relative h-12 text-base"
+                        type="submit"
+                        disabled={loading}
+                    >
+                        {loading && (
+                            <span className="block absolute top-1/2 left-4 -translate-y-1/2 size-5">
+                                <LoaderCircle className="animate-spin !w-full !h-full" />
+                            </span>
+                        )}
                         Зарегистрироваться
                     </Button>
                 </form>
