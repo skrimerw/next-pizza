@@ -9,6 +9,7 @@ import {
 import { prisma } from "@/prisma/prisma-client";
 import React from "react";
 import moment from "moment";
+import "moment/locale/ru";
 import { cn } from "@/lib/utils";
 import { OrderStatus } from "@prisma/client";
 import OrderCard, { OrderItem } from "@/components/shared/OrderCard";
@@ -27,10 +28,9 @@ export default async function OrdersPage() {
 
     function getOrderDate(date: Date) {
         moment.locale("ru");
-
-        moment(date).format("d MMMM YYYY, в HH:mm");
-
-        return moment(date).format("d MMMM YYYY, в HH:mm");
+        const utcDate = moment.utc(date);
+        const localDate = utcDate.local();
+        return localDate.format("D MMMM YYYY, в HH:mm");
     }
 
     function getStatusName(status: OrderStatus) {

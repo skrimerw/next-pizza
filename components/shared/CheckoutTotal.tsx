@@ -3,7 +3,7 @@
 import { useAppContext } from "@/contexts/AppContextProvider";
 import React from "react";
 import { Button } from "../ui/button";
-import { Loader2, Package, Percent, Truck } from "lucide-react";
+import { LoaderCircle, Package, Percent, Truck } from "lucide-react";
 import { Skeleton } from "../ui/skeleton";
 import { DELIVERY_PRICE, totalCartPrice } from "@/lib/utils";
 import { CartRelations } from "./Cart";
@@ -83,8 +83,8 @@ export default function CheckoutTotal({ loading }: Props) {
                 type="submit"
             >
                 {loading && (
-                    <span className="absolute top-1/2 left-3 -translate-y-1/2">
-                        <Loader2 className="opacity-0 animate-spin !w-5 !h-5 delay-500" />
+                    <span className="block absolute top-1/2 left-4 -translate-y-1/2 size-5">
+                        <LoaderCircle className="animate-spin !w-full !h-full" />
                     </span>
                 )}
                 Перейти к оплате

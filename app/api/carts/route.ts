@@ -27,7 +27,33 @@ export async function GET(req: NextRequest) {
             },
         });
 
-        const response = NextResponse.json(cart);
+        let response;
+
+        if (!cart) {
+            console.log(token?.value)
+            const newCart = await prisma.cart.create({
+                data: {
+                    token: token?.value || "",
+                    userId: session.user.id,
+                },
+                include: {
+                    cartItems: {
+                        include: {
+                            ingredients: true,
+                            productItem: {
+                                include: {
+                                    product: true,
+                                },
+                            },
+                        },
+                    },
+                },
+            });
+
+            response = NextResponse.json(newCart);
+        } else {
+            response = NextResponse.json(cart);
+        }
 
         response.cookies.delete("cart-token");
 
