@@ -17,7 +17,7 @@ interface Props {
     className?: string;
 }
 
-export default async function OrderCard({
+export default function OrderCard({
     item: { productItem, ingredients, quantity },
     className,
 }: Props) {
