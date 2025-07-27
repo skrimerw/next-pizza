@@ -28,9 +28,11 @@ export default async function OrdersPage() {
 
     function getOrderDate(date: Date) {
         moment.locale("ru");
+        
         const utcDate = moment.utc(date);
-        const localDate = utcDate.local();
-        console.log(localDate)
+        const offset = new Date().getTimezoneOffset()
+        const localDate = utcDate.utcOffset(-offset);
+        
         return localDate.format("D MMMM YYYY, в HH:mm");
     }
 
@@ -46,7 +48,7 @@ export default async function OrdersPage() {
     }
 
     return (
-        <Container>
+        <Container className="pb-20">
             <Title
                 text="Мои заказы"
                 size="xl"
