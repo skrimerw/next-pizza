@@ -11,6 +11,8 @@ import { z } from "zod";
 import { SignupSchema } from "./schemas";
 import { axiosInstance } from "@/lib/axiosInstance";
 import { LoaderCircle } from "lucide-react";
+import { failToast, successToast } from "../toast";
+import { AxiosError } from "axios";
 
 export default function SignUpForm() {
     const [loading, setLoading] = useState(false);
@@ -31,8 +33,14 @@ export default function SignUpForm() {
             await axiosInstance.post("/auth/signup", data);
 
             location.reload();
+
+            successToast("Вы успешно зарегистрировались!");
         } catch (e) {
             console.error(e);
+
+            if (e instanceof AxiosError) {
+                failToast(e.response?.data.message);
+            }
         } finally {
             setLoading(false);
         }

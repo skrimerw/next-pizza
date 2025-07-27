@@ -18,18 +18,18 @@ export async function POST(req: NextRequest) {
                 },
             });
 
-            if (user) {
-                throw new Error("Такой пользователь уже существует");
+            if (user !== null) {
+                return NextResponse.json({ message: "Такой пользователь уже существует" }, { status: 401 });
             } else {
-                const token = req.cookies.get("cart-token")
+                const token = req.cookies.get("cart-token");
 
                 await prisma.user.create({
                     data: {
                         ...data,
                         password: bcrypt.hashSync(data.password, 10),
                         cart: {
-                            connect: {token:token?.value}
-                        }
+                            connect: { token: token?.value },
+                        },
                     },
                 });
 

@@ -30,6 +30,7 @@ export default async function OrdersPage() {
         moment.locale("ru");
         const utcDate = moment.utc(date);
         const localDate = utcDate.local();
+        console.log(localDate)
         return localDate.format("D MMMM YYYY, в HH:mm");
     }
 
