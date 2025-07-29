@@ -7,27 +7,9 @@ import {
     BreadcrumbPage,
     BreadcrumbSeparator,
 } from "@/components/ui/breadcrumb";
+import { getCachedProduct } from "@/lib/cache";
 import { prisma } from "@/prisma/prisma-client";
 import { Metadata, ResolvingMetadata } from "next";
-import { unstable_cache } from "next/cache";
-
-export const getCachedProduct = unstable_cache(
-    async (id: string) => {
-        const product = await prisma.product.findFirst({
-            where: {
-                id: Number(id),
-            },
-            select: {
-                name: true,
-                imageUrl: true,
-            },
-        });
-
-        return product;
-    },
-    ["product"],
-    { revalidate: 3600 }
-);
 
 export async function generateMetadata(
     {
