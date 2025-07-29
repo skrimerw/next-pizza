@@ -4,13 +4,28 @@ import {
     Filters,
     FiltersSheet,
     ProductGroup,
-    SortPopup,
+    //SortPopup,
     ToolBar,
 } from "@/components/shared";
 import { QueryFilters } from "@/hooks/useFilters";
 import { prisma } from "@/prisma/prisma-client";
 import { DoughType } from "@prisma/client";
+import { Metadata } from "next";
 import { Suspense } from "react";
+
+export const metadata: Metadata = {
+    title: "Next Pizza | Главная",
+    description:
+        "Доставка свежей пиццы и напитков на дом. Быстро и вкусно! Закажите онлайн с удобной доставкой в любое время.",
+    openGraph: {
+        type: "website",
+        title: "Next Pizza | Главная",
+        siteName: "Next Pizza",
+        description:
+            "Доставка свежей пиццы и напитков на дом. Быстро и вкусно! Закажите онлайн с удобной доставкой в любое время.",
+        url: process.env.APP_URL,
+    },
+};
 
 export default async function Home({
     searchParams,
@@ -93,7 +108,7 @@ export default async function Home({
             <div className="h-[1px]"></div>
             <ToolBar className="overflow-hidden">
                 <Categories categories={productGroups} />
-                <SortPopup className="mr-0 sm:ml-auto" />
+                {/* <SortPopup className="mr-0 sm:ml-auto" /> */}
                 <FiltersSheet />
             </ToolBar>
             <Container className="flex sm:gap-10 md:gap-8 lg:gap-12 mt-7">

@@ -30,11 +30,22 @@ export async function GET(req: NextRequest) {
         let response;
 
         if (!cart) {
-            console.log(token?.value)
-            const newCart = await prisma.cart.create({
+            await prisma.user.update({
+                where: {
+                    id: Number(session.user.id),
+                },
                 data: {
-                    token: token?.value || "",
-                    userId: session.user.id,
+                    cart: {
+                        connect: {
+                            token: token?.value,
+                        },
+                    },
+                },
+            });
+
+            const newCart = await prisma.cart.findFirst({
+                where: {
+                    userId: Number(session.user.id),
                 },
                 include: {
                     cartItems: {
@@ -53,6 +64,14 @@ export async function GET(req: NextRequest) {
             response = NextResponse.json(newCart);
         } else {
             response = NextResponse.json(cart);
+
+            if (token) {
+                await prisma.cart.delete({
+                    where: {
+                        token: token.value,
+                    },
+                });
+            }
         }
 
         response.cookies.delete("cart-token");

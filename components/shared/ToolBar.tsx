@@ -115,9 +115,9 @@ export default function ToolBar({ className, children }: Props) {
                 {children}
                 <Cart
                     className={cn(
-                        "w-0 opacity-0 invisible transition-all px-0 hidden sm:flex",
+                        "w-0 opacity-0 invisible transition-all px-0 hidden sm:flex ml-auto",
                         hasShadow || toolbar.current?.offsetTop === 0
-                            ? "w-[100px] md:w-[130px] opacity-100 visible sm:ml-3 md:ml-4"
+                            ? "w-[100px] md:w-[130px] opacity-100 visible"
                             : ""
                     )}
                 />

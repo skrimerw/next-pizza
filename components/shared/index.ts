@@ -34,6 +34,8 @@ import CheckoutAddress from "./CheckoutAddress";
 import FormTextarea from "./FormTextarea";
 import CheckoutForm from "./CheckoutForm";
 import InputPhone from "./InputPhone";
+import OrderCard from "./OrderCard";
+import OrdersAccordion from "../OrdersAccordion";
 
 export {
     Header,
@@ -72,4 +74,6 @@ export {
     FormTextarea,
     CheckoutForm,
     InputPhone,
+    OrderCard,
+    OrdersAccordion
 };

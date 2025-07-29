@@ -1,8 +1,13 @@
 import { auth } from "@/auth";
 import { CheckoutForm, Container, Title } from "@/components/shared";
 import { prisma } from "@/prisma/prisma-client";
+import { Metadata } from "next";
 import { redirect } from "next/navigation";
 import React from "react";
+
+export const metadata: Metadata = {
+    title: "Next Pizza | Оформление заказа",
+};
 
 export default async function CheckoutPage() {
     const session = await auth();

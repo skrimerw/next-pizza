@@ -1,20 +1,14 @@
 import { auth } from "@/auth";
 import { Container, Title } from "@/components/shared";
-import {
-    Accordion,
-    AccordionContent,
-    AccordionItem,
-    AccordionTrigger,
-} from "@/components/ui/accordion";
 import { prisma } from "@/prisma/prisma-client";
 import React from "react";
-import moment from "moment";
-import "moment/locale/ru";
-import { cn } from "@/lib/utils";
-import { OrderStatus } from "@prisma/client";
-import OrderCard, { OrderItem } from "@/components/shared/OrderCard";
 import Image from "next/image";
 import OrdersAccordion from "@/components/OrdersAccordion";
+import { Metadata } from "next";
+
+export const metadata: Metadata = {
+    title: "Next Pizza | Мои заказы"
+}
 
 export default async function OrdersPage() {
     const session = await auth();
@@ -26,26 +20,6 @@ export default async function OrdersPage() {
             createdAt: "desc",
         },
     });
-
-    function getOrderDate(date: Date) {
-        moment.locale("ru");
-        const utcDate = moment.utc(date);
-        const offset = new Date().getTimezoneOffset()
-        const localDate = utcDate.utcOffset(offset);
-        
-        return localDate.format("D MMMM YYYY, в HH:mm");
-    }
-
-    function getStatusName(status: OrderStatus) {
-        switch (status) {
-            case OrderStatus.PENDING:
-                return "В ожидании";
-            case OrderStatus.CANCELLED:
-                return "Отклонено";
-            case OrderStatus.SUCCEEDED:
-                return "Оплачено";
-        }
-    }
 
     return (
         <Container className="pb-20">

@@ -20,7 +20,7 @@ export default async function RootLayout({
     const session = await auth();
 
     return (
-        <html lang="en" className="text-sm md:text-base">
+        <html lang="ru" className="text-sm md:text-base">
             <body className={`${nunito.className} antialiased`}>
                 <NextTopLoader color="#f97316" showSpinner={false} />
                 <SessionProvider session={session}>
