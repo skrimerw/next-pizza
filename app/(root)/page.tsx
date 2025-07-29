@@ -20,7 +20,6 @@ export const metadata: Metadata = {
     openGraph: {
         type: "website",
         title: "Next Pizza | Главная",
-        siteName: "Next Pizza",
         description:
             "Доставка свежей пиццы и напитков на дом. Быстро и вкусно! Закажите онлайн с удобной доставкой в любое время.",
         url: process.env.APP_URL,

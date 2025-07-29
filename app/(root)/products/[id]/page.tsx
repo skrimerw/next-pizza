@@ -8,12 +8,58 @@ import {
     BreadcrumbSeparator,
 } from "@/components/ui/breadcrumb";
 import { prisma } from "@/prisma/prisma-client";
-import { Metadata } from "next";
-import { OpenGraph } from "next/dist/lib/metadata/types/opengraph-types";
+import { Metadata, ResolvingMetadata } from "next";
+import { unstable_cache } from "next/cache";
 
-export const metadata: Metadata = {
-    title: "Next Pizza | Продукт",
-};
+export const getCachedProduct = unstable_cache(
+    async (id: string) => {
+        const product = await prisma.product.findFirst({
+            where: {
+                id: Number(id),
+            },
+            select: {
+                name: true,
+                imageUrl: true,
+            },
+        });
+
+        return product;
+    },
+    ["product"],
+    { revalidate: 3600 }
+);
+
+export async function generateMetadata(
+    {
+        params,
+    }: {
+        params: Promise<{ id: string }>;
+    },
+    parent: ResolvingMetadata
+): Promise<Metadata> {
+    const id = (await params).id;
+
+    const product = await getCachedProduct(id);
+
+    if (!product) return { title: "Next Pizza | Product" };
+
+    return {
+        title: product.name,
+        description: `${product.name} — доступно в Next Pizza. Свежие продукты, быстрая доставка, отличный вкус.`,
+        openGraph: {
+            type: "website",
+            title: "Next Pizza | " + product.name,
+            url: `${process.env.APP_URL}/products/${id}`,
+            images: [
+                {
+                    url: product.imageUrl,
+                    alt: product.name,
+                },
+            ],
+            description: `${product.name} — доступно в Next Pizza. Свежие продукты, быстрая доставка, отличный вкус.`,
+        },
+    };
+}
 
 export default async function ProductModal({
     params,
@@ -34,22 +80,6 @@ export default async function ProductModal({
     });
 
     if (!product) return;
-
-    const openGraph: OpenGraph = {
-        type: "website",
-        title: "Next Pizza | " + product.name,
-        url: `${process.env.APP_URL}/products/${product.id}`,
-        images: [
-            {
-                url: product.imageUrl,
-                alt: product.name,
-            },
-        ],
-        description: `${product.name} — доступно в Next Pizza. Свежие продукты, быстрая доставка, отличный вкус.`,
-    };
-
-    metadata.title = product.name;
-    metadata.openGraph = openGraph;
 
     return (
         <>
