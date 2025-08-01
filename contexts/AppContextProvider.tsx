@@ -2,6 +2,8 @@
 
 import { CartRelations } from "@/components/shared/Cart";
 import { axiosInstance } from "@/lib/axiosInstance";
+import { useRouter } from "next/navigation";
+import { useTopLoader } from "nextjs-toploader";
 import React, { createContext, useContext, useEffect, useState } from "react";
 
 export const AppContext = createContext<{

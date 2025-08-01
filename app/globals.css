@@ -144,13 +144,18 @@ body {
     }
 
     .filters-scroll::-webkit-scrollbar-thumb {
-        border: 3px solid white
+        border: 3px solid white;
     }
 }
 
 div:has(.search-input:focus) + .search-focused-overlay {
     opacity: 1;
     visibility: visible;
+}
+
+.product-groups-container-overlay--active {
+    visibility: visible;
+    opacity: 50%;
 }
 
 @layer base {

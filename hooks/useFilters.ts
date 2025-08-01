@@ -37,12 +37,6 @@ export function useFilters() {
     const [checkedIngredients, setCheckedIngredients] = useState<string[]>(
         searchParams.get("ingredients")?.split(",") || []
     );
-    const [order, setOrder] = useState<OrderType | "">(
-        (searchParams.get("order") as OrderType) || undefined
-    );
-    const [sortBy, setSortBy] = useState<SortByType>(
-        (searchParams.get("sortBy") as SortByType) || undefined
-    );
 
     useEffect(() => {
         const filters = {
@@ -51,21 +45,12 @@ export function useFilters() {
             sizes: checkedSizes,
             priceFrom: prices[0],
             priceTo: prices[1],
-            order,
-            sortBy,
         };
-        
+
         const queryString = qs.stringify(filters, { arrayFormat: "comma" });
 
         router.push(`/?${queryString}`, { scroll: false });
-    }, [
-        checkedSizes,
-        checkedDoughTypes,
-        prices,
-        checkedIngredients,
-        order,
-        sortBy,
-    ]);
+    }, [checkedSizes, checkedDoughTypes, prices, checkedIngredients]);
 
     return {
         prices,
@@ -76,9 +61,5 @@ export function useFilters() {
         setCheckedDoughTypes,
         checkedIngredients,
         setCheckedIngredients,
-        order,
-        setOrder,
-        sortBy,
-        setSortBy,
     };
 }

@@ -11,6 +11,8 @@ import CheckboxFilterGroup from "./CheckboxFilterGroup";
 import { axiosInstance } from "@/lib/axiosInstance";
 import { useFilters } from "@/hooks/useFilters";
 import { Ingredient } from "@prisma/client";
+import { useTopLoader } from "nextjs-toploader";
+import { usePathname, useRouter, useSearchParams } from "next/navigation";
 interface Props {
     className?: string;
 }
@@ -54,6 +56,9 @@ export default function Filters({ className }: Props) {
         checkedIngredients,
         setCheckedIngredients,
     } = useFilters();
+
+    const pathname = usePathname();
+    const sp = useSearchParams();
 
     useEffect(() => {
         async function fetchData() {
@@ -191,7 +196,7 @@ export default function Filters({ className }: Props) {
                 checkedIds={checkedIngredients}
                 setCheckedIds={setCheckedIngredients}
             />
-            <Button className="w-full h-12">Применить</Button>
+            {/* <Button className="w-full h-12">Применить</Button> */}
         </aside>
     );
 }

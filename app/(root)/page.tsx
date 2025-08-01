@@ -116,7 +116,8 @@ export default async function Home({
                 >
                     <Filters className="hidden sm:block" />
                 </Suspense>
-                <div className="flex flex-col gap-24 pb-20">
+                <div className="relative flex flex-col gap-24 pb-20">
+                    <div className="product-groups-container-overlay absolute inset-0 invisible opacity-0 bg-white"></div>
                     {productGroups.map(({ id, name, products }) => {
                         if (products.length > 0) {
                             return (

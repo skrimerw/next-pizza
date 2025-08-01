@@ -1,6 +1,6 @@
 "use client";
 
-import React, { useState } from "react";
+import React from "react";
 import {
     FormControl,
     FormField,
@@ -34,16 +34,11 @@ export default function InputPhone({
     function handleInputPhoneChange(
         target: EventTarget & HTMLInputElement,
         value: string,
-        field: ControllerRenderProps<any, string>,
-        type: string
+        field: ControllerRenderProps<any, string>
     ) {
         const input = target;
         const selectInEnd = input.selectionStart === value.length;
-        let selectionStart = selectInEnd
-            ? value.length + 1
-            : input.selectionStart ?? 0;
-
-        console.log(type);
+        let selectionStart = selectInEnd ? 18 : input.selectionStart ?? 0;
 
         let maskedPhone = "";
         let cleanPhone = target.value.replaceAll(/\D/g, "");
@@ -52,22 +47,21 @@ export default function InputPhone({
             cleanPhone += "7";
         }
 
+        if (cleanPhone[0] !== "7" && cleanPhone[0] !== "8") {
+            cleanPhone = "7" + cleanPhone;
+        }
+
         for (let i = 0; i < cleanPhone.length; i++) {
             const currentNumber = cleanPhone.at(i);
 
             if (i === 0) {
                 if (currentNumber === "7" || currentNumber === "8") {
                     maskedPhone += "+7";
-                } else {
-                    maskedPhone += "+7 (" + currentNumber;
-                    selectionStart = selectInEnd
-                        ? selectionStart + 1
-                        : selectionStart + 0;
                 }
             } else if (i === 1) {
                 maskedPhone += " (" + currentNumber;
                 selectionStart = selectInEnd
-                    ? selectionStart + 1
+                    ? selectionStart + 3
                     : selectionStart + 0;
             } else if (i === 4) {
                 maskedPhone += ") " + currentNumber;
@@ -78,14 +72,16 @@ export default function InputPhone({
             }
         }
 
-        field.onChange(maskedPhone);
-
         requestAnimationFrame(() => {
-            if (selectionStart > 3) {
-                target.setSelectionRange(selectionStart, selectionStart);
-            } else {
-                target.setSelectionRange(4, 4);
-            }
+            field.onChange(maskedPhone);
+
+            requestAnimationFrame(() => {
+                if (selectionStart > 3) {
+                    target.setSelectionRange(selectionStart, selectionStart);
+                } else {
+                    target.setSelectionRange(4, 4);
+                }
+            });
         });
     }
 
@@ -131,9 +127,7 @@ export default function InputPhone({
                                     handleInputPhoneChange(
                                         e.target,
                                         e.target.value,
-                                        field,
-
-                                        "change"
+                                        field
                                     );
                                 }}
                                 onPaste={(e) => handlePaste(e)}
