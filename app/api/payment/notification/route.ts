@@ -18,7 +18,7 @@ export async function POST(req: NextRequest) {
     try {
         const order = await prisma.order.findFirst({
             where: {
-                id: Number(notification.object.metadata.order_id),
+                id: Number(notification.object.metadata.orderId),
             },
         });
 
