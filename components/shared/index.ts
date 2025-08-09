@@ -35,7 +35,7 @@ import FormTextarea from "./FormTextarea";
 import CheckoutForm from "./CheckoutForm";
 import InputPhone from "./InputPhone";
 import OrderCard from "./OrderCard";
-import OrdersAccordion from "../OrdersAccordion";
+import OrdersAccordion from "./OrdersAccordion";
 
 export {
     Header,
@@ -75,5 +75,5 @@ export {
     CheckoutForm,
     InputPhone,
     OrderCard,
-    OrdersAccordion
+    OrdersAccordion,
 };

@@ -3,12 +3,12 @@ import { Container, Title } from "@/components/shared";
 import { prisma } from "@/prisma/prisma-client";
 import React from "react";
 import Image from "next/image";
-import OrdersAccordion from "@/components/OrdersAccordion";
+import OrdersAccordion from "@/components/shared/OrdersAccordion";
 import { Metadata } from "next";
 
 export const metadata: Metadata = {
-    title: "Next Pizza | Мои заказы"
-}
+    title: "Next Pizza | Мои заказы",
+};
 
 export default async function OrdersPage() {
     const session = await auth();

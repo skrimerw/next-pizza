@@ -35,10 +35,10 @@ export default function ProfileButton({ className }: Props) {
             <DropdownMenuContent
                 style={{ width: "var(--radix-dropdown-menu-trigger-width)" }}
             >
-                <DropdownMenuItem className="text-base">
+                {/* <DropdownMenuItem className="text-base">
                     <Settings className="!w-5 !h-5" />
                     Настройки
-                </DropdownMenuItem>
+                </DropdownMenuItem> */}
                 <DropdownMenuItem asChild className="text-base">
                     <Link href="/orders">
                         <Package className="!w-5 !h-5" />

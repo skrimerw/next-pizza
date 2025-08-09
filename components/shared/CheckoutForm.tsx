@@ -10,11 +10,10 @@ import { FormProvider, useForm } from "react-hook-form";
 import { useSession } from "next-auth/react";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { axiosInstance } from "@/lib/axiosInstance";
-import { totalCartPrice } from "@/lib/utils";
+import { DELIVERY_PRICE, totalCartPrice } from "@/lib/utils";
 import { useAppContext } from "@/contexts/AppContextProvider";
 import { CartRelations } from "./Cart";
-import { failToast, successToast } from "./toast";
-import { useRouter } from "next/navigation";
+import { failToast } from "./toast";
 
 const OrderSchema = z.object({
     firstName: z.string().nonempty("Введите ваше имя"),
@@ -35,7 +34,6 @@ export default function CheckoutForm() {
     const { data: session } = useSession();
     const { cart, setCart } = useAppContext();
     const [loading, setLoading] = useState(false);
-    const router = useRouter();
 
     const form = useForm({
         resolver: zodResolver(OrderSchema),
@@ -60,9 +58,12 @@ export default function CheckoutForm() {
         try {
             setLoading(true);
 
+            const cartPrice = totalCartPrice(cart as CartRelations)
+
             const { data } = await axiosInstance.post("/orders", {
                 userId: session?.user.id,
-                totalAmount: totalCartPrice(cart as CartRelations),
+                totalAmount:
+                    cartPrice + DELIVERY_PRICE + Number((cartPrice  * 0.05).toFixed(2)),
                 items: cart?.cartItems.map((item) => {
                     return {
                         productItem: item.productItem,
@@ -77,10 +78,11 @@ export default function CheckoutForm() {
                 comment,
             });
 
-            successToast("Заказ успешно создан!");
             setCart(data.cart);
 
-            router.push("/");
+            const confirmationUrl = data.payment.confirmation.confirmation_url;
+
+            window.location.href = confirmationUrl;
         } catch (e) {
             failToast("Ошбика сервера. Попробуйте позже");
 

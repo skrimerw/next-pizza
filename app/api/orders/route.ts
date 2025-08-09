@@ -1,6 +1,7 @@
 import { prisma } from "@/prisma/prisma-client";
 import { NextRequest, NextResponse } from "next/server";
 import { OrderSchema } from "./schemas";
+import { getYooKassa } from "@/lib/YooKassa";
 
 export async function POST(req: NextRequest) {
     const data = await req.json();
@@ -12,7 +13,7 @@ export async function POST(req: NextRequest) {
     }
 
     try {
-        await prisma.order.create({
+        const order = await prisma.order.create({
             data: {
                 totalAmount: parsedData.totalAmount,
                 items: JSON.stringify(parsedData.items),
@@ -45,7 +46,39 @@ export async function POST(req: NextRequest) {
             },
         });
 
-        return NextResponse.json({ message: "Заказ создан", cart });
+        const YooKassa = getYooKassa();
+
+        const payment = await YooKassa.createPayment(
+            {
+                amount: {
+                    value: String(order.totalAmount),
+                    currency: "RUB",
+                },
+                payment_method_data: {
+                    type: "bank_card",
+                },
+                //capture: true,
+                confirmation: {
+                    type: "redirect",
+                    return_url: process.env.APP_URL,
+                },
+                metadata: {
+                    orderId: order.id,
+                },
+            },
+            crypto.randomUUID()
+        );
+
+        await prisma.order.update({
+            where: {
+                id: order.id,
+            },
+            data: {
+                paymentId: payment.id,
+            },
+        });
+
+        return NextResponse.json({ message: "Заказ создан", cart, payment });
     } catch (e) {
         return NextResponse.json(
             { message: "Internal sever error" },

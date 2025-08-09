@@ -1,12 +1,17 @@
-'use client'
+"use client";
 
 import { cn } from "@/lib/utils";
 import { Order, OrderStatus } from "@prisma/client";
 import React from "react";
-import OrderCard, { OrderItem } from "./shared/OrderCard";
+import OrderCard, { OrderItem } from "./OrderCard";
 import moment from "moment";
 import "moment/locale/ru";
-import { Accordion, AccordionContent, AccordionItem, AccordionTrigger } from "./ui/accordion";
+import {
+    Accordion,
+    AccordionContent,
+    AccordionItem,
+    AccordionTrigger,
+} from "../ui/accordion";
 
 interface Props {
     orders: Order[];
@@ -16,7 +21,7 @@ export default function OrdersAccordion({ orders }: Props) {
     function getOrderDate(date: Date) {
         moment.locale("ru");
         const utcDate = moment.utc(date);
-        const offset = -(new Date().getTimezoneOffset());
+        const offset = -new Date().getTimezoneOffset();
 
         const localDate = utcDate.utcOffset(offset);
 
