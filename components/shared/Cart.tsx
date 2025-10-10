@@ -24,6 +24,8 @@ import Image from "next/image";
 import { Prisma } from "@prisma/client";
 import { useAppContext } from "@/contexts/AppContextProvider";
 import Link from "next/link";
+import { useSession } from "next-auth/react";
+import LoginButton from "./LoginButton";
 
 interface Props {
   className?: string;
@@ -47,7 +49,9 @@ export type CartRelations = Prisma.CartGetPayload<{
 export default function Cart({ className }: Props) {
   const { cart } = useAppContext();
 
-  const totalAmount = totalCartPrice(cart as CartRelations)
+  const totalAmount = totalCartPrice(cart as CartRelations);
+
+  const session = useSession();
 
   function getCartLength() {
     let cartLength = 0;
@@ -92,9 +96,7 @@ export default function Cart({ className }: Props) {
         >
           {cart ? (
             <>
-              <span className="hidden sm:inline">
-                {totalAmount} ₽
-              </span>
+              <span className="hidden sm:inline">{totalAmount} ₽</span>
               <div className="hidden sm:block h-full w-[1px] bg-white opacity-25"></div>
               <div className="relative">
                 <span className="flex items-center justify-center transition-all gap-1 sm:group-hover:opacity-0">
@@ -149,17 +151,23 @@ export default function Cart({ className }: Props) {
                   {(totalAmount * 0.05).toFixed(2)} ₽
                 </b>
               </p>
-              <SheetClose asChild>
-                <Button
-                  asChild
-                  className="mt-5 group text-base font-semibold h-12"
-                >
-                  <Link href="/checkout">
-                    Оформить заказ
-                    <ArrowRight className="transition-all group-hover:translate-x-1" />
-                  </Link>
-                </Button>
-              </SheetClose>
+              {session.data?.user ? (
+                <SheetClose asChild>
+                  <Button
+                    asChild
+                    className="mt-5 group text-base font-semibold h-12"
+                  >
+                    <Link href="/checkout">
+                      Оформить заказ
+                      <ArrowRight className="transition-all group-hover:translate-x-1" />
+                    </Link>
+                  </Button>
+                </SheetClose>
+              ) : (
+                <SheetClose asChild>
+                  <LoginButton className="bg-primary text-primary-foreground hover:bg-primary/80" textContent="Войдите, чтобы оформить заказ" />
+                </SheetClose>
+              )}
             </footer>
           </div>
         ) : (
